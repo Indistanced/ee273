@@ -12,7 +12,7 @@ public:
 	Character(std::string name) : name(name), currentHealth(DEFAULT_MAX_HEALTH), maxHealth(DEFAULT_MAX_HEALTH), strength(DEFAULT_STRENGTH) {};
 	Character(std::string name, int hp) : name(name), currentHealth(hp), maxHealth(DEFAULT_MAX_HEALTH), strength(DEFAULT_STRENGTH) {};
 
-	virtual ~Character(); // Destructor
+	virtual ~Character() {}; // Destructor
 
 	// Getter member functions
 	std::string getName() const { return name; };
