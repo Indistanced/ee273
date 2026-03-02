@@ -1,8 +1,5 @@
-#include "character.h"
+#include "Character.h"
 #include <string>
-
-Character::~Character() {
-}
 
 int Character::Attack() {
     return 0;
