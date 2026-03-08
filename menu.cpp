@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <limits>
 #include <fstream>
+#include <vector>
 
 #include "Player.h"
 #include "menu.h"
@@ -54,9 +55,7 @@ bool load_player(Player*& player) {
 
     std::ifstream inFile(file_name);
 
-    if (!inFile) {
-        return false;
-    }
+    if (!inFile) return false; // Return false if file doesn't exist
 
     std::string name, location;
     int hp, maxHp, strength;

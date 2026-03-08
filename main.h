@@ -7,6 +7,7 @@ class Game {
 public:
 	static Game* getInstance(Player* p);
 	void start(Player* p);
+	bool save_player(Player*& p);
 private:
 	static Game* instance;
 	Player* p;

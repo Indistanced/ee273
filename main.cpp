@@ -1,8 +1,29 @@
-#include <iostream> // Read and write functionality
+#include <iostream> // Read and write functionality with console
+#include <fstream> // Read and write functionality with files
 
 #include "Player.h"
 #include "menu.h"
 #include "main.h"
+
+bool Game::save_player(Player*& p) {
+	const std::string file_name = "game_save_file.txt"; // Constant load file path (eliminates user error)
+
+	std::string name, location;
+	int hp, maxHp, strength;
+
+	std::ofstream outFile(file_name);
+
+	if (!outFile) {
+		std::cerr << "Error opening file: " << file_name << '\n';
+		return -1;
+	}
+
+	outFile << p->getName() << '\n';
+	outFile << p->getHealth() << '\n';
+	outFile << p->getMaxHealth() << '\n';
+	outFile << p->getStrength() << '\n';
+	outFile << p->location << '\n';
+}
 
 Game* Game::instance = nullptr; // Tells class that the game initially hasn't been created
 
@@ -24,6 +45,8 @@ int main() {
 
 	Game* g = Game::getInstance(p1);
 	g->start(p1);
+	g->save_player(p1);
+	
 
 	delete p1;
 	delete g;
