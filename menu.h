@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "player.h"
+#include "Player.h"
 
-Player* menu();  //display menu to terminal 
+Player* selectPlayerInstance(Player*& p);  //display menu to terminal 
 bool load_player(Player*& player);  //used for reading in text files
 
 

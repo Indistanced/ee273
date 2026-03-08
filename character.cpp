@@ -1,4 +1,5 @@
 #include "Character.h"
+
 #include <string>
 
 int Character::Attack() {
