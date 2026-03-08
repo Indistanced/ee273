@@ -9,6 +9,6 @@ void Character::takeDamage(int dmg) {
     currentHealth -= dmg;
 }
 
-bool Character::isAlive() const{
+bool Character::isAlive() const {
     return currentHealth > 0;
 }
