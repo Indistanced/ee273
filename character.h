@@ -11,12 +11,14 @@ public:
 	// Constructor variations
 	Character(std::string name) : name(name), currentHealth(DEFAULT_MAX_HEALTH), maxHealth(DEFAULT_MAX_HEALTH), strength(DEFAULT_STRENGTH) {};
 	Character(std::string name, int hp) : name(name), currentHealth(hp), maxHealth(DEFAULT_MAX_HEALTH), strength(DEFAULT_STRENGTH) {};
+	Character(std::string name, int hp, int maxHp, int strength) : name(name), currentHealth(hp), maxHealth(maxHp), strength(strength) {};
 
 	virtual ~Character() {}; // Destructor
 
 	// Getter member functions
 	std::string getName() const { return name; };
 	int getHealth() const { return currentHealth; };
+	int getMaxHealth() const { return maxHealth; };
 	int getStrength() const { return strength; };
 
 	// General member functions
