@@ -14,5 +14,5 @@ public:
 	Player(std::string name, int hp, int maxHp, int strength) : Character{ name, hp, maxHp, strength } { location = START_LOCATION; };
 	Player(std::string name, int hp, int maxHp, int strength, std::string location) : Character{ name, hp, maxHp, strength } { this->location = location; };
 
-
+	static std::istream& pin(Player* p);
 };

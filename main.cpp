@@ -34,19 +34,30 @@ Game* Game::getInstance(Player* p) {
 }
 
 void Game::start(Player* p) {
-	std::cout << "Welcome, " << p->getName() << '\n';
-	std::cout << "Health: (" << p->getHealth() << "/" << p->getMaxHealth() << ")\n"; // Health bar check
-	std::cout << "Location: " << p->location;
+	gout() << "Welcome, " << p->getName() << '\n';
+	gout() << "Health: (" << p->getHealth() << "/" << p->getMaxHealth() << ")\n"; // Health bar check
+	gout() << "Location: " << p->location << '\n';
+}
+
+void Game::run(Game* g, Player* p) {
+	start(p);
+	save_player(p);
+
+	gout() << "What is your favourite number?\n"; // gout = cout (Game class)
+	int num;
+	Player::pin(p) >> num; // pin = cin (Player class)
+}
+
+std::ostream& Game::gout() {
+	return std::cout << ">> ";
 }
 
 int main() {
 	Player* p1 = selectPlayerInstance(p1);
 	if (p1 == nullptr) return 0; // Checks whether player exists
 
-	Game* g = Game::getInstance(p1);
-	g->start(p1);
-	g->save_player(p1);
-	
+	Game* g = Game::getInstance(p1); // Creates, loads, or exits instance
+	g->run(g, p1);
 
 	delete p1;
 	delete g;
