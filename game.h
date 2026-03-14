@@ -11,8 +11,9 @@ public:
 	void run(Game* g, Player* p);
 	static std::ostream& gout();
 
-    void Player_Menu(Player* p);
-    bool quit_game();
+	void Player_Menu(Player* p);
+	bool quit_game();
+	void ask_to_continue();
 
 private:
 	static Game* instance;
