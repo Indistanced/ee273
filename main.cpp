@@ -1,7 +1,6 @@
-
 #include "Player.h"
 #include "menu.h"
-#include "game.h"
+#include "Game.h"
 
 
 int main() {

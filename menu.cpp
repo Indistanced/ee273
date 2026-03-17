@@ -8,6 +8,11 @@
 #include "Player.h"
 #include "menu.h"
 
+static void wipeBuffer() {
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear input stream
+}
+
 void getChoice(int& choice) {
     std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
     std::cout << "==============================\n";
@@ -31,8 +36,7 @@ Player* selectPlayerInstance(Player*& p) {
     do {
         if (choice < 1 || choice > 3 || std::cin.fail()) { // If invaild choice, clear input before re-running
             std::cout << "Invaild choice, try again.";
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear input stream
+            wipeBuffer();
         }
     } while (choice < 1 || choice > 3 || std::cin.fail());
 
@@ -41,7 +45,7 @@ Player* selectPlayerInstance(Player*& p) {
         std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
         std::cout << "\n\t>> Quitting game <<\n";
         std::cout << "\nPress Enter to close...";
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        wipeBuffer();
         std::getline(std::cin, exit);
         return p;
     }
@@ -57,7 +61,7 @@ Player* selectPlayerInstance(Player*& p) {
     else {
         std::string name;
         std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear input stream
+        wipeBuffer();
         std::cout << "Please enter your name: ";
         std::getline(std::cin, name);
 
