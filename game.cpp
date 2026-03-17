@@ -5,6 +5,18 @@
 #include "Player.h"
 #include "game.h"
 
+void Game::run(Game* g, Player* p) {
+	start(p);
+
+	save_player(p);
+	Player_Menu(p);
+
+	/*
+	gout() << "What is your favourite number?\n"; // gout = cout (Game class)
+	int num;
+	Player::pin(p) >> num; // pin = cin (Player class)
+	*/
+}
 
 Game* Game::instance = nullptr; // Tells class that the game initially hasn't been created
 
@@ -39,27 +51,20 @@ bool Game::save_player(Player*& p) {
 
 void Game::start(Player* p) {
 	std::string start;
-	std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
+	std::cout << "\033[3J\033[H\033[2J"; // Control sequence to clear terminal
 	std::cout << "\n\tWelcome, Adventurer " << p->getName() << "!\n";
 	std::cout << "\t  --Entering the " << p->location << "--\n";
 		
+	
 	std::cout << "\n\t>> Press enter to start <<";
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //claer input stream
-	std::getline(std::cin, start); //return when new line (enter is recived)
+	std::getline(std::cin, start); // Return when new line (enter is recived);
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear input stream
+	
+	
 	return;
 }
 
-void Game::run(Game* g, Player* p) {
-	start(p);
-	save_player(p);
-	Player_Menu(p);
 
-	/*
-	gout() << "What is your favourite number?\n"; // gout = cout (Game class)
-	int num;
-	Player::pin(p) >> num; // pin = cin (Player class)
-	*/
-}
 
 std::ostream& Game::gout() {
 	return std::cout << ">> ";
@@ -103,7 +108,7 @@ void Game::Player_Menu(Player* p) {
 	do {
 		std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
 		std::cout << "\n\n==============================\n";
-		std::cout << "\tPlayer Menue\t";
+		std::cout << "\tPlayer Menu\t";
 		std::cout << "\n==============================\n";
 
 		std::cout << "1) Display player stats\n";
@@ -143,7 +148,7 @@ void Game::Player_Menu(Player* p) {
 			quit = quit_game();
 			break;
 		default:
-			std::cout << "Not implemneted yet :/";
+			std::cout << "Not implemented yet :/";
 
 		};
 
