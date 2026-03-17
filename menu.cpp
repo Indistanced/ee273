@@ -8,13 +8,17 @@
 #include "Player.h"
 #include "menu.h"
 
+static void wipeTerminal() {
+    std::cout << "\033[3J\033[H\033[2J"; // Control sequence to clear terminal
+}
+
 static void wipeBuffer() {
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear input stream
 }
 
 void getChoice(int& choice) {
-    std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
+    wipeTerminal();
     std::cout << "==============================\n";
     std::cout << "\tText-Based RPG\t\n";
     std::cout << "==============================\n\n";
@@ -60,7 +64,7 @@ Player* selectPlayerInstance(Player*& p) {
     }
     else {
         std::string name;
-        std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
+        wipeTerminal();
         wipeBuffer();
         std::cout << "Please enter your name: ";
         std::getline(std::cin, name);
