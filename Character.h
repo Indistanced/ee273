@@ -30,6 +30,7 @@ public:
 	virtual int Attack();
 	void takeDamage(int dmg);
 	bool isAlive() const;
+	void addHealth(int health);
 
 protected:
 	std::string name;

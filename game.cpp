@@ -1,31 +1,10 @@
 #include <iostream> // Read and write functionality with console
 #include <fstream> // Read and write functionality with files
 #include <string>
-#include <map>
 
 #include "Player.h"
 #include "game.h"
 
-static void wipeBuffer() {
-	std::cin.clear();
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear input stream
-}
-
-
-void Game::run(Game* g, Player* p) {
-	start(p);
-
-	save_player(p);
-	Player_Menu(p);
-
-	
-
-	/*
-	gout() << "What is your favourite number?\n"; // gout = cout (Game class)
-	int num;
-	Player::pin(p) >> num; // pin = cin (Player class)
-	*/
-}
 
 Game* Game::instance = nullptr; // Tells class that the game initially hasn't been created
 
@@ -55,25 +34,49 @@ bool Game::save_player(Player*& p) {
 	outFile << p->getExp() << '\n';
 	outFile << p->getStrength() << '\n';
 	outFile << p->location << '\n';
+
+	auto& items = p->getInventory().getItems();
+
+	outFile << items.size() << "\n";
+
+	for (const auto& item : items)
+	{
+		outFile << item.name << ","
+			<< item.description << ","
+			<< item.type << ","
+			<< item.value << ","
+			<< item.quantity << ","
+			<< item.weak << ","
+			<< item.strong << ","
+			<< item.element << "\n";
+	}
+	
 	return true;
 }
 
 void Game::start(Player* p) {
 	std::string start;
-	std::cout << "\033[3J\033[H\033[2J"; // Control sequence to clear terminal
+	std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
 	std::cout << "\n\tWelcome, Adventurer " << p->getName() << "!\n";
 	std::cout << "\t  --Entering the " << p->location << "--\n";
 		
-	
 	std::cout << "\n\t>> Press enter to start <<";
-	std::getline(std::cin, start); // Return when new line (enter is recived);
-	wipeBuffer();
-	
-	
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //claer input stream
+	std::getline(std::cin, start); //return when new line (enter is recived)
 	return;
 }
 
+void Game::run(Game* g, Player* p) {
+	start(p);
+	save_player(p);
+	Player_Menu(p);
 
+	/*
+	gout() << "What is your favourite number?\n"; // gout = cout (Game class)
+	int num;
+	Player::pin(p) >> num; // pin = cin (Player class)
+	*/
+}
 
 std::ostream& Game::gout() {
 	return std::cout << ">> ";
@@ -104,7 +107,7 @@ void Game::ask_to_continue() {
 	std::string input;
 
 	std::cout << "\n>> Press enter to continue <<";
-	wipeBuffer();
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //claer input stream
 	std::getline(std::cin, input); //return when new line (enter is recived)
 	return;
 }
@@ -113,12 +116,11 @@ void Game::Player_Menu(Player* p) {
 
 	int choice;
 	bool quit = false;
-	std::map<std::string, int> level = { {"Green Hill Zone", 1 }, { "Magic Mountain", 2 }, { "The Arm of Dismay", 3 } };
 
 	do {
 		std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
 		std::cout << "\n\n==============================\n";
-		std::cout << "\tPlayer Menu\t";
+		std::cout << "\tPlayer Menue\t";
 		std::cout << "\n==============================\n";
 
 		std::cout << "1) Display player stats\n";
@@ -134,29 +136,25 @@ void Game::Player_Menu(Player* p) {
 
 			if (choice < 1 || choice > 6) { // If invaild choice, clear input before re-running
 				std::cout << "Invaild choice, try again.";
-				wipeBuffer();
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear input stream
 			}
 
 		} while (choice < 1 || choice > 6);
 
 		switch (choice) {
 		case 1:
-			std::cout << "\033[3J\033[H\033[2J"; // Control sequence to clear terminal
+			std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
 			std::cout << "\n\n--- PLAYER STATS ---\n";
 			p->to_string();
 			ask_to_continue();
 			break;
-		case 4:
-			std::cout << "\033[3J\033[H\033[2J"; // Control sequence to clear terminal
-			
-			for (auto& l : level) {
-				std::cout << l.first << ": " << l.second << std::endl;
-			}
-
-			ask_to_continue();
+		case 2:
+			std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
+			p->getInventory().displayItems(p);
 			break;
 		case 5:
-			std::cout << "\033[3J\033[H\033[2J"; // Control sequence to clear terminal
+			std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
 			save_player(p);
 			std::cout << "\t>> Game saved <<\n";
 			ask_to_continue();
@@ -165,7 +163,7 @@ void Game::Player_Menu(Player* p) {
 			quit = quit_game();
 			break;
 		default:
-			std::cout << "Not implemented yet :/";
+			std::cout << "Not implemneted yet :/";
 
 		};
 

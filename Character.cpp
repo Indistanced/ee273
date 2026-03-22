@@ -17,3 +17,12 @@ void Character::takeDamage(int dmg) {
 bool Character::isAlive() const {
     return currentHealth > 0;
 }
+
+void Character::addHealth(int health) {
+
+    currentHealth += health;
+
+    if (currentHealth > maxHealth) {
+        currentHealth = maxHealth;
+    }
+}
