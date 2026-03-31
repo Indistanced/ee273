@@ -42,17 +42,13 @@ Player* selectPlayerInstance(Player*& p) {
         clearBuffer();
         std::getline(std::cin, exit);
         return p;
-    }
-
-    else if (choice == 2) {
+    } else if (choice == 2) {
         if (!load_player(p)) {
             std::cout << "Save game not found.";
-        }
-        else {
+        } else {
             return p;
         }
-    }
-    else {
+    } else {
         std::string name;
         terminateBuffer();
         clearBuffer();

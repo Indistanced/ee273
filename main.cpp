@@ -1,7 +1,6 @@
 #include "Player.h"
 #include "menu.h"
-#include "game.h"
-#include <Windows.h>
+#include "Game.h"
 #include "unicode.h"
 
 int main() {

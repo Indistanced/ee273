@@ -1,6 +1,7 @@
 #include <iostream> // Read and write functionality with console
 #include <fstream> // Read and write functionality with files
 #include <string>
+#include <map>
 
 #include "Player.h"
 #include "Game.h"
@@ -117,6 +118,7 @@ void Game::Player_Menu(Player* p) {
 
 	int choice;
 	bool quit = false;
+	std::map<std::string, int> level = { {"Green Hill Zone", 1 }, { "Magic Mountain", 2 }, { "The Arm of Dismay", 3 } };
 
 	do {
 		terminateBuffer();
@@ -152,6 +154,12 @@ void Game::Player_Menu(Player* p) {
 		case 2:
 			terminateBuffer();
 			p->getInventory().displayItems(p);
+			break;
+		case 4:
+			terminateBuffer();
+			for (auto& l : level) {
+				std::cout << l.first << ": " << l.second << std::endl;
+			} ask_to_continue();
 			break;
 		case 5:
 			terminateBuffer();
