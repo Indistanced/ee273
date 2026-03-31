@@ -12,7 +12,7 @@ class Player;  //player has an inventroy
 class Inventory
 {
 public:
-    bool addPotion(std::string name, std::string description, int value, int quantity); 
+    bool addPotion(std::string name, std::string description, int value, int quantity);
     bool addSpell(std::string name, std::string description, int base, int weak, int strong, std::string element);
 
     bool usePotion(std::string name, Player* p);
@@ -22,7 +22,7 @@ public:
     void displayItems(Player* p);
     void ask_to_continue();
 
-    
+
     void addItem(const Item& item);  //for saving and loading items
     std::vector<Item>& getItems();   //for saving and loading items
 

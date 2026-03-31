@@ -14,7 +14,7 @@ public:
 	Character(std::string name, int hp) : name(name), currentHealth(hp), maxHealth(DEFAULT_MAX_HEALTH), strength(DEFAULT_STRENGTH), level(DEFAULT_LEVEL) {};
 	Character(std::string name, int hp, int maxHp, int strength) : name(name), currentHealth(hp), maxHealth(maxHp), strength(strength), level(DEFAULT_LEVEL) {};
 	Character(std::string name, int hp, int maxHp, int strength, int level) : name(name), currentHealth(hp), maxHealth(maxHp), strength(strength), level(level) {};
-	
+
 
 	virtual ~Character() {}; // Destructor
 
@@ -24,7 +24,7 @@ public:
 	int getMaxHealth() const { return maxHealth; };
 	int getStrength() const { return strength; };
 
-	int getlevel() const { return level;};
+	int getlevel() const { return level; };
 
 	// General member functions
 	virtual int Attack();

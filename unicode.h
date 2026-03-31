@@ -1,0 +1,10 @@
+#pragma once
+
+#include <Windows.h>
+#include <string>
+
+void unicode_init();
+
+void xbar(int size);
+void xdbar(int size);
+void enbox(std::string text);

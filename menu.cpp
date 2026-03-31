@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include <iomanip>
 #include <limits>
@@ -8,18 +8,20 @@
 
 #include "Player.h"
 #include "menu.h"
+#include "Game.h"
+#include "clear.h"
 
 Player* selectPlayerInstance(Player*& p) {
-
     int choice;
 
     do {
-        std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
-        std::cout << "==============================\n";
-        std::cout << "\tText-Based RPG\t\n";
-        std::cout << "==============================\n\n";
+        std::string title = "Text-Based RPG";
 
-        std::cout << "--- CHOOSE AN OPTION ---\n";
+        std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear 
+        enbox(title);
+        enbox("HELLLLLO WORLD!");
+
+        std::cout << u8"─── CHOOSE AN OPTION ───\n";
         std::cout << "1) New Game\n";
         std::cout << "2) Load Game\n";
         std::cout << "3) Quit\n";
@@ -28,8 +30,7 @@ Player* selectPlayerInstance(Player*& p) {
 
         if (choice < 1 || choice > 3 || std::cin.fail()) { // If invaild choice, clear input before re-running
             std::cout << "Invaild choice, try again.";
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear input stream
+            clearBuffer();
         }
     } while (choice < 1 || choice > 3 || std::cin.fail());
 
@@ -38,7 +39,7 @@ Player* selectPlayerInstance(Player*& p) {
         std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
         std::cout << "\n\t>> Quitting game <<\n";
         std::cout << "\nPress Enter to close...";
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        clearBuffer();
         std::getline(std::cin, exit);
         return p;
     }
@@ -54,14 +55,16 @@ Player* selectPlayerInstance(Player*& p) {
     else {
         std::string name;
         std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear input stream
+        clearBuffer();
         std::cout << "Please enter your name: ";
         std::getline(std::cin, name);
 
         Player* p = new Player(name);
         int choice;
 
-        std::cout << "Welcome, " << name << " you awaken in a town and are faced with a choice of spells, which will you choose:\n";
+        Game::gout() << "Welcome, " << name << "!\n";
+        Game::gout() << "You awaken in a town and are faced with a choice of spells—which will you choose? \n";
+        xbar(12);
         std::cout << "\n-- CHOOSE A SPELL --\n";
         std::cout << "1. Fireball\n";
         std::cout << "2. Ice Spike\n";
@@ -69,9 +72,9 @@ Player* selectPlayerInstance(Player*& p) {
         std::cout << "Choice: ";
         std::cin >> choice;
 
-        if (choice == 1)  //adds spell to player inventory.
+        if (choice == 1)  // Add spell to player inventory.
         {
-            p->getInventory().addSpell("Fireball", "Strong against water", 20, 10, 30, "Fire"); 
+            p->getInventory().addSpell("Fireball", "Strong against water", 20, 10, 30, "Fire");
         }
         else if (choice == 2)
         {
@@ -90,7 +93,7 @@ Player* selectPlayerInstance(Player*& p) {
         std::string input;
 
         std::cout << "\n>> Press enter to continue <<";
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //claer input stream
+        clearBuffer();
         std::getline(std::cin, input); //return when new line (enter is recived)
         return p;  // Create a new player with a name
     }
@@ -116,7 +119,7 @@ bool load_player(Player*& player) {
     inFile.ignore();
     std::getline(inFile, location);
 
-   player = new Player(name, hp, maxHp, strength, location, level, exp);
+    player = new Player(name, hp, maxHp, strength, location, level, exp);
 
     int itemCount;
     inFile >> itemCount;

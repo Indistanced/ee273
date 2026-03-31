@@ -1,9 +1,12 @@
 #include "Player.h"
 #include "menu.h"
 #include "game.h"
-
+#include <Windows.h>
+#include "unicode.h"
 
 int main() {
+	unicode_init();
+
 	Player* p = selectPlayerInstance(p);
 	if (p == nullptr) return 0; // Checks whether player exists
 
