@@ -17,7 +17,7 @@ Player* selectPlayerInstance(Player*& p) {
     do {
         std::string title = "Text-Based RPG";
 
-        std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear 
+        terminateBuffer();
         enbox(title);
         enbox("HELLLLLO WORLD!");
 
@@ -36,7 +36,7 @@ Player* selectPlayerInstance(Player*& p) {
 
     if (choice == 3) {
         std::string exit;
-        std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
+        terminateBuffer();
         std::cout << "\n\t>> Quitting game <<\n";
         std::cout << "\nPress Enter to close...";
         clearBuffer();
@@ -54,7 +54,7 @@ Player* selectPlayerInstance(Player*& p) {
     }
     else {
         std::string name;
-        std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
+        terminateBuffer();
         clearBuffer();
         std::cout << "Please enter your name: ";
         std::getline(std::cin, name);

@@ -3,3 +3,4 @@
 #include <iostream>
 
 void clearBuffer();
+void terminateBuffer();

@@ -3,7 +3,8 @@
 #include <string>
 
 #include "Player.h"
-#include "game.h"
+#include "Game.h"
+#include "clear.h"
 
 
 Game* Game::instance = nullptr; // Tells class that the game initially hasn't been created
@@ -56,12 +57,12 @@ bool Game::save_player(Player*& p) {
 
 void Game::start(Player* p) {
 	std::string start;
-	std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
+	terminateBuffer();
 	std::cout << "\n\tWelcome, Adventurer " << p->getName() << "!\n";
 	std::cout << "\t  --Entering the " << p->location << "--\n";
 
 	std::cout << "\n\t>> Press enter to start <<";
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //claer input stream
+	clearBuffer();
 	std::getline(std::cin, start); //return when new line (enter is recived)
 	return;
 }
@@ -107,7 +108,7 @@ void Game::ask_to_continue() {
 	std::string input;
 
 	std::cout << "\n>> Press enter to continue <<";
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //claer input stream
+	clearBuffer();
 	std::getline(std::cin, input); //return when new line (enter is recived)
 	return;
 }
@@ -118,7 +119,7 @@ void Game::Player_Menu(Player* p) {
 	bool quit = false;
 
 	do {
-		std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
+		terminateBuffer();
 		std::cout << "\n\n==============================\n";
 		std::cout << "\tPlayer Menu\t";
 		std::cout << "\n==============================\n";
@@ -136,25 +137,24 @@ void Game::Player_Menu(Player* p) {
 
 			if (choice < 1 || choice > 6) { // If invaild choice, clear input before re-running
 				std::cout << "Invaild choice, try again.";
-				std::cin.clear();
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear input stream
+				clearBuffer();
 			}
 
 		} while (choice < 1 || choice > 6);
 
 		switch (choice) {
 		case 1:
-			std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
+			terminateBuffer();
 			std::cout << "\n\n--- PLAYER STATS ---\n";
 			p->to_string();
 			ask_to_continue();
 			break;
 		case 2:
-			std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
+			terminateBuffer();
 			p->getInventory().displayItems(p);
 			break;
 		case 5:
-			std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
+			terminateBuffer();
 			save_player(p);
 			std::cout << "\t>> Game saved <<\n";
 			ask_to_continue();
