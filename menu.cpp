@@ -55,7 +55,7 @@ Player* selectPlayerInstance(Player*& p) {
         std::cout << "Please enter your name: ";
         std::getline(std::cin, name);
 
-        Player* p = new Player(name);
+        p = new Player(name);
         int choice;
 
         Game::gout() << "Welcome, " << name << "!\n";
@@ -68,17 +68,15 @@ Player* selectPlayerInstance(Player*& p) {
         std::cout << "Choice: ";
         std::cin >> choice;
 
-        if (choice == 1)  // Add spell to player inventory.
-        {
-            p->getInventory().addSpell("Fireball", "Strong against water", 20, 10, 30, "Fire");
+        //adds spell to player inventory.
+        if (choice == 1) {
+            p->getInventory().addSpell("Fireball", "Strong against leaf", 20, 10, 30, "Fire");
         }
-        else if (choice == 2)
-        {
-            p->getInventory().addSpell("Ice Spike", "Strong against fire", 15, 12, 20, "Ice");
+        else if (choice == 2) {
+            p->getInventory().addSpell("Ice Spike", "Strong against fire", 15, 12, 20, "Water");
         }
-        else if (choice == 3)
-        {
-            p->getInventory().addSpell("Lightning", "Strong againt earth", 25, 5, 35, "Electric");
+        else if (choice == 3) {
+            p->getInventory().addSpell("Leaf slash", "Strong againt water", 25, 5, 35, "Leaf");
         }
 
         std::cout << "\nAh a fine choice!\n";
@@ -191,7 +189,6 @@ bool load_player(Player*& player) {
         else {
             player->addQuest(description, false);
         }
-
 
     }
 
