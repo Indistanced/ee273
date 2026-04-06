@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "player.h"
 
 #include <fstream>
 #include <iostream>
@@ -33,4 +33,49 @@ void Player::addExp(int exp_ammount) {
 
 		std::cout << "-- You leveled up! --\n";
 	}
+}
+
+
+std::vector<std::pair<std::string, bool>>& Player::getQuests() {
+	return quest;
+}
+
+bool Player::addQuest(std::string description, bool complete) {
+
+	for (auto& q : quest) {
+		if (q.first == description) {
+			return false;
+		}
+	}
+	
+	quest.push_back(std::make_pair(description, complete));
+	return true;
+}
+
+bool Player::completeQuest(std::string description) {
+	for (int i = 0; i < quest.size(); i++) {
+		if (quest[i].first == description) {
+			quest[i].second = true;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void Player::quests_to_string() {
+	for (int i = 0; i < quest.size(); i++) {
+		std::cout << quest[i].first << '|';
+		 
+		if (quest[i].second) {
+			std::cout << "Complete\n";
+		}
+		else {
+			std::cout << "Incomplete\n";
+		}
+	}
+}
+
+int Player::questNumber() {	
+	return quest.size();
 }

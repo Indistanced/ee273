@@ -120,36 +120,79 @@ bool load_player(Player*& player) {
     int itemCount;
     inFile >> itemCount;
     inFile.ignore();
-
+    
+    
     for (int i = 0; i < itemCount; i++)
     {
         std::string line;
         std::getline(inFile, line);
 
-        Item item;
+        std::stringstream ss(line);
+        std::string type;
+
+        std::getline(ss, type, ',');
+
+        if (type == "potion") {
+            std::string name, desc, temp;
+            int value, quantity;
+
+            std::getline(ss, name, ',');
+            std::getline(ss, desc, ',');
+
+            std::getline(ss, temp, ',');
+            value = std::stoi(temp);
+
+            std::getline(ss, temp, ',');
+            quantity = std::stoi(temp);
+
+            player->getInventory().addPotion(name, desc, value, quantity);
+        }
+        else if (type == "spell") {
+            std::string name, desc, element, temp;
+            int base, weak, strong;
+
+            std::getline(ss, name, ',');
+            std::getline(ss, desc, ',');
+
+            std::getline(ss, temp, ',');
+            base = std::stoi(temp);
+
+            std::getline(ss, temp, ',');
+            weak = std::stoi(temp);
+
+            std::getline(ss, temp, ',');
+            strong = std::stoi(temp);
+
+            std::getline(ss, element, ',');
+
+            player->getInventory().addSpell(name, desc, base, weak, strong, element);
+        }
+    }
+
+    int questCount;
+    inFile >> questCount;
+    inFile.ignore();
+
+    for (int i = 0; i < questCount; i++)
+    {
+        std::string line;
+        std::getline(inFile, line);
 
         std::stringstream ss(line);
-        std::string temp;
+        std::string description;
+        std::string status;
 
-        std::getline(ss, item.name, ',');
-        std::getline(ss, item.description, ',');
-        std::getline(ss, item.type, ',');
+        std::getline(ss, description, '|');
+        std::getline(ss, status, '|');
 
-        std::getline(ss, temp, ',');
-        item.value = std::stoi(temp);
+        if (status == "Complete") {
+            player->addQuest(description, true);
+        }
+        else {
+            player->addQuest(description, false);
+        }
 
-        std::getline(ss, temp, ',');
-        item.quantity = std::stoi(temp);
 
-        std::getline(ss, temp, ',');
-        item.weak = std::stoi(temp);
-
-        std::getline(ss, temp, ',');
-        item.strong = std::stoi(temp);
-
-        std::getline(ss, item.element, ',');
-
-        player->getInventory().addItem(item);
     }
 
     return true;

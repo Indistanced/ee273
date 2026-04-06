@@ -1,7 +1,11 @@
 #pragma once
 
 #include "Character.h"
-#include "Inventory.h"
+#include "inventory.h"
+
+#include <vector>
+#include <utility>
+#include <iostream>
 
 class Player : public Character {
 public:
@@ -27,9 +31,17 @@ public:
 
 	Inventory& getInventory() { return inventory; } //get players inventroy 
 
+	std::vector<std::pair<std::string, bool>>& getQuests();
+	bool addQuest(std::string description, bool complete);
+	bool completeQuest(std::string description);
+	void quests_to_string();
+	int questNumber();
+	
+
 
 private:
 	unsigned int exp;
 	unsigned int exp_limit = 100;
 	Inventory inventory; // player has an inventory 
+	std::vector<std::pair<std::string, bool>> quest; 
 };

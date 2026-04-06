@@ -1,4 +1,4 @@
-2
+Jake
 100
 100
 1
@@ -6,5 +6,7 @@
 5
 Town
 2
-Lightning,Strong againt earth,spell,25,-858993460,5,35,Electric
-Health Potion,Restores +25 HP,potion,25,1,-858993460,-858993460,
+spell,Ice Spike,Strong against fire,15,12,20,Ice
+potion,Health Potion,Restores +25 HP,25,1
+1
+Defeat a slime|Incomplete

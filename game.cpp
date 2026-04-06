@@ -32,7 +32,7 @@ bool Game::save_player(Player*& p) {
 	outFile << p->getName() << '\n';
 	outFile << p->getHealth() << '\n';
 	outFile << p->getMaxHealth() << '\n';
-	outFile << p->getlevel() << '\n';
+	outFile << p->getLevel() << '\n';
 	outFile << p->getExp() << '\n';
 	outFile << p->getStrength() << '\n';
 	outFile << p->location << '\n';
@@ -41,16 +41,34 @@ bool Game::save_player(Player*& p) {
 
 	outFile << items.size() << "\n";
 
-	for (const auto& item : items)
+	for (auto* item : items)
 	{
-		outFile << item.name << ","
-			<< item.description << ","
-			<< item.type << ","
-			<< item.value << ","
-			<< item.quantity << ","
-			<< item.weak << ","
-			<< item.strong << ","
-			<< item.element << "\n";
+		if (Potion* po = dynamic_cast<Potion*>(item)) {
+			outFile << "potion,"
+				<< po->get_name() << ","
+				<< po->get_description() << ","
+				<< po->get_value() << ","
+				<< po->get_quantity() << "\n";
+		}
+		else if (Spell* sp = dynamic_cast<Spell*>(item)) {
+			outFile << "spell,"
+				<< sp->get_name() << ","
+				<< sp->get_description() << ","
+				<< sp->get_base() << ","
+				<< sp->get_weak() << ","
+				<< sp->get_strong() << ","
+				<< sp->get_element() << "\n";
+		}
+	}
+
+	
+	auto& quests = p->getQuests();   
+
+	outFile << quests.size() << "\n";
+
+	for (auto& q : quests) {
+		outFile << q.first << "|"
+			<< (q.second ? "Complete" : "Incomplete") << "\n";
 	}
 
 	return true;
