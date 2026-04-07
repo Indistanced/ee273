@@ -17,7 +17,7 @@ Player* selectPlayerInstance(Player*& p) {
 
     do {
         terminateBuffer();
-        enbox(title);
+        enbox(title); std::cout << '\n';
 
         std::cout << u8"─── CHOOSE AN OPTION ───\n";
         std::cout << "1) New Game\n";

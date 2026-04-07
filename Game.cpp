@@ -128,13 +128,18 @@ void Game::ask_to_continue() {
 
 	std::cout << "\n>> Press enter to continue <<";
 	clearBuffer();
-	std::getline(std::cin, input); // Return when new line (enter is recived)
+	std::getline(std::cin, input); // Return when new line (enter is received)
 	return;
 }
 
 void Game::level_one() {
-	ask_to_continue();
-	std::cout << u8"═════════════════════════ GREEN HILL ZONE ═════════════════════════";
+	terminateBuffer();
+	std::cout << u8"═════════════════════════ GREEN HILL ZONE ═════════════════════════\n";
+	std::cout << ">> You encounter a water slime! <<\n";
+	create_slime(); std::cout << '\n';
+	std::string yesNO;
+	Game::gout() << "It seems rather aggressive. Would you like to be the first to strike? (yes/no)\n";
+	Player::pin(p) >> yesNO;
 }
 
 void Game::menu(Player* p) {
@@ -145,7 +150,7 @@ void Game::menu(Player* p) {
 
 	do {
 		terminateBuffer();
-		enbox("Player Menu");
+		enbox("Player Menu"); std::cout << '\n';
 
 		std::cout << "1) Display player stats\n";
 		std::cout << "2) View Inventory\n";
@@ -166,37 +171,45 @@ void Game::menu(Player* p) {
 		} while (choice < 1 || choice > 6);
 
 		switch (choice) {
-		case 1:
+		case 1: {
 			terminateBuffer();
 			std::cout << u8"─── PLAYER STATS ───\n";
 			p->to_string();
 			ask_to_continue();
 			break;
-		case 2:
+		}
+		case 2: {
 			terminateBuffer();
 			p->getInventory().displayItems(p);
 			break;
-		case 4:
+		}
+		case 4: {
 			terminateBuffer();
 			for (auto& l : level) {
 				std::cout << l.first << ": " << l.second << std::endl;
 			} std::cout << std::endl;
 			std::cout << "You are entering level " << level["Green Hill Zone"] << std::endl;
 			ask_to_continue();
+			level_one();
+			ask_to_continue();
 			break;
-		case 5:
+		}
+		case 5: {
 			terminateBuffer();
 			save_player(p);
 			std::cout << "\t>> Game saved <<\n";
 			ask_to_continue();
 			break;
-		case 6:
+		}
+		case 6: {
 			quit = quit_game();
 			break;
-		default:
+		}
+		default: {
 			std::cout << "Not implemneted yet :/";
 			break;
 		};
+		}
 
 	} while (quit == false);
 }
