@@ -19,8 +19,8 @@ Game* Game::getInstance(Player* p) {
 bool Game::save_player(Player*& p) {
 	const std::string file_name = "game_save_file.txt"; // Constant load file path (eliminates user error)
 
-	std::string name, location;
-	int hp, maxHp, strength;
+	std::string name{}, location{};
+	int hp{}, maxHp{}, strength{};
 
 	std::ofstream outFile(file_name);
 

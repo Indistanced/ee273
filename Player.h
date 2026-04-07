@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Character.h"
-#include "inventory.h"
+#include "Inventory.h"
 
 #include <vector>
 #include <utility>

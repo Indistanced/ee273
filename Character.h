@@ -23,8 +23,7 @@ public:
 	int getHealth() const { return currentHealth; };
 	int getMaxHealth() const { return maxHealth; };
 	int getStrength() const { return strength; };
-
-	int getlevel() const { return level; };
+	int getLevel() const { return level; };
 
 	// General member functions
 	virtual int Attack();

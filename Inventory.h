@@ -3,7 +3,7 @@
 #include <string>
 
 
-#include "item.h"
+#include "Item.h"
 
 class Player;  //player has an inventroy 
 

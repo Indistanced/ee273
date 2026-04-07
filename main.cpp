@@ -7,9 +7,9 @@ int main() {
 	unicode_init();
 
 	Player* p = selectPlayerInstance(p);
-	if (p == nullptr) return 0; // Checks whether player exists
+	if (p == nullptr) return 0; // Check whether player exists
 
-	Game* g = Game::getInstance(p); // Creates, loads, or exits instance
+	Game* g = Game::getInstance(p); // Create, load, or exit instance
 	g->run(g, p);
 
 	delete p;

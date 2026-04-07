@@ -1,4 +1,4 @@
-#include "player.h"
+#include "Player.h"
 
 #include <fstream>
 #include <iostream>
@@ -77,5 +77,5 @@ void Player::quests_to_string() {
 }
 
 int Player::questNumber() {	
-	return quest.size();
+	return static_cast<int>(quest.size());
 }

@@ -2,9 +2,9 @@
 #include <iostream>
 #include <limits> 
 
-#include "inventory.h"
-#include "item.h"
-#include "player.h"
+#include "Inventory.h"
+#include "Item.h"
+#include "Player.h"
 
 
 Inventory::~Inventory() {
