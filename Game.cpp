@@ -128,8 +128,13 @@ void Game::ask_to_continue() {
 
 	std::cout << "\n>> Press enter to continue <<";
 	clearBuffer();
-	std::getline(std::cin, input); //return when new line (enter is recived)
+	std::getline(std::cin, input); // Return when new line (enter is recived)
 	return;
+}
+
+void Game::level_one() {
+	ask_to_continue();
+	std::cout << u8"═════════════════════════ GREEN HILL ZONE ═════════════════════════";
 }
 
 void Game::menu(Player* p) {
@@ -175,7 +180,9 @@ void Game::menu(Player* p) {
 			terminateBuffer();
 			for (auto& l : level) {
 				std::cout << l.first << ": " << l.second << std::endl;
-			} ask_to_continue();
+			} std::cout << std::endl;
+			std::cout << "You are entering level " << level["Green Hill Zone"] << std::endl;
+			ask_to_continue();
 			break;
 		case 5:
 			terminateBuffer();
@@ -188,7 +195,7 @@ void Game::menu(Player* p) {
 			break;
 		default:
 			std::cout << "Not implemneted yet :/";
-
+			break;
 		};
 
 	} while (quit == false);
