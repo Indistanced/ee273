@@ -13,13 +13,11 @@
 
 Player* selectPlayerInstance(Player*& p) {
     int choice;
+    std::string title = "Text-Based RPG";
 
     do {
-        std::string title = "Text-Based RPG";
-
         terminateBuffer();
         enbox(title);
-        enbox("HELLLLLO WORLD!");
 
         std::cout << u8"─── CHOOSE AN OPTION ───\n";
         std::cout << "1) New Game\n";
@@ -37,7 +35,7 @@ Player* selectPlayerInstance(Player*& p) {
     if (choice == 3) {
         std::string exit;
         terminateBuffer();
-        std::cout << "\n\t>> Quitting game <<\n";
+        std::cout << "\n>> Quitting game <<\n";
         std::cout << "\nPress Enter to close...";
         clearBuffer();
         std::getline(std::cin, exit);
@@ -59,36 +57,43 @@ Player* selectPlayerInstance(Player*& p) {
         int choice;
 
         Game::gout() << "Welcome, " << name << "!\n";
-        Game::gout() << "You awaken in a town and are faced with a choice of spells—which will you choose? \n";
-        xbar(12);
-        std::cout << "\n-- CHOOSE A SPELL --\n";
+        Game::gout() << u8"You awaken in a town and are faced with a choice of spells—which will you choose?\n";
+        xbar();
+        std::cout << u8"\n── CHOOSE A SPELL ──\n";
         std::cout << "1. Fireball\n";
         std::cout << "2. Ice Spike\n";
         std::cout << "3. Lightning Strike\n";
-        std::cout << "Choice: ";
-        std::cin >> choice;
+        xbar(); std::cout << '\n';
+        do {
+            std::cin >> choice;
+            if (choice < 1 || choice > 3) {
+                Game::gout() << "Choice out of range. Try again.\n";
+            }
+        } while (choice < 1 || choice > 3);
 
-        //adds spell to player inventory.
-        if (choice == 1) {
-            p->getInventory().addSpell("Fireball", "Strong against leaf", 20, 10, 30, "Fire");
-        }
-        else if (choice == 2) {
-            p->getInventory().addSpell("Ice Spike", "Strong against fire", 15, 12, 20, "Water");
-        }
-        else if (choice == 3) {
-            p->getInventory().addSpell("Leaf slash", "Strong againt water", 25, 5, 35, "Leaf");
+        // Add spell to player inventory
+        switch (choice) {
+        case 1: p->getInventory().addSpell("Fireball", "Strong against leaf", 20, 10, 30, "Fire");
+            break;
+        case 2: p->getInventory().addSpell("Ice Spike", "Strong against fire", 15, 12, 20, "Water");
+            break;
+        case 3: p->getInventory().addSpell("Leaf slash", "Strong againt water", 25, 5, 35, "Leaf");
+            break;
+        default: Game::gout() << "A horrific error has occurred.";
+            break;
         }
 
-        std::cout << "\nAh a fine choice!\n";
-        std::cout << "\nYour adventure will be long here take this.\n";
-        std::cout << "-- You recive a +25 health potion --\n";
-        p->getInventory().addPotion("Health Potion", "Restores +25 HP", 25, 1); //adds health potion to inventory.
+        xbar(); std::cout << '\n';
+        Game::gout() << "Ahh, a fine choice!\n";
+        Game::gout() << u8"Your adventure will be dangerous──so take this.\n";
+        std::cout << u8"── You received a health potion worth +25 HP! ──\n";
+        p->getInventory().addPotion("Health Potion", "Restores +25 HP", 25, 1); // Add health potion to inventory.
 
         std::string input;
 
         std::cout << "\n>> Press enter to continue <<";
         clearBuffer();
-        std::getline(std::cin, input); //return when new line (enter is recived)
+        std::getline(std::cin, input); // Return when new line (enter is recived)
         return p;  // Create a new player with a name
     }
 }
@@ -144,8 +149,7 @@ bool load_player(Player*& player) {
             quantity = std::stoi(temp);
 
             player->getInventory().addPotion(name, desc, value, quantity);
-        }
-        else if (type == "spell") {
+        } else if (type == "spell") {
             std::string name, desc, element, temp;
             int base, weak, strong;
 
@@ -185,11 +189,9 @@ bool load_player(Player*& player) {
 
         if (status == "Complete") {
             player->addQuest(description, true);
-        }
-        else {
+        } else {
             player->addQuest(description, false);
         }
-
     }
 
     return true;

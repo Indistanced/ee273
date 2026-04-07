@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Player.h"
 
@@ -11,7 +11,7 @@ public:
 	void run(Game* g, Player* p);
 	static std::ostream& gout();
 
-	void Player_Menu(Player* p);
+	void menu(Player* p);
 	bool quit_game();
 	void ask_to_continue();
 

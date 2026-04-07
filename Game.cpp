@@ -1,4 +1,4 @@
-#include <iostream> // Read and write functionality with console
+﻿#include <iostream> // Read and write functionality with console
 #include <fstream> // Read and write functionality with files
 #include <string>
 #include <map>
@@ -6,7 +6,7 @@
 #include "Player.h"
 #include "Game.h"
 #include "clear.h"
-
+#include "unicode.h"
 
 Game* Game::instance = nullptr; // Tells class that the game initially hasn't been created
 
@@ -77,19 +77,19 @@ bool Game::save_player(Player*& p) {
 void Game::start(Player* p) {
 	std::string start;
 	terminateBuffer();
-	std::cout << "\n\tWelcome, Adventurer " << p->getName() << "!\n";
-	std::cout << "\t  --Entering the " << p->location << "--\n";
-
-	std::cout << "\n\t>> Press enter to start <<";
+	gout() << "Welcome, Adventurer " << p->getName() << "!\n";
+	std::cout << u8"── Entering the " << p->location << u8" ──\n";
+	xbar(); std::cout << '\n';
+	std::cout << ">> Press enter to start <<";
 	clearBuffer();
-	std::getline(std::cin, start); //return when new line (enter is recived)
+	std::getline(std::cin, start); // Return when new line (enter is recived)
 	return;
 }
 
 void Game::run(Game* g, Player* p) {
 	start(p);
 	save_player(p);
-	Player_Menu(p);
+	menu(p);
 
 	/*
 	gout() << "What is your favourite number?\n"; // gout = cout (Game class)
@@ -132,7 +132,7 @@ void Game::ask_to_continue() {
 	return;
 }
 
-void Game::Player_Menu(Player* p) {
+void Game::menu(Player* p) {
 
 	int choice;
 	bool quit = false;
@@ -140,9 +140,7 @@ void Game::Player_Menu(Player* p) {
 
 	do {
 		terminateBuffer();
-		std::cout << "\n\n==============================\n";
-		std::cout << "\tPlayer Menu\t";
-		std::cout << "\n==============================\n";
+		enbox("Player Menu");
 
 		std::cout << "1) Display player stats\n";
 		std::cout << "2) View Inventory\n";
@@ -165,7 +163,7 @@ void Game::Player_Menu(Player* p) {
 		switch (choice) {
 		case 1:
 			terminateBuffer();
-			std::cout << "\n\n--- PLAYER STATS ---\n";
+			std::cout << "─── PLAYER STATS ───\n";
 			p->to_string();
 			ask_to_continue();
 			break;

@@ -1,4 +1,4 @@
-Jake
+John
 100
 100
 1
@@ -6,7 +6,6 @@ Jake
 5
 Town
 2
-spell,Ice Spike,Strong against fire,15,12,20,Ice
+spell,Leaf slash,Strong againt water,25,5,35,Leaf
 potion,Health Potion,Restores +25 HP,25,1
-1
-Defeat a slime|Incomplete
+0

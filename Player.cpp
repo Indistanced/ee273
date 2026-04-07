@@ -77,5 +77,5 @@ void Player::quests_to_string() {
 }
 
 int Player::questNumber() {	
-	return static_cast<int>(quest.size());
+	return (int)quest.size();
 }

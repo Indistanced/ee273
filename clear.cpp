@@ -1,4 +1,4 @@
-#include "clear.h"
+﻿#include "clear.h"
 
 void clearBuffer() {
     std::cin.clear();
@@ -6,5 +6,5 @@ void clearBuffer() {
 }
 
 void terminateBuffer() {
-    std::cout << "\033[3J\033[H\033[2J"; // Control sequence to clear 
+    std::cout << "\033[3J\033[H\033[2J"; // Control sequence to clear  
 }

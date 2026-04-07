@@ -1,11 +1,11 @@
-#include <vector>
+﻿#include <vector>
 #include <iostream>
 #include <limits> 
 
 #include "Inventory.h"
 #include "Item.h"
 #include "Player.h"
-
+#include "unicode.h"
 
 Inventory::~Inventory() {
     for (auto item : inventory) {
@@ -57,9 +57,11 @@ void Inventory::removeItem(std::string name) {
 void  Inventory::displayItems(Player* p) {
 
     while (true) {
-        std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
-        std::cout << "\n======================== PLAYER INVENTORY ========================\n";
-        std::cout << "\n---- Spell List --------------\n";
+        std::cout << "\033[3J\033[H\033[2J"; // Control sequence to clear terminal
+        xdbar(25); std::cout << "\n ";
+        std::cout << "PLAYER INVENTORY\n";
+        xdbar(25); std::cout << "\n ";
+        std::cout << u8"\n────────── Spell List ──────────\n";
 
         for (auto& item : inventory) {
             Spell* s = dynamic_cast<Spell*>(item);
@@ -68,7 +70,7 @@ void  Inventory::displayItems(Player* p) {
             }
         }
 
-        std::cout << "\n---- Potion List --------------\n";
+        std::cout << u8"\n────────── Potion List ──────────\n";
 
         for (auto& item : inventory) {
             Potion* p = dynamic_cast<Potion*>(item);
@@ -79,7 +81,7 @@ void  Inventory::displayItems(Player* p) {
 
         int choice = 0;
 
-        std::cout << "\n\n---- Options --------------\n";
+        std::cout << u8"\n────────── Options ──────────\n";
         std::cout << "1) Use a potion.\n";
         //std::cout << "2) Use a spell.\n";
         std::cout << "2) Exit inventory.\n";
