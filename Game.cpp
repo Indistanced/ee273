@@ -163,7 +163,7 @@ void Game::menu(Player* p) {
 		switch (choice) {
 		case 1:
 			terminateBuffer();
-			std::cout << "─── PLAYER STATS ───\n";
+			std::cout << u8"─── PLAYER STATS ───\n";
 			p->to_string();
 			ask_to_continue();
 			break;

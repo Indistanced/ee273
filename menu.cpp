@@ -65,7 +65,7 @@ Player* selectPlayerInstance(Player*& p) {
         std::cout << "3. Lightning Strike\n";
         xbar(); std::cout << '\n';
         do {
-            std::cin >> choice;
+            Player::pin(p) >> choice;
             if (choice < 1 || choice > 3) {
                 Game::gout() << "Choice out of range. Try again.\n";
             }
