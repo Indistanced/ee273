@@ -63,20 +63,20 @@ Player* selectPlayerInstance(Player*& p) {
         xbar(12);
         std::cout << "\n-- CHOOSE A SPELL --\n";
         std::cout << "1. Fireball\n";
-        std::cout << "2. Ice Spike\n";
-        std::cout << "3. Lightning Strike\n";
+        std::cout << "2. Water Spike\n";
+        std::cout << "3. Leaf Slash\n";
         std::cout << "Choice: ";
         std::cin >> choice;
 
         //adds spell to player inventory.
-        if (choice == 1) {
-            p->getInventory().addSpell("Fireball", "Strong against leaf", 20, 10, 30, "Fire");
+         if (choice == 1)  {  //adds spell to player inventory.
+            p->getInventory().addSpell("Fireball", "Strong against leaf", 20, 10, 30, "fire");
         }
         else if (choice == 2) {
-            p->getInventory().addSpell("Ice Spike", "Strong against fire", 15, 12, 20, "Water");
+            p->getInventory().addSpell("Water Spike", "Strong against fire", 15, 12, 20, "water");
         }
-        else if (choice == 3) {
-            p->getInventory().addSpell("Leaf slash", "Strong againt water", 25, 5, 35, "Leaf");
+        else if (choice == 3){
+            p->getInventory().addSpell("Leaf slash", "Strong againt water", 25, 5, 35, "grass");
         }
 
         std::cout << "\nAh a fine choice!\n";

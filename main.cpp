@@ -2,8 +2,10 @@
 #include "menu.h"
 #include "Game.h"
 #include "unicode.h"
+#include <ctime>
 
 int main() {
+	srand(time(0)); // for random numbers 
 	unicode_init();
 
 	Player* p = selectPlayerInstance(p);
