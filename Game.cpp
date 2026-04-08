@@ -183,6 +183,13 @@ void Game::menu(Player* p) {
 			p->getInventory().displayItems(p);
 			break;
 		}
+		case 3: {
+			terminateBuffer();
+			std::cout << u8"─── Quest List ───\n";
+			p->quests_to_string();
+			ask_to_continue();
+			break;
+		}
 		case 4: {
 			terminateBuffer();
 			for (auto& l : level) {
@@ -206,7 +213,7 @@ void Game::menu(Player* p) {
 			break;
 		}
 		default: {
-			std::cout << "Not implemneted yet :/";
+			std::cout << "Invalid Choice.\n";
 			break;
 		};
 		}
