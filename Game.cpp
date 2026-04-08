@@ -140,7 +140,15 @@ void Game::level_one() {
 	std::string yesNO;
 	Game::gout() << "It seems rather aggressive. Would you like to be the first to strike? (yes/no)\n";
 	Player::pin(p) >> yesNO;
+
+	/*
+	if (startCombat(p, "Slime", 50, 8, "water")) {
+	std::cout << "\n\nYou completed a quest.\n";
+	p->completeQuest("Defeat a slime");
+	save_player(p);
+	*/
 }
+
 
 void Game::menu(Player* p) {
 

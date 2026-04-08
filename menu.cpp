@@ -60,34 +60,33 @@ Player* selectPlayerInstance(Player*& p) {
         Game::gout() << u8"You awaken in a town and are faced with a choice of spells—which will you choose?\n";
         xbar();
         std::cout << u8"\n── CHOOSE A SPELL ──\n";
-        std::cout << "1. Fireball\n";
-        std::cout << "2. Ice Spike\n";
-        std::cout << "3. Lightning Strike\n";
-        xbar(); std::cout << '\n';
-        do {
-            Player::pin(p) >> choice;
-            if (choice < 1 || choice > 3) {
-                Game::gout() << "Choice out of range. Try again.\n";
-            }
-        } while (choice < 1 || choice > 3);
+        std::cout << "1. Fire Spin\n";
+        std::cout << "2. Water Whip\n";
+        std::cout << "3. Leaf Slash\n";
+        std::cout << "Choice: ";
+        std::cin >> choice;
 
-        // Add spell to player inventory
-        switch (choice) {
-        case 1: p->getInventory().addSpell("Fireball", "Strong against leaf", 20, 10, 30, "Fire");
-            break;
-        case 2: p->getInventory().addSpell("Ice Spike", "Strong against fire", 15, 12, 20, "Water");
-            break;
-        case 3: p->getInventory().addSpell("Leaf slash", "Strong againt water", 25, 5, 35, "Leaf");
-            break;
-        default: Game::gout() << "A horrific error has occurred.";
-            break;
+        if (choice == 1)  //adds spell to player inventory.
+        {
+            p->getInventory().addSpell("Fire Spin", "Weak fire ability", 20, 10, 24, "fire");
+        }
+        else if (choice == 2)
+        {
+            p->getInventory().addSpell("Water Whip", "Weak water ability", 15, 12, 25, "water");
+        }
+        else if (choice == 3)
+        {
+            p->getInventory().addSpell("Leaf Slash", "Weak grass ability", 15, 5, 28, "grass");
         }
 
-        xbar(); std::cout << '\n';
-        Game::gout() << "Ahh, a fine choice!\n";
-        Game::gout() << u8"Your adventure will be dangerous──so take this.\n";
-        std::cout << u8"── You received a health potion worth +25 HP! ──\n";
-        p->getInventory().addPotion("Health Potion", "Restores +25 HP", 25, 1); // Add health potion to inventory.
+        std::cout << "\nAh a fine choice!\n";
+
+        std::cout << "\nYour first quest is to defeat a slime\n";
+        p->addQuest("Defeat a slime", false);
+
+        std::cout << "\nYour adventure will be difficult, here take this.\n";
+        std::cout << "-- You recive a +25 health potion --\n";
+        p->getInventory().addPotion("Small Health Potion", "Restores +25 HP", 25, 1); //adds health potion to inventory.
 
         std::string input;
 

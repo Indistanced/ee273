@@ -3,3 +3,4 @@
 #include "enemy.h"
 
 bool startCombat(Player* p, std::string enemy_name, int health, int attack, std::string element);
+void item_drop_generator(Player* p, int enemy_health);
