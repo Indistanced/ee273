@@ -6,97 +6,116 @@
 void playerMove(Player* p, Enemy& e) {
 
 	int choice = 0;
-	std::cout << "\n---- Player's Move ----\n";
-	std::cout << "1) Cast a spell\n";
-	std::cout << "2) Use a potion\n";
-	std::cout << "choice: ";
-	std::cin >> choice;
+	do {
+		std::cout << "\n═══════ Player's Move ═══════\n\n";
+		std::cout << "1) Cast a spell\n";
+		std::cout << "2) Use a potion\n";
+		std::cout << "choice: ";
+		std::cin >> choice;
 
-	if (choice == 1) {
+		if (choice == 1) {
 
-		auto spells = p->getInventory().getSpells();
+			auto spells = p->getInventory().getSpells();
 
-		if (spells.empty()) {
-			std::cout << "\nYou have no spells!\n";
-			return;
+			if (spells.empty()) {
+				std::cout << "\nYou have no spells!\n";
+				return;
+			}
+
+			p->getInventory().displaySpells();
+
+			int spellChoice;
+			do {
+				std::cout << "Choose spell: ";
+				std::cin >> spellChoice;
+			} while (spellChoice < 1 || spellChoice > spells.size());
+
+			Spell* sp = spells[spellChoice - 1];
+
+			int damage = p->getStrength() + rand() % 10;
+
+			if (sp->get_element() == e.get_element()) {
+				damage += sp->get_weak();
+				std::cout << "\nYour spell was not very effective.";
+			}
+			else if (sp->get_element() == e.get_weakness_element()) {
+				damage += sp->get_strong();
+				std::cout << "\nYour spell was super effective!";
+			}
+			else {
+				damage += sp->get_base();
+			}
+
+			e.takeDamage(damage);
+
+			std::cout << "\nYou cast " << sp->get_name()
+				<< " for " << damage << " damage!\n";
 		}
 
-		p->getInventory().displaySpells();
+		else if (choice == 2) {
 
-		int spellChoice;
-		do {
-			std::cout << "Choose spell: ";
-			std::cin >> spellChoice;
-		} while (spellChoice < 1 || spellChoice > spells.size());
+			auto potions = p->getInventory().getPotions();
 
-		Spell* sp = spells[spellChoice - 1];
+			if (potions.empty()) {
+				std::cout << "\nYou have no potions!\n";
+				return;
+			}
 
-		int damage = p->getStrength() + rand() % 10;
+			p->getInventory().displayPotions();
 
-		if (sp->get_element() == e.get_element()) {
-			damage += sp->get_weak();
-			std::cout << "\nYour spell was not very effective.\n";
-		}
-		else if (sp->get_element() == e.get_weakness_element()) {
-			damage += sp->get_strong();
-			std::cout << "\nYour spell was super effective!\n";
-		}
-		else {
-			damage += sp->get_base();
-		}
+			int potionChoice;
+			do {
+				std::cout << "Choose potion: ";
+				std::cin >> potionChoice;
+			} while (potionChoice < 1 || potionChoice > potions.size());
 
-		e.takeDamage(damage);
+			Potion* po = potions[potionChoice - 1];
 
-		std::cout << "\nYou cast " << sp->get_name()
-			<< " for " << damage << " damage!\n";
-	}
+			if (po->use_potion(p)) {
+				std::cout << "\nHealth: " << p->getHealth()
+					<< "/" << p->getMaxHealth() << "\n";
 
-	else if (choice == 2) {
-
-		auto potions = p->getInventory().getPotions();
-
-		if (potions.empty()) {
-			std::cout << "\nYou have no potions!\n";
-			return;
-		}
-
-		p->getInventory().displayPotions();
-
-		int potionChoice;
-		do {
-			std::cout << "Choose potion: ";
-			std::cin >> potionChoice;
-		} while (potionChoice < 1 || potionChoice > potions.size());
-
-		Potion* po = potions[potionChoice - 1];
-
-		if (po->use_potion(p)) {
-			std::cout << "\nHealth: " << p->getHealth()
-				<< "/" << p->getMaxHealth() << "\n";
-
-			if (po->get_quantity() == 0) {
-				p->getInventory().removeItem(po);
+				if (po->get_quantity() == 0) {
+					p->getInventory().removeItem(po);
+				}
+			}
+			else {
+				std::cout << "\nYou have no potions left.\n";
 			}
 		}
-		else {
-			std::cout << "\nYou have no potions left.\n";
-		}
-	}
 
-	else {
-		std::cout << "\nInvalid choice.\n";
-	}
+		else {
+			std::cout << "\nInvalid choice.\n";
+		}
+	} while (choice != 1);
 }
 
 void enemyMove(Player* p, Enemy& e) {
 
-	if (!e.isAlive()) return;
+	std::cout << "\n═══════ Enemy Attack ═══════\n\n";
 
-	std::cout << "\n---- Enemy Attack ----\n";
+	int damage = 0;
+	int randNum = rand() % 3; //0 to 2
 
-	int damage = e.getStrength() + rand() % 10;
+	if (randNum == 0) {
+		damage = e.getStrength() + (rand() % 10 + 5); // strong attak damage
+		std::cout << "The enemy attacks aggressively!\n";
+	}
+	else if (randNum == 1) {
+		damage = e.getStrength() + rand() % 5; // low attack damage
+		int heal = e.getMaxHealth() / 10;
+		if (heal < 1) {
+			heal = 1;
+		}
+		e.addHealth(heal); // gains 10% of health back
+		std::cout << "The enemy plays defensively and recovers some health!\n";
+	}
+	else { 
+		damage = e.getStrength() + rand() % 10; //basic attack  
+		std::cout << "The enemy attacks!\n";   
+	}
 
-	std::cout << "\nThe " << e.getName()
+	std::cout << "The " << e.getName()
 		<< " hit you for " << damage << " damage!\n";
 
 	p->takeDamage(damage);
@@ -108,7 +127,7 @@ bool startCombat(Player* p, std::string enemy_name, int health, int attack, std:
 	Enemy e(enemy_name, health, attack, element);
 
 	std::cout << "\033[3J\033[H\033[2J";
-	std::cout << "\n---- Combat ----\n";
+	std::cout << "\n══════════════ Combat ══════════════\n";
 
 	while (p->isAlive() && e.isAlive()) {
 
@@ -116,7 +135,10 @@ bool startCombat(Player* p, std::string enemy_name, int health, int attack, std:
 		std::cout << e.getName() << " Health: " << e.getHealth() << "\n";
 
 		playerMove(p, e);
-		enemyMove(p, e);
+		if (e.isAlive()) {
+			enemyMove(p, e);
+		}
+		
 	}
 
 	if (p->isAlive()) {

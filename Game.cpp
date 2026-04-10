@@ -149,6 +149,60 @@ void Game::level_one() {
 	*/
 }
 
+/*
+bool Game::level_one() {
+	terminateBuffer();
+	std::cout << "═════════════════════════ GREEN HILL ZONE ═════════════════════════\n";
+	Game::gout() << "You leave step into a lush green hill range full of flowers.\n";
+	Game::gout() << "You progress on in your jorney...\n\n";
+
+	Game::gout() << "All of a sudden something jumps up at you out of no where!\n";
+	Game::gout() << "You encounter a water slime! \n";
+
+	// enemy 1 
+	Game::gout() << "Something jumps out at you!\n";
+	Game::gout() << "A water slime appears!\n";
+	ask_to_continue();
+	if (!startCombat(p, "Slime", 50, 8, "water")) {
+		return false;
+	}
+
+	Game::gout() << "You completed a quest! - Defeat a slime\n\n";
+	p->completeQuest("Defeat a slime");
+
+	Game::gout() << "You have a new quest! - Take down the fire spirit";
+	p->addQuest("Take down the fire spirit", false);
+
+	ask_to_continue();
+
+	// enemy 2 
+	Game::gout() << "You move deeper into the hills...\n";
+	Game::gout() << "A wild grass goblin ambushes you!\n";
+	ask_to_continue();
+	if (!startCombat(p, "Goblin", 70, 10, "grass")) {
+		return false;
+	}
+
+	ask_to_continue();
+
+	// enemy 3 - boss battle
+	Game::gout() << "You reach the top of the hill...\n";
+	Game::gout() << "A powerful fire spirit blocks your path!\n";
+	ask_to_continue();
+	if (!startCombat(p, "Fire Spirit", 100, 12, "fire")) {
+		return false;
+	}
+
+	//level complete
+	std::cout << "\n\nYou completed Level 1!\n";
+	p->completeQuest("Take down the fire spirit");
+
+	save_player(p);
+
+	return true;
+
+}
+*/
 
 void Game::menu(Player* p) {
 
@@ -200,14 +254,22 @@ void Game::menu(Player* p) {
 		}
 		case 4: {
 			terminateBuffer();
+			
 			for (auto& l : level) {
 				std::cout << l.first << ": " << l.second << std::endl;
-			} std::cout << std::endl;
-			std::cout << "You are entering level " << level["Green Hill Zone"] << std::endl;
-			ask_to_continue();
-			level_one();
-			ask_to_continue();
-			break;
+			} 
+			std::cout << std::endl;
+
+			if (p->location == "Town") {
+				p->location = "Green Hill Zone";
+				std::cout << "You are entering level " << level[p->location] << std::endl;
+				ask_to_continue();
+				if (!level_one()) {
+					std::cout << "Game over!";
+				}
+
+				ask_to_continue();
+			}
 		}
 		case 5: {
 			terminateBuffer();
