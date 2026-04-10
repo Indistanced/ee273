@@ -4,6 +4,7 @@
 
 void unicode_init() {
 	SetConsoleOutputCP(CP_UTF8);
+	SetConsoleCP(CP_UTF8);
 }
 
 void xbar(int size) {

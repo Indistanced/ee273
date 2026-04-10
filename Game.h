@@ -15,7 +15,7 @@ public:
 	bool quit_game();
 	void ask_to_continue();
 
-	void level_one();
+	bool level_one();
 
 private:
 	static Game* instance;

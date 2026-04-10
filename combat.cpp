@@ -3,7 +3,7 @@
 #include <string>
 #include <limits>
 
-void playerMove(Player* p, Enemy& e) {
+void Combat::playerMove(Player* p, Enemy& e) {
 
 	int choice = 0;
 	do {
@@ -90,8 +90,7 @@ void playerMove(Player* p, Enemy& e) {
 	} while (choice != 1);
 }
 
-void enemyMove(Player* p, Enemy& e) {
-
+void Combat::enemyMove(Player* p, Enemy& e) {
 	std::cout << "\n═══════ Enemy Attack ═══════\n\n";
 
 	int damage = 0;
@@ -122,24 +121,36 @@ void enemyMove(Player* p, Enemy& e) {
 }
 
 
-bool startCombat(Player* p, std::string enemy_name, int health, int attack, std::string element) {
+bool Combat::startCombat(Player* p, std::string enemy_name, int health, int attack, std::string element) {
 
 	Enemy e(enemy_name, health, attack, element);
 
-	std::cout << "\033[3J\033[H\033[2J";
-	std::cout << "\n══════════════ Combat ══════════════\n";
-
 	while (p->isAlive() && e.isAlive()) {
+		// PLAYER TURN
+		std::cout << "\033[3J\033[H\033[2J";
+		std::cout << "\n══════════════ Combat ══════════════\n";
 
 		std::cout << "\nPlayer Health: " << p->getHealth() << "\n";
 		std::cout << e.getName() << " Health: " << e.getHealth() << "\n";
 
 		playerMove(p, e);
-		if (e.isAlive()) {
-			enemyMove(p, e);
-		}
-		
+		if (!e.isAlive()) break;
+		system("pause");
+
+		// ENEMY TURN
+		std::cout << "\033[3J\033[H\033[2J";
+		std::cout << "\n══════════════ Combat ══════════════\n";
+
+		std::cout << "\nPlayer Health: " << p->getHealth() << "\n";
+		std::cout << e.getName() << " Health: " << e.getHealth() << "\n";
+
+		enemyMove(p, e);
+		if (!e.isAlive()) break;
+		system("pause");
+
 	}
+
+	// END
 
 	if (p->isAlive()) {
 		std::cout << "\n\nCongratulations you defeated the " << e.getName() << "!\n";
@@ -157,7 +168,7 @@ bool startCombat(Player* p, std::string enemy_name, int health, int attack, std:
 	return false;
 }
 
-void item_drop_generator(Player* p, int enemy_health) {
+void Combat::item_drop_generator(Player* p, int enemy_health) {
 
 	int rand_num = rand() % 101; // 0 to 100
 	int rand_element = rand() % 3; // 0 to 2

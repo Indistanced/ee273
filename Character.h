@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <string>
 
@@ -14,7 +14,7 @@ public:
 	Character(std::string name, int hp, int maxHp, int strength) : name(name), currentHealth(hp), maxHealth(maxHp), strength(strength){};
 
 
-	virtual ~Character() {}; // Destructor
+	virtual ~Character() {}; // Destructor───
 
 	// Getter member functions
 	std::string getName() const { return name; };

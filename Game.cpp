@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "clear.h"
 #include "unicode.h"
+#include "combat.h"
 
 Game* Game::instance = nullptr; // Tells class that the game initially hasn't been created
 
@@ -132,8 +133,11 @@ void Game::ask_to_continue() {
 	return;
 }
 
+/*
 void Game::level_one() {
+	Combat* c = new Combat();
 	terminateBuffer();
+
 	std::cout << u8"═════════════════════════ GREEN HILL ZONE ═════════════════════════\n";
 	std::cout << ">> You encounter a water slime! <<\n";
 	create_slime(); std::cout << '\n';
@@ -141,16 +145,19 @@ void Game::level_one() {
 	Game::gout() << "It seems rather aggressive. Would you like to be the first to strike? (yes/no)\n";
 	Player::pin(p) >> yesNO;
 
-	/*
-	if (startCombat(p, "Slime", 50, 8, "water")) {
-	std::cout << "\n\nYou completed a quest.\n";
-	p->completeQuest("Defeat a slime");
-	save_player(p);
-	*/
+	
+	if (c->startCombat(p, "Slime", 50, 8, "water")) {
+		std::cout << "\n\nYou completed a quest.\n";
+		p->completeQuest("Defeat a slime");
+		save_player(p);
+	}
+	
 }
+*/
 
-/*
+
 bool Game::level_one() {
+	Combat* c = new Combat();
 	terminateBuffer();
 	std::cout << "═════════════════════════ GREEN HILL ZONE ═════════════════════════\n";
 	Game::gout() << "You leave step into a lush green hill range full of flowers.\n";
@@ -163,7 +170,7 @@ bool Game::level_one() {
 	Game::gout() << "Something jumps out at you!\n";
 	Game::gout() << "A water slime appears!\n";
 	ask_to_continue();
-	if (!startCombat(p, "Slime", 50, 8, "water")) {
+	if (!c->startCombat(p, "Slime", 50, 8, "water")) {
 		return false;
 	}
 
@@ -176,20 +183,22 @@ bool Game::level_one() {
 	ask_to_continue();
 
 	// enemy 2 
+	std::cout << "\033[3J\033[H\033[2J";
 	Game::gout() << "You move deeper into the hills...\n";
 	Game::gout() << "A wild grass goblin ambushes you!\n";
 	ask_to_continue();
-	if (!startCombat(p, "Goblin", 70, 10, "grass")) {
+	if (!c->startCombat(p, "Goblin", 70, 10, "grass")) {
 		return false;
 	}
 
 	ask_to_continue();
 
 	// enemy 3 - boss battle
+	std::cout << "\033[3J\033[H\033[2J";
 	Game::gout() << "You reach the top of the hill...\n";
 	Game::gout() << "A powerful fire spirit blocks your path!\n";
 	ask_to_continue();
-	if (!startCombat(p, "Fire Spirit", 100, 12, "fire")) {
+	if (!c->startCombat(p, "Fire Spirit", 100, 12, "fire")) {
 		return false;
 	}
 
@@ -202,7 +211,6 @@ bool Game::level_one() {
 	return true;
 
 }
-*/
 
 void Game::menu(Player* p) {
 
@@ -264,9 +272,11 @@ void Game::menu(Player* p) {
 				p->location = "Green Hill Zone";
 				std::cout << "You are entering level " << level[p->location] << std::endl;
 				ask_to_continue();
-				if (!level_one()) {
-					std::cout << "Game over!";
-				}
+
+				level_one();
+				//if (!level_one()) {
+					//std::cout << "Game over!";
+				//}
 
 				ask_to_continue();
 			}
