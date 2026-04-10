@@ -217,7 +217,7 @@ void Game::menu(Player* p) {
 		std::cout << "1) Display player stats\n";
 		std::cout << "2) View Inventory\n";
 		std::cout << "3) View Quests\n";
-		std::cout << "4) Move Player\n";
+		std::cout << "4) Go to Game\n";
 		std::cout << "5) Save Game\n";
 		std::cout << "6) Quit\n";
 
@@ -254,7 +254,7 @@ void Game::menu(Player* p) {
 		}
 		case 4: {
 			terminateBuffer();
-			
+
 			for (auto& l : level) {
 				std::cout << l.first << ": " << l.second << std::endl;
 			} 
