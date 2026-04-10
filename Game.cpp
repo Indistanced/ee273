@@ -50,8 +50,7 @@ bool Game::save_player(Player*& p) {
 				<< po->get_description() << ","
 				<< po->get_value() << ","
 				<< po->get_quantity() << "\n";
-		}
-		else if (Spell* sp = dynamic_cast<Spell*>(item)) {
+		} else if (Spell* sp = dynamic_cast<Spell*>(item)) {
 			outFile << "spell,"
 				<< sp->get_name() << ","
 				<< sp->get_description() << ","
@@ -91,12 +90,6 @@ void Game::run(Game* g, Player* p) {
 	start(p);
 	save_player(p);
 	menu(p);
-
-	/*
-	gout() << "What is your favourite number?\n"; // gout = cout (Game class)
-	int num;
-	Player::pin(p) >> num; // pin = cin (Player class)
-	*/
 }
 
 std::ostream& Game::gout() {
@@ -132,29 +125,6 @@ void Game::ask_to_continue() {
 	std::getline(std::cin, input); // Return when new line (enter is received)
 	return;
 }
-
-/*
-void Game::level_one() {
-	Combat* c = new Combat();
-	terminateBuffer();
-
-	std::cout << u8"═════════════════════════ GREEN HILL ZONE ═════════════════════════\n";
-	std::cout << ">> You encounter a water slime! <<\n";
-	create_slime(); std::cout << '\n';
-	std::string yesNO;
-	Game::gout() << "It seems rather aggressive. Would you like to be the first to strike? (yes/no)\n";
-	Player::pin(p) >> yesNO;
-
-	
-	if (c->startCombat(p, "Slime", 50, 8, "water")) {
-		std::cout << "\n\nYou completed a quest.\n";
-		p->completeQuest("Defeat a slime");
-		save_player(p);
-	}
-	
-}
-*/
-
 
 bool Game::level_one() {
 	Combat* c = new Combat();
@@ -273,13 +243,11 @@ void Game::menu(Player* p) {
 				std::cout << "You are entering level " << level[p->location] << std::endl;
 				ask_to_continue();
 
-				level_one();
-				//if (!level_one()) {
-					//std::cout << "Game over!";
-				//}
-
-				ask_to_continue();
+				if (!level_one()) {
+					std::cout << "Game over!";
+				} ask_to_continue();
 			}
+			break;
 		}
 		case 5: {
 			terminateBuffer();
