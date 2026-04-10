@@ -102,7 +102,7 @@ bool Game::quit_game() {
 	std::string answer;
 
 	std::cout << "\n>> Are you sure you want to exit?\n";
-	std::cout << "\t>> yes / no <<\n";
+	std::cout << "\t>> Yes (Y) / No (N) <<\n";
 	std::cout << "Choice: ";
 	std::cin >> answer;
 
@@ -110,11 +110,9 @@ bool Game::quit_game() {
 		c = tolower(c);
 	}
 
-	if (answer == "yes") {
+	if (answer == "yes" || answer == "y") {
 		return true;
-	}
-
-	return false;
+	} return false;
 }
 
 void Game::ask_to_continue() {

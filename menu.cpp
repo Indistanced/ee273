@@ -90,14 +90,14 @@ Player* selectPlayerInstance(Player*& p) {
         }
 
         xbar();
-        std::cout << "\n>> Ah a fine choice!\n";
+        std::cout << "\n>> Ahh, a fine choice!\n";
 
         std::cout << "\n>> Your first quest is to defeat a slime\n";
         p->addQuest("Defeat a slime", false);
 
-        std::cout << "\n>> Your adventure will be difficult, here take this.\n";
-        std::cout << "---- You recive a +25 health potion ----\n";
-        p->getInventory().addPotion("Small Health Potion", "Restores +25 HP", 25, 1); //adds health potion to inventory.
+        std::cout << "\n>> Your adventure will be difficult──here, take this.\n";
+        std::cout << "───── You receive a +25 health potion ─────\n";
+        p->getInventory().addPotion("Small Health Potion", "Restores +25 HP", 25, 1); // Add health potion to inventory.
 
         ask_to_continue();
         return p;  // Create a new player with a name

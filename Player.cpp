@@ -1,4 +1,4 @@
-#include "Player.h"
+﻿#include "Player.h"
 
 #include <fstream>
 #include <iostream>
@@ -65,7 +65,7 @@ bool Player::completeQuest(std::string description) {
 
 void Player::quests_to_string() {
 	for (int i = 0; i < quest.size(); i++) {
-		std::cout << quest[i].first << '|';
+		std::cout << quest[i].first << " | ";
 		 
 		if (quest[i].second) {
 			std::cout << "Complete\n";
