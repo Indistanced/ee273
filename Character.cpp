@@ -2,10 +2,6 @@
 
 #include <string>
 
-int Character::Attack() {
-    return getStrength();
-}
-
 void Character::takeDamage(int dmg) {
     currentHealth -= dmg;
 
