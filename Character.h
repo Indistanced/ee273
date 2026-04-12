@@ -23,7 +23,6 @@ public:
 	int getStrength() const { return strength; };
 
 	// General member functions
-	virtual int Attack();
 	void takeDamage(int dmg);
 	bool isAlive() const;
 	void addHealth(int health);
