@@ -27,8 +27,7 @@ Player* selectPlayerInstance(Player*& p) {
         std::cin >> choice;
 
         if (choice < 1 || choice > 3 || std::cin.fail()) { // If invaild choice, clear input before re-running
-            std::cout << "Invaild choice, try again.";
-            clearBuffer();
+            clearBuffer(); terminateBuffer();
         }
 
     } while (choice < 1 || choice > 3 || std::cin.fail());
