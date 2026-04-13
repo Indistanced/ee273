@@ -76,7 +76,7 @@ Player* selectPlayerInstance(Player*& p) {
         std::cout << "Choice: ";
         std::cin >> choice;
 
-        if (choice == 1)  //adds spell to player inventory.
+        if (choice == 1)  // Add spell to player inventory.
         {
             p->getInventory().addSpell("Fire Spin", "Weak fire ability", 20, 10, 24, "fire");
         }

@@ -127,15 +127,14 @@ void Game::ask_to_continue() {
 bool Game::level_one() {
 	Combat* c = new Combat();
 	terminateBuffer();
+	std::cout << "\033[3J\033[H\033[2J";
 	std::cout << "═════════════════════════ GREEN HILL ZONE ═════════════════════════\n";
 	Game::gout() << "You leave step into a lush green hill range full of flowers.\n";
 	Game::gout() << "You progress on in your jorney...\n\n";
 
-	Game::gout() << "All of a sudden something jumps up at you out of no where!\n";
-	Game::gout() << "You encounter a water slime! \n";
+	Game::gout() << "All of a sudden, something jumps up at you out of nowhere!\n";
 
-	// enemy 1 
-	Game::gout() << "Something jumps out at you!\n";
+	// Enemy 1 
 	Game::gout() << "A water slime appears!\n";
 	ask_to_continue();
 	if (!c->startCombat(p, "Slime", 50, 8, "water")) {
@@ -150,7 +149,7 @@ bool Game::level_one() {
 
 	ask_to_continue();
 
-	// enemy 2 
+	// Enemy 2 
 	std::cout << "\033[3J\033[H\033[2J";
 	Game::gout() << "You move deeper into the hills...\n";
 	Game::gout() << "A wild grass goblin ambushes you!\n";
@@ -161,7 +160,7 @@ bool Game::level_one() {
 
 	ask_to_continue();
 
-	// enemy 3 - boss battle
+	// Enemy 3 (boss battle)
 	std::cout << "\033[3J\033[H\033[2J";
 	Game::gout() << "You reach the top of the hill...\n";
 	Game::gout() << "A powerful fire spirit blocks your path!\n";
@@ -170,7 +169,7 @@ bool Game::level_one() {
 		return false;
 	}
 
-	//level complete
+	// Level complete
 	std::cout << "\n\nYou completed Level 1!\n";
 	p->completeQuest("Take down the fire spirit");
 
@@ -230,6 +229,7 @@ void Game::menu(Player* p) {
 		}
 		case 4: {
 			terminateBuffer();
+			std::cout << "\033[3J\033[H\033[2J";
 
 			for (auto& l : level) {
 				std::cout << l.first << ": " << l.second << std::endl;

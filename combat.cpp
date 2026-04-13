@@ -1,15 +1,21 @@
 ﻿#include "combat.h"
+#include "unicode.h"
+#include "Game.h"
+#include "clear.h"
 
 #include <string>
 #include <limits>
+#include <cstdlib>
 
-void Combat::playerMove(Player* p, Enemy& e) {
+void Combat::playerMove(Player* p, Enemy*& e) {
 
 	int choice = 0;
-	do {
+	do { 
+		
 		std::cout << "\n═══════ Player's Move ═══════\n\n";
 		std::cout << "1) Cast a spell\n";
 		std::cout << "2) Use a potion\n";
+		std::cout << "3) Exit game\n";
 		std::cout << "Choice: ";
 		std::cin >> choice;
 
@@ -37,10 +43,10 @@ void Combat::playerMove(Player* p, Enemy& e) {
 			int damage = p->getStrength() + rand() % 10; // An element of randomness is appended in the definition of the player strength attribute
 
 			// Element X -> X = standard damage, Fire -> Water = weak damage, Water -> Fire = string damage, etc.
-			if (sp->get_element() == e.get_element()) {
+			if (sp->get_element() == e->get_element()) {
 				damage += sp->get_base(); // Same elements are neither effective nor ineffective to one another
 			}
-			else if (sp->get_element() == e.get_weakness_element()) {
+			else if (sp->get_element() == e->get_weakness_element()) {
 				damage += sp->get_strong(); // If the attacker has the element of the enemy's weakness, the attack is effective
 				std::cout << "\nYour spell was super effective!";
 			}
@@ -49,7 +55,7 @@ void Combat::playerMove(Player* p, Enemy& e) {
 				std::cout << "\nYour spell was not very effective.";
 			}
 
-			e.takeDamage(damage); // Subtract the corresponding damage value from the enemy's health
+			e->takeDamage(damage); // Subtract the corresponding damage value from the enemy's health
 
 			std::cout << "\nYou cast " << sp->get_name() << " for " << damage << " damage!\n";
 
@@ -86,6 +92,9 @@ void Combat::playerMove(Player* p, Enemy& e) {
 			}
 			break;
 		}
+		case 3: {
+			exit(0);
+		}
 		default: std::cout << "\nInvalid choice.\n";
 		} 
 		
@@ -94,31 +103,31 @@ void Combat::playerMove(Player* p, Enemy& e) {
 
 		
 
-void Combat::enemyMove(Player* p, Enemy& e) {
+void Combat::enemyMove(Player* p, Enemy*& e) {
 	std::cout << "\n═══════ Enemy Attack ═══════\n\n";
 
 	int damage = 0;
 	int randNum = rand() % 3; // 0 to 2
 
 	if (randNum == 0) {
-		damage = e.getStrength() + (rand() % 10 + 5); // strong attack damage
+		damage = e->getStrength() + (rand() % 10 + 5); // strong attack damage
 		std::cout << "The enemy attacks aggressively!\n";
 	}
 	else if (randNum == 1) {
-		damage = e.getStrength() + rand() % 5; // low attack damage
-		int heal = e.getMaxHealth() / 10;
+		damage = e->getStrength() + rand() % 5; // low attack damage
+		int heal = e->getMaxHealth() / 10;
 		if (heal < 1) {
 			heal = 1;
 		}
-		e.addHealth(heal); // Gain 10% of health back
+		e->addHealth(heal); // Gain 10% of health back
 		std::cout << "The enemy plays defensively and recovers some health!\n";
 	}
 	else { 
-		damage = e.getStrength() + rand() % 10; // Basic attack  
+		damage = e->getStrength() + rand() % 10; // Basic attack  
 		std::cout << "The enemy attacks!\n";   
 	}
 
-	std::cout << "The " << e.getName()
+	std::cout << "The " << e->getName()
 		<< " hit you for " << damage << " damage!\n";
 
 	p->takeDamage(damage);
@@ -127,29 +136,33 @@ void Combat::enemyMove(Player* p, Enemy& e) {
 
 bool Combat::startCombat(Player* p, std::string enemy_name, int health, int attack, std::string element) {
 
-	Enemy e(enemy_name, health, attack, element);
+	Enemy* e = new Enemy(enemy_name, health, attack, element);
 
-	while (p->isAlive() && e.isAlive()) {
+	while (p->isAlive() && e->isAlive()) {
 		// PLAYER TURN
+		clearBuffer(); terminateBuffer();
 		std::cout << "\033[3J\033[H\033[2J";
+		if (enemy_name == "Slime") { create_slime(e); }
 		std::cout << "\n══════════════ Combat ══════════════\n";
 
 		std::cout << "\nPlayer Health: " << p->getHealth() << "\n";
-		std::cout << e.getName() << " Health: " << e.getHealth() << "\n";
+		std::cout << e->getName() << " Health: " << e->getHealth() << "\n";
 
 		playerMove(p, e);
-		if (!e.isAlive()) break;
+		if (!e->isAlive()) break;
 		system("pause");
 
 		// ENEMY TURN
+		clearBuffer(); terminateBuffer();
 		std::cout << "\033[3J\033[H\033[2J";
+		if (enemy_name == "Slime") { create_slime(e); }
 		std::cout << "\n══════════════ Combat ══════════════\n";
 
 		std::cout << "\nPlayer Health: " << p->getHealth() << "\n";
-		std::cout << e.getName() << " Health: " << e.getHealth() << "\n";
+		std::cout << e->getName() << " Health: " << e->getHealth() << "\n";
 
 		enemyMove(p, e);
-		if (!e.isAlive()) break;
+		if (!e->isAlive()) break;
 		system("pause");
 
 	}
@@ -157,18 +170,20 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 	// END
 
 	if (p->isAlive()) {
-		std::cout << "\n\nCongratulations you defeated the " << e.getName() << "!\n";
-		std::cout << "-- You Gained +" << e.getMaxHealth() << " Experience! --\n";
+		std::cout << "\n\nCongratulations! You defeated the " << e->getName() << "!\n";
+		std::cout << "-- You Gained +" << e->getMaxHealth() << " Experience! --\n";
 
-		p->addExp(e.getMaxHealth());
+		p->addExp(e->getMaxHealth());
 
-		std::cout << "\nThe " << e.getName() << " dropped:\n";
-		item_drop_generator(p, e.getMaxHealth());
+		std::cout << "\nThe " << e->getName() << " dropped:\n";
+		item_drop_generator(p, e->getMaxHealth());
 
+		delete e;
 		return true;
 	}
 
 	std::cout << "\n\nYou were defeated...\n";
+	delete e;
 	return false;
 }
 
@@ -201,7 +216,7 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 		}
 	}
 	else if (enemy_health <= 100) {
-		std::cout << "- Medium Health Potion\n";
+		std::cout << u8"── Medium Health Potion ──\n";
 		p->getInventory().addPotion("Medium Health Potion", "Restores 50 HP", 50, 1);
 
 		if (rand_num < 60) {
