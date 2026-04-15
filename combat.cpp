@@ -139,7 +139,9 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 	Enemy* e = new Enemy(enemy_name, health, attack, element);
 
 	while (p->isAlive() && e->isAlive()) {
+
 		// PLAYER TURN
+
 		clearBuffer(); terminateBuffer();
 		std::cout << "\033[3J\033[H\033[2J";
 		if (enemy_name == "Slime") { create_slime(e); }
@@ -153,6 +155,7 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 		system("pause");
 
 		// ENEMY TURN
+
 		clearBuffer(); terminateBuffer();
 		std::cout << "\033[3J\033[H\033[2J";
 		if (enemy_name == "Slime") { create_slime(e); }
@@ -170,8 +173,8 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 	// END
 
 	if (p->isAlive()) {
-		std::cout << "\n\nCongratulations! You defeated the " << e->getName() << "!\n";
-		std::cout << "-- You Gained +" << e->getMaxHealth() << " Experience! --\n";
+		std::cout << "\nCongratulations! You defeated the " << e->getName() << "!\n";
+		std::cout << "── You Gained +" << e->getMaxHealth() << " Experience! ──\n";
 
 		p->addExp(e->getMaxHealth());
 
@@ -192,7 +195,7 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 	int rand_num = rand() % 101; // 0 to 100
 	int rand_element = rand() % 3; // 0 to 2
 
-	//lower teir of drops
+	// Lower tier of drops
 	if (enemy_health <= 50) {
 		std::cout << "- Small Health Potion\n";
 		p->getInventory().addPotion("Small Health Potion", "Restores 25 HP", 25, 1);
@@ -214,8 +217,7 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 				}
 			}
 		}
-	}
-	else if (enemy_health <= 100) {
+	} else if (enemy_health <= 100) {
 		std::cout << u8"── Medium Health Potion ──\n";
 		p->getInventory().addPotion("Medium Health Potion", "Restores 50 HP", 50, 1);
 
@@ -236,9 +238,7 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 				}
 			}
 		}
-	}
-
-	else {
+	} else {
 		std::cout << "- Large Health Potion\n";
 		p->getInventory().addPotion("Large Health Potion", "Restores 50 HP", 75, 1);
 
@@ -260,5 +260,4 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 			}
 		}
 	}
-
 }

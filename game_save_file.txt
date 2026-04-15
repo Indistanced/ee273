@@ -1,15 +1,17 @@
-Aifa
+Aidan
 140
 140
 3
 20
 25
 Green Hill Zone
-4
+6
 spell,Fire Spin,Weak fire ability,20,10,24,fire
 potion,Small Health Potion,Restores +25 HP,25,2
-spell,Water Ball,Weak water ability,18,15,25,water
+spell,Fire Ball,Weak fire ability,18,15,25,fire
 potion,Medium Health Potion,Restores 50 HP,50,2
+spell,Grass Spikes,Medium grass ability,30,20,35,grass
+spell,Water Wave,Medium water ability,30,20,35,water
 2
 Defeat a slime|Complete
 Take down the fire spirit|Complete

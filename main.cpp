@@ -6,15 +6,21 @@
 
 int main() {
 	
+	// INITIALISATIONS
 
-	srand(time(0)); // for random numbers 
-	unicode_init();
+	srand(time(0)); // Random number generator set seed
+	unicode_init(); // Enable unicode
 
-	Player* p = selectPlayerInstance(p);
+	Player* p = selectPlayerInstance(p); // Select game type
 	if (p == nullptr) return 0; // Check whether player exists
 
 	Game* g = Game::getInstance(p); // Create, load, or exit instance
-	g->run(g, p);
+
+	// MAIN
+
+	g->run(g, p); // Run game instance
+
+	// DEALLOCATE MEMORY
 
 	delete p;
 	delete g;
