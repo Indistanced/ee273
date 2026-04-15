@@ -186,7 +186,14 @@ bool Game::level_one() {
 	save_player(p);
 
 	return true;
+}
 
+bool Game::level_two() {
+	return 0;
+}
+
+bool Game::level_three() {
+	return 0;
 }
 
 void Game::menu(Player* p) {
@@ -220,6 +227,7 @@ void Game::menu(Player* p) {
 		switch (choice) {
 		case 1: {
 			terminateBuffer();
+
 			std::cout << u8"─── PLAYER STATS ───\n";
 			p->to_string();
 			ask_to_continue();
@@ -227,11 +235,13 @@ void Game::menu(Player* p) {
 		}
 		case 2: {
 			terminateBuffer();
+
 			p->getInventory().displayItems(p);
 			break;
 		}
 		case 3: {
 			terminateBuffer();
+
 			std::cout << u8"─── Quest List ───\n";
 			p->quests_to_string();
 			ask_to_continue();
@@ -239,7 +249,6 @@ void Game::menu(Player* p) {
 		}
 		case 4: {
 			terminateBuffer();
-			std::cout << "\033[3J\033[H\033[2J";
 
 			for (auto& l : level) {
 				std::cout << l.first << ": " << l.second << std::endl;
