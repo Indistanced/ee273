@@ -2,6 +2,8 @@
 #include "menu.h"
 #include "Game.h"
 #include "unicode.h"
+#include "Game_Level.h"
+
 #include <ctime>
 
 int main() {
@@ -19,6 +21,10 @@ int main() {
 	// MAIN
 
 	g->run(g, p); // Run game instance
+
+	// TESTING
+
+	Level::test();
 
 	// DEALLOCATE MEMORY
 

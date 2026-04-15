@@ -10,6 +10,7 @@
 #include "menu.h"
 #include "Game.h"
 #include "clear.h"
+#include "Game_Level.h"
 
 Player* selectPlayerInstance(Player*& p) {
     int choice;
@@ -18,6 +19,8 @@ Player* selectPlayerInstance(Player*& p) {
     do {
         terminateBuffer();
         enbox(title); std::cout << '\n';
+
+        Level::test();
 
         std::cout << "─── CHOOSE AN OPTION ───\n";
         std::cout << "1) New Game\n";
