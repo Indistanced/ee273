@@ -12,6 +12,19 @@
 #include "clear.h"
 #include "Game_Level.h"
 
+void playerInstanceOptions(int& choice) {
+    std::cout << "─── CHOOSE AN OPTION ───\n";
+    std::cout << "1) New Game\n";
+    std::cout << "2) Load Game\n";
+    std::cout << "3) Quit\n";
+    std::cout << "\nChoice: ";
+    std::cin >> choice;
+
+    if (choice < 1 || choice > 3 || std::cin.fail()) { // If invaild choice, clear input before re-running
+        clearBuffer(); terminateBuffer();
+    }
+}
+
 Player* selectPlayerInstance(Player*& p) {
     int choice;
     std::string title = "Spells and Potions RPG";
@@ -20,18 +33,9 @@ Player* selectPlayerInstance(Player*& p) {
         terminateBuffer();
         enbox(title); std::cout << '\n';
 
-        Level::test();
+        Level::test(); // Ensure level class functions splendidly
 
-        std::cout << "─── CHOOSE AN OPTION ───\n";
-        std::cout << "1) New Game\n";
-        std::cout << "2) Load Game\n";
-        std::cout << "3) Quit\n";
-        std::cout << "\nChoice: ";
-        std::cin >> choice;
-
-        if (choice < 1 || choice > 3 || std::cin.fail()) { // If invaild choice, clear input before re-running
-            clearBuffer(); terminateBuffer();
-        }
+        playerInstanceOptions(choice);
 
     } while (choice < 1 || choice > 3 || std::cin.fail());
 
