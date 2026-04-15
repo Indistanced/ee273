@@ -20,7 +20,7 @@ void playerInstanceOptions(int& choice) {
     std::cout << "\nChoice: ";
     std::cin >> choice;
 
-    if (choice < 1 || choice > 3 || std::cin.fail()) { // If invaild choice, clear input before re-running
+    if (choice < 1 || choice > 3 || std::cin.fail()) { // If invalid choice, clear input before re-running
         clearBuffer(); terminateBuffer();
     }
 }

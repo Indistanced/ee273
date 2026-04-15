@@ -8,6 +8,7 @@
 #include "clear.h"
 #include "unicode.h"
 #include "combat.h"
+#include "Game_Level.h"
 
 Game* Game::instance = nullptr; // Tells class that the game initially hasn't been created
 
@@ -135,7 +136,7 @@ bool Game::level_one() {
 
 	std::cout << "═════════════════════════ GREEN HILL ZONE ═════════════════════════\n";
 	Game::gout() << "You leave step into a lush green hill range full of flowers.\n";
-	Game::gout() << "You progress on in your jorney...\n\n";
+	Game::gout() << "You progress on in your journey...\n\n";
 
 	Game::gout() << "All of a sudden, something jumps up at you out of nowhere!\n";
 
@@ -179,9 +180,11 @@ bool Game::level_one() {
 		return false;
 	}
 
-	// Level complete
+	// LEVEL COMPLETE
+	p->location = "Magic Mountain";
 	std::cout << "\nYou completed Level 1!\n";
 	p->completeQuest("Take down the fire spirit");
+	Level::isComplete[0] = true;
 
 	save_player(p);
 
@@ -189,11 +192,39 @@ bool Game::level_one() {
 }
 
 bool Game::level_two() {
-	return 0;
+	Combat* c = new Combat();
+
+	terminateBuffer();
+
+	std::cout << "═════════════════════════ MAGIC MOUNTAIN ═════════════════════════\n";
+	Game::gout() << "You leave step into a lush green hill range full of flowers.\n";
+	Game::gout() << "You progress on in your journey...\n\n";
+
+	Game::gout() << "All of a sudden, something jumps up at you out of nowhere!\n";
+
+	// Enemy 1 
+
+	Game::gout() << "A water slime appears!\n";
+	ask_to_continue();
+	if (!c->startCombat(p, "Slime", 50, 8, "water")) {
+		return false;
+	}
+
+	// LEVEL COMPLETE
+	p->location = "The Arm of Dismay";
+	Level::isComplete[1] = true;
+	save_player(p);
+
+	return true;
 }
 
 bool Game::level_three() {
-	return 0;
+
+	// LEVEL COMPLETE
+	Level::isComplete[1] = true;
+	save_player(p);
+
+	return true;
 }
 
 void Game::menu(Player* p) {
@@ -217,8 +248,8 @@ void Game::menu(Player* p) {
 			std::cout << "Choice: ";
 			std::cin >> choice;
 
-			if (choice < 1 || choice > 6) { // If invaild choice, clear input before re-running
-				std::cout << "Invaild choice, try again.";
+			if (choice < 1 || choice > 6) { // If invalid choice, clear input before re-running
+				std::cout << "Invalid choice, try again.";
 				clearBuffer();
 			}
 
@@ -255,15 +286,37 @@ void Game::menu(Player* p) {
 			} 
 			std::cout << std::endl;
 
+			auto first = Level::names.begin();
+			auto second = std::next(first);
+			auto third = std::next(second);
+			
 			if (p->location == "Town") {
-				p->location = "Green Hill Zone";
+				p->location = first->first;
 				std::cout << "You are entering level " << level[p->location] << std::endl;
-				ask_to_continue();
 
 				if (!level_one()) {
 					std::cout << "Game over!";
 				} ask_to_continue();
+				break;
 			}
+			
+			if (p->location == second->first) {
+				std::cout << "You are entering level " << level[p->location] << std::endl;
+				if (!level_two()) {
+					std::cout << "Game over!";
+				} ask_to_continue();
+				break;
+			}
+
+			if (p->location == third->first) {
+				std::cout << "You are entering level " << level[p->location] << std::endl;
+				if (!level_three()) {
+					std::cout << "Game over!";
+				} ask_to_continue();
+				break;
+			}
+
+			
 			break;
 		}
 		case 5: {

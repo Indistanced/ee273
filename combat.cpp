@@ -2,6 +2,7 @@
 #include "unicode.h"
 #include "Game.h"
 #include "clear.h"
+#include "Game_Level.h"
 
 #include <string>
 #include <limits>
@@ -143,8 +144,11 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 		// PLAYER TURN
 
 		clearBuffer(); terminateBuffer();
-		std::cout << "\033[3J\033[H\033[2J";
+		
 		if (enemy_name == "Slime") { create_slime(e); }
+		if (enemy_name == "Goblin") { create_goblin(e); }
+		if (enemy_name == "Fire Spirit") { create_fire_spirit(e); }
+
 		std::cout << "\n══════════════ Combat ══════════════\n";
 
 		std::cout << "\nPlayer Health: " << p->getHealth() << "\n";
@@ -157,8 +161,11 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 		// ENEMY TURN
 
 		clearBuffer(); terminateBuffer();
-		std::cout << "\033[3J\033[H\033[2J";
+
 		if (enemy_name == "Slime") { create_slime(e); }
+		if (enemy_name == "Goblin") { create_goblin(e); }
+		if (enemy_name == "Fire Spirit") { create_fire_spirit(e); }
+
 		std::cout << "\n══════════════ Combat ══════════════\n";
 
 		std::cout << "\nPlayer Health: " << p->getHealth() << "\n";
@@ -173,6 +180,9 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 	// END
 
 	if (p->isAlive()) {
+
+		if (enemy_name == "Fire Spirit") { Level::isComplete[0] = true; } // Unlock next level if final level 1 enemy is defeated
+
 		std::cout << "\nCongratulations! You defeated the " << e->getName() << "!\n";
 		std::cout << "── You Gained +" << e->getMaxHealth() << " Experience! ──\n";
 
@@ -205,13 +215,11 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 				if (p->getInventory().addSpell("Water Ball", "Weak water ability", 18, 15, 25, "water")) {
 					std::cout << "- Water ball spell\n";
 				}
-			}
-			else if (rand_element == 1) {
+			} else if (rand_element == 1) {
 				if (p->getInventory().addSpell("Fire Ball", "Weak fire ability", 18, 15, 25, "fire")) {
 					std::cout << "- Fire Ball spell\n";
 				}
-			}
-			else {
+			} else {
 				if (p->getInventory().addSpell("Vine Whip", "Weak grass ability", 18, 15, 25, "grass")) {
 					std::cout << "- Vine Whip spell\n";
 				}

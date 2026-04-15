@@ -22,9 +22,9 @@ public:
 	// MAIN
 	static int test();
 
-	std::map<std::string, int> names = { {"Green Hill Zone", 1 }, { "Magic Mountain", 2 }, { "The Arm of Dismay", 3 } };
+	inline static std::map<std::string, int> names = { {"Green Hill Zone", 1 }, { "Magic Mountain", 2 }, { "The Arm of Dismay", 3 } };
 
-	std::array<bool, NUMBER_OF_LEVELS> isComplete{ false };
+	inline static std::array<bool, NUMBER_OF_LEVELS> isComplete{ false };
 	void isCompleteString();
 
 private:

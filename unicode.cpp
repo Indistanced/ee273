@@ -37,3 +37,11 @@ void create_slime(Enemy* e) {
 	std::cout << u8"────────────────────────────────────────┬┬┬┐                                          ┌────────────────────────\n";
 	std::cout << u8"                                         └────────────────────────────────────────────┴\n";
 }
+
+void create_goblin(Enemy* e) {
+	return;
+}
+
+void create_fire_spirit(Enemy* e) {
+	return;
+}

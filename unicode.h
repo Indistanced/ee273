@@ -11,3 +11,5 @@ void xdbar(int size);
 void enbox(std::string text);
 
 void create_slime(Enemy* e);
+void create_goblin(Enemy* e);
+void create_fire_spirit(Enemy* e);
