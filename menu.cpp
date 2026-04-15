@@ -11,6 +11,8 @@
 #include "Game.h"
 #include "clear.h"
 #include "Game_Level.h"
+#include "Minimap.h"
+#include "win.h"
 
 void playerInstanceOptions(int& choice) {
     std::cout << "─── CHOOSE AN OPTION ───\n";

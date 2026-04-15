@@ -3,15 +3,19 @@
 #include "Game.h"
 #include "unicode.h"
 #include "Game_Level.h"
+#include "win.h"
+#include <thread>
 
 #include <ctime>
 
 int main() {
 	
 	// INITIALISATIONS
+	WinMinimap();
 
 	srand(time(0)); // Random number generator set seed
 	unicode_init(); // Enable unicode
+	
 
 	Player* p = selectPlayerInstance(p); // Select game type
 	if (p == nullptr) return 0; // Check whether player exists
