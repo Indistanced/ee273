@@ -20,6 +20,8 @@ public:
 	
 	// LEVELS
 
+	void level_selection();
+
 	bool level_one();
 	bool level_two();
 	bool level_three();

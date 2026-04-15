@@ -181,7 +181,6 @@ bool Game::level_one() {
 	}
 
 	// LEVEL COMPLETE
-	p->location = "Magic Mountain";
 	std::cout << "\nYou completed Level 1!\n";
 	p->completeQuest("Take down the fire spirit");
 	Level::isComplete[0] = true;
@@ -211,7 +210,6 @@ bool Game::level_two() {
 	}
 
 	// LEVEL COMPLETE
-	p->location = "The Arm of Dismay";
 	Level::isComplete[1] = true;
 	save_player(p);
 
@@ -225,6 +223,41 @@ bool Game::level_three() {
 	save_player(p);
 
 	return true;
+}
+
+void Game::level_selection() {
+	auto first = Level::names.begin();
+	auto second = std::next(first);
+	auto third = std::next(second);
+
+	if (p->location == "Town") {
+		p->location = first->first;
+		std::cout << "You are entering level " << Level::names[p->location] << std::endl;
+
+		if (!level_one()) {
+			std::cout << "Game over!";
+		} ask_to_continue();
+		p->location = second->first;
+		return;
+	}
+
+	if (p->location == second->first) {
+		std::cout << "You are entering level " << Level::names[p->location] << std::endl;
+		if (!level_two()) {
+			std::cout << "Game over!";
+		} ask_to_continue();
+		p->location = third->first;
+		return;
+	}
+
+	if (p->location == third->first) {
+		std::cout << "You are entering level " << Level::names[p->location] << std::endl;
+		if (!level_three()) {
+			std::cout << "Game over!";
+		} ask_to_continue();
+		p->location = "End";
+		return;
+	}
 }
 
 void Game::menu(Player* p) {
@@ -289,33 +322,11 @@ void Game::menu(Player* p) {
 			auto first = Level::names.begin();
 			auto second = std::next(first);
 			auto third = std::next(second);
-			
-			if (p->location == "Town") {
-				p->location = first->first;
-				std::cout << "You are entering level " << level[p->location] << std::endl;
 
-				if (!level_one()) {
-					std::cout << "Game over!";
-				} ask_to_continue();
+			level_selection();
+			if (p->location == first->first || p->location == second->first || p->location == third->first) {
 				break;
 			}
-			
-			if (p->location == second->first) {
-				std::cout << "You are entering level " << level[p->location] << std::endl;
-				if (!level_two()) {
-					std::cout << "Game over!";
-				} ask_to_continue();
-				break;
-			}
-
-			if (p->location == third->first) {
-				std::cout << "You are entering level " << level[p->location] << std::endl;
-				if (!level_three()) {
-					std::cout << "Game over!";
-				} ask_to_continue();
-				break;
-			}
-
 			
 			break;
 		}

@@ -1,16 +1,18 @@
-
-127
+1
+129
 140
 3
 70
 25
 The Arm of Dismay
-5
+7
 spell,Fire Spin,Weak fire ability,20,10,24,fire
 potion,Small Health Potion,Restores +25 HP,25,3
+spell,Fire Ball,Weak fire ability,18,15,25,fire
 potion,Medium Health Potion,Restores 50 HP,50,2
 spell,Flame Rush,Medium fire ability,30,20,35,fire
-spell,Fire Ball,Weak fire ability,18,15,25,fire
+spell,Grass Spikes,Medium grass ability,30,20,35,grass
+spell,Vine Whip,Weak grass ability,18,15,25,grass
 2
 Defeat a slime|Complete
 Take down the fire spirit|Complete
