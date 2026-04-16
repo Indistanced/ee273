@@ -34,46 +34,45 @@ bool Game::save_player(Player*& p) {
 
 	// WRITE PLAYER DATA TO TEXT FILE
 
-	outFile << p->getName() << '\n';
-	outFile << p->getHealth() << '\n';
-	outFile << p->getMaxHealth() << '\n';
-	outFile << p->getLevel() << '\n';
-	outFile << p->getExp() << '\n';
-	outFile << p->getStrength() << '\n';
-	outFile << p->location << '\n';
+	outFile << "Player name: " << p->getName() << '\n';
+	outFile << "Current health: " << p->getHealth() << '\n';
+	outFile << "Maximum health: " << p->getMaxHealth() << '\n';
+	outFile << "Level: " << p->getLevel() << '\n';
+	outFile << "Experience Points: " << p->getExp() << '\n';
+	outFile << "Strength: " << p->getStrength() << '\n';
+	outFile << "Location: " << p->location << "\n\n";
 
 	auto& items = p->getInventory().getItems();
 
-	outFile << items.size() << "\n";
+	outFile << "Items: " << items.size() << "\n";
 
 	for (auto* item : items)
 	{
 		if (Potion* po = dynamic_cast<Potion*>(item)) {
-			outFile << "potion,"
-				<< po->get_name() << ","
-				<< po->get_description() << ","
-				<< po->get_value() << ","
-				<< po->get_quantity() << "\n";
+			outFile << "Potion: "
+				<< po->get_name() << "\nDescription: "
+				<< po->get_description() << "\nValue: "
+				<< po->get_value() << "\nQuantity: "
+				<< po->get_quantity() << "\n\n";
 		} else if (Spell* sp = dynamic_cast<Spell*>(item)) {
-			outFile << "spell,"
-				<< sp->get_name() << ","
-				<< sp->get_description() << ","
-				<< sp->get_base() << ","
-				<< sp->get_weak() << ","
-				<< sp->get_strong() << ","
+			outFile << "Spell: "
+				<< sp->get_name() << "\nDescription: "
+				<< sp->get_description() << "\nBase damage: "
+				<< sp->get_base() << "\nWeak damage: "
+				<< sp->get_weak() << "\nStrong damage: "
+				<< sp->get_strong() << "\nElement: "
 				<< sp->get_element() << "\n";
 		}
 	}
 	
 	auto& quests = p->getQuests();   
 
-	outFile << quests.size() << "\n";
+	outFile << "Quests: " << quests.size() << "\n";
 
 	for (auto& q : quests) {
-		outFile << q.first << "|"
-			<< (q.second ? "Complete" : "Incomplete") << "\n";
-	}
-	return true;
+		outFile << q.first << " | "
+				<< (q.second ? "Complete" : "Incomplete") << "\n";
+	} return true;
 }
 
 void Game::start(Player* p) {

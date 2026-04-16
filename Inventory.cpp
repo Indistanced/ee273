@@ -14,7 +14,6 @@ Inventory::~Inventory() {
 }
 
 bool Inventory::addSpell(std::string name, std::string description, int base, int weak, int strong, std::string element) {
-
     inventory.push_back(new Spell(name, description, weak, base, strong, element));
     return true;
 }

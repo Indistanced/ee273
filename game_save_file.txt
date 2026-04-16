@@ -1,12 +1,22 @@
-1
-100
-100
-1
-0
-5
-Town
-2
-spell,Fire Spin,Weak fire ability,20,10,24,fire
-potion,Small Health Potion,Restores +25 HP,25,1
-1
-Defeat a slime|Incomplete
+Player name: Asa
+Current health: 100
+Maximum health: 100
+Level: 1
+Experience Points: 0
+Strength: 5
+Location: Town
+
+Items: 2
+Spell: Fire Spin
+Description: Weak fire ability
+Base damage: 20
+Weak damage: 10
+Strong damage: 24
+Element: fire
+Potion: Small Health Potion
+Description: Restores +25 HP
+Value: 25
+Quantity: 1
+
+Quests: 1
+Defeat a slime | Incomplete

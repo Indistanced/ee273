@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <string>
 
 class Player;
@@ -27,10 +27,10 @@ public:
     std::string get_element();
     
 private:
-    int base; // base attack
-    int weak; //weak attack 
-    int strong;  // strong attack
-    std::string element; // element that spell fall under
+    int base; // Base attack
+    int weak; // Weak attack 
+    int strong;  // Strong attack
+    std::string element; // Element that the spell falls under
 };
 
 class Potion : public Item {
@@ -43,7 +43,6 @@ public:
     bool use_potion(Player* p);
 
 private:
-    int value;  // health value
-    int quantity; // quantity 
-
+    int value;  // Health value
+    int quantity; // Quantity 
 };
