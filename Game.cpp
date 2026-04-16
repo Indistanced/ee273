@@ -10,7 +10,6 @@
 #include "combat.h"
 #include "Game_Level.h"
 #include "win.h"
-#include "menu.h"
 
 Game* Game::instance = nullptr; // Tells class that the game initially hasn't been created
 
@@ -20,6 +19,7 @@ Game* Game::getInstance(Player* p) {
 	} return instance;
 }
 
+//Save Game function
 bool Game::save_player(Player*& p) {
 	const std::string file_name = "game_save_file.txt"; // Constant load file path (eliminates user error)
 
@@ -33,47 +33,50 @@ bool Game::save_player(Player*& p) {
 		return false;
 	}
 
-	// WRITE PLAYER DATA TO TEXT FILE
-
-	outFile << "Player name: " << p->getName() << '\n';
-	outFile << "Current health: " << p->getHealth() << '\n';
-	outFile << "Maximum health: " << p->getMaxHealth() << '\n';
-	outFile << "Level: " << p->getLevel() << '\n';
-	outFile << "Experience Points: " << p->getExp() << '\n';
-	outFile << "Strength: " << p->getStrength() << '\n';
-	outFile << "Location: " << p->location << "\n\n";
+	outFile << p->getName() << "\n";
+	outFile << p->getHealth() << "\n";
+	outFile << p->getMaxHealth() << "\n";
+	outFile << p->getLevel() << "\n";
+	outFile << p->getExp() << "\n";
+	outFile << p->getExpLimit() << "\n";
+	outFile << p->getStrength() << "\n";
+	outFile << p->getLocation() << "\n";
 
 	auto& items = p->getInventory().getItems();
 
-	outFile << "Items: " << items.size() << "\n";
+	outFile << items.size() << "\n";
 
 	for (auto* item : items)
 	{
 		if (Potion* po = dynamic_cast<Potion*>(item)) {
-			outFile << "Potion: "
-				<< po->get_name() << "\nDescription: "
-				<< po->get_description() << "\nValue: "
-				<< po->get_value() << "\nQuantity: "
-				<< po->get_quantity() << "\n\n";
-		} else if (Spell* sp = dynamic_cast<Spell*>(item)) {
-			outFile << "Spell: "
-				<< sp->get_name() << "\nDescription: "
-				<< sp->get_description() << "\nBase damage: "
-				<< sp->get_base() << "\nWeak damage: "
-				<< sp->get_weak() << "\nStrong damage: "
-				<< sp->get_strong() << "\nElement: "
+			outFile << "potion,"
+				<< po->get_name() << ","
+				<< po->get_description() << ","
+				<< po->get_value() << ","
+				<< po->get_quantity() << "\n";
+		}
+		else if (Spell* sp = dynamic_cast<Spell*>(item)) {
+			outFile << "spell,"
+				<< sp->get_name() << ","
+				<< sp->get_description() << ","
+				<< sp->get_base() << ","
+				<< sp->get_weak() << ","
+				<< sp->get_strong() << ","
 				<< sp->get_element() << "\n";
 		}
 	}
-	
-	auto& quests = p->getQuests();   
 
-	outFile << "Quests: " << quests.size() << "\n";
+
+	auto& quests = p->getQuests();
+
+	outFile << quests.size() << "\n";
 
 	for (auto& q : quests) {
-		outFile << q.first << " | "
-				<< (q.second ? "Complete" : "Incomplete") << "\n";
-	} return true;
+		outFile << q.first << "|"
+			<< (q.second ? "Complete" : "Incomplete") << "\n";
+	}
+
+	return true;
 }
 
 void Game::start(Player* p) {
@@ -81,7 +84,7 @@ void Game::start(Player* p) {
 	terminateBuffer();
 
 	gout() << "Welcome, Adventurer " << p->getName() << "!\n"; // Introductory message
-	std::cout << u8"── Entering the " << p->location << u8" ──\n"; xbar(); std::cout << '\n'; // Location information
+	std::cout << "── Entering the " << p->getLocation() << " ──\n"; xbar(); std::cout << '\n'; // Location information
 	std::cout << ">> Press enter to start <<"; // Confirmation
 
 	clearBuffer();
@@ -187,7 +190,7 @@ bool Game::level_one() {
 	Level::isComplete[0] = true;
 
 	Game::gout() << "You have a new quest! - Reach the portal at the peak of the Magic Mountain";
-	p->addQuest("Reach the portal at the peak of the Magic Mountain", false);	
+	p->addQuest("Reach the portal at the peak of the Magic Mountain", false);
 
 	save_player(p);
 
@@ -197,18 +200,20 @@ bool Game::level_one() {
 bool Game::level_two_choices(int choice, Combat* c) {
 	if (choice == 1) { // ATTACK
 		if (!c->startCombat(p, "Slime", 50, 8, "water")) return false;
-	} else if (choice == 2) { // RUN
+	}
+	else if (choice == 2) { // RUN
 		Game::gout() << "\nThe Mushroom Warrior is catching up to you\n";
 		Game::gout() << "Running away is a form of disrespect in their eyes\n";
 		Game::gout() << "You have offended it and you cannot evade it. What will you do?\n\n";
 		playerInstanceOptions(choice, "ATTACK", "STAY");
 		if (choice == 1) level_two_choices(1, c); // ATTACK
 		else if (choice == 2) level_two_choices(3, c); // STAY
-	} else if (choice == 3) { // STAY
+	}
+	else if (choice == 3) { // STAY
 		Game::gout() << "You hand a stick to the warrior as as an attempt to ease the hostility";
 		std::cout << "???: AweR44 60Jlas w asd";
 		Game::gout() << "It seems that his compadres have been alerted. They troddle towards you, dragging their mushroom helmets"
-					 << "(FUN FACT: mushroom helmets are a part of their bone structure, just as tortoises have shells as part of their skeletal structure)";
+			<< "(FUN FACT: mushroom helmets are a part of their bone structure, just as tortoises have shells as part of their skeletal structure)";
 		Game::gout() << "You tell warriors your mission, and they thus deem you to be of no harm to them,"
 			<< "and decide to give you a gift to aid you in your journey.";
 	}
@@ -223,7 +228,7 @@ bool Game::level_two() {
 	std::cout << "═════════════════════════ MAGIC MOUNTAIN ═════════════════════════\n";
 	Game::gout() << "As I venture through this forest engorged with shrooms, I can't help but wonder why this place was one of his fondest memories.\n";
 	Game::gout() << "As per the memoir, this was perhaps the last place on Earth devoid of human endeavour (aside from perhaps unliveable areas in the Arctic,"
-				 << "Antarctic, and the Sahara...).\n\n";
+		<< "Antarctic, and the Sahara...).\n\n";
 	Game::gout() << "I smell something...\n\n";
 
 	// Enemy 1
@@ -231,9 +236,9 @@ bool Game::level_two() {
 	std::cout << "???: " << "ARHGH!!!\n\n";
 	Game::gout() << "A wild Mushroom Warrior has emerged from the marshlands embedded in the forest\n";
 	ask_to_continue();
-	
+
 	Game::gout() << "\nWhat shall your plan of action be?\n";
-	
+
 	playerInstanceOptions(choice, "Attack", "Run", "Stay");
 	level_two_choices(choice, c);
 
@@ -376,37 +381,38 @@ bool Game::level_three() {
 
 	return true;
 }
+
 void Game::level_selection() {
 	auto first = Level::names.begin();
 	auto second = std::next(first);
 	auto third = std::next(second);
 
-	if (p->location == "Town") {
-		p->location = first->first;
-		std::cout << "You are entering level " << Level::names[p->location] << std::endl;
+	if (p->getLocation() == "Town") {
+		p->setLocation(first->first);
+		std::cout << "You are entering level " << Level::names[p->getLocation()] << std::endl;
 
 		if (!level_one()) {
 			std::cout << "Game over!";
 		} ask_to_continue();
-		p->location = second->first;
+		p->setLocation(second->first);
 		return;
 	}
 
-	if (p->location == second->first) {
-		std::cout << "You are entering level " << Level::names[p->location] << std::endl;
+	if (p->getLocation() == second->first) {
+		std::cout << "You are entering level " << Level::names[p->getLocation()] << std::endl;
 		if (!level_two()) {
 			std::cout << "Game over!";
 		} ask_to_continue();
-		p->location = third->first;
+		p->setLocation(third->first);
 		return;
 	}
 
-	if (p->location == third->first) {
-		std::cout << "You are entering level " << Level::names[p->location] << std::endl;
+	if (p->getLocation() == third->first) {
+		std::cout << "You are entering level " << Level::names[p->getLocation()] << std::endl;
 		if (!level_three()) {
 			std::cout << "Game over!";
 		} ask_to_continue();
-		p->location = "End";
+		p->setLocation("End");
 		return;
 	}
 }
@@ -446,7 +452,7 @@ void Game::menu(Player* p) {
 		case 1: {
 			terminateBuffer();
 
-			std::cout << u8"─── PLAYER STATS ───\n";
+			std::cout << "─── PLAYER STATS ───\n";
 			p->to_string();
 			ask_to_continue();
 			break;
@@ -460,7 +466,7 @@ void Game::menu(Player* p) {
 		case 3: {
 			terminateBuffer();
 
-			std::cout << u8"─── Quest List ───\n";
+			std::cout << "─── Quest List ───\n";
 			p->quests_to_string();
 			ask_to_continue();
 			break;
@@ -470,16 +476,19 @@ void Game::menu(Player* p) {
 
 			for (auto& l : level) {
 				std::cout << l.first << ": " << l.second << std::endl;
-			} std::cout << std::endl;
+			}
+			std::cout << std::endl;
 
 			auto first = Level::names.begin();
 			auto second = std::next(first);
 			auto third = std::next(second);
 
 			level_selection();
-			if (p->location == first->first || p->location == second->first || p->location == third->first) {
+			if (p->getLocation() == first->first || p->getLocation() == second->first || p->getLocation() == third->first) {
 				break;
-			} break;
+			}
+
+			break;
 		}
 		case 5: {
 			terminateBuffer();

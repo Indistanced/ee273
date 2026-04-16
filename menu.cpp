@@ -71,24 +71,52 @@ Player* selectPlayerInstance(Player*& p) {
         int choice;
 
         Game::gout() << "Welcome, " << name << "!\n";
-        Game::gout() << "You awaken in a town and are faced with a choice of spells, which will you choose?\n"; xbar(); std::cout << '\n';
+        Game::gout() << "You awaken in the town square.\n";
+        Game::gout() << "The villagers talk amongst themselves, fear in their eyes.\n\n";
 
-        playerInstanceOptions(choice, "Fire Spin", "Water Whip", "Leaf Slash");
+        Game::gout() << "For weeks, a dark force has been growing beneath the land...\n";
+        Game::gout() << "A cursed place known as the Arm of Dismay.\n";
+        Game::gout() << "Creatures have begun emerging from it, attacking anything in their path.\n\n";
 
-        if (choice == 1) { // Add spell to player inventory.
+        Game::gout() << "If nothing is done, the town will fall.\n";
+        Game::gout() << "The guards have tried and failed.\n";
+        Game::gout() << "Now, all eyes turn to you - a beginner but powerful mage\n\n";
+
+        Game::gout() << "You must enter the Arm of Dismay and put an end to whatever lies within.\n";
+        Game::gout() << "You are the towns only hope.\n\n";
+
+        Game::gout() << "Before you set out, you must choose a spell to aid you.\n";
+        xbar();
+
+        std::cout << "\n── CHOOSE A SPELL ──\n";
+        std::cout << "1. Fire Spin\n";
+        std::cout << "2. Water Whip\n";
+        std::cout << "3. Leaf Slash\n";
+        std::cout << "Choice: ";
+        std::cin >> choice;
+
+        if (choice == 1)  // Add spell to player inventory.
+        {
             p->getInventory().addSpell("Fire Spin", "Weak fire ability", 20, 10, 24, "fire");
-        } else if (choice == 2) {
+        }
+        else if (choice == 2)
+        {
             p->getInventory().addSpell("Water Whip", "Weak water ability", 15, 12, 25, "water");
-        } else if (choice == 3) {
+        }
+        else if (choice == 3)
+        {
             p->getInventory().addSpell("Leaf Slash", "Weak grass ability", 15, 5, 28, "grass");
-        } xbar();
+        }
 
-        std::cout << "\n>> Ahh, a fine choice!\n";
+        xbar();
+        Game::gout() << "Ahh, a fine choice!\n";
 
-        std::cout << "\n>> Your first quest is to defeat a slime\n";
+        Game::gout() << "Your first quest is to defeat a slime\n";
         p->addQuest("Defeat a slime", false);
 
-        std::cout << "\n>> Your adventure will be difficult──here, take this.\n";
+        Game::gout() << "Prove your strength, then venture into the Arm of Dismay.\n\n";
+        std::cout << "Villager: Your adventure will be difficult - here, take this.\n";
+
         std::cout << "───── You receive a +25 health potion ─────\n";
         p->getInventory().addPotion("Small Health Potion", "Restores +25 HP", 25, 1); // Add health potion to inventory.
 
@@ -106,18 +134,19 @@ bool load_player(Player*& player) {
     if (!inFile) { return false; } // Return false if file doesn't exist
 
     std::string name, location;
-    int hp, maxHp, strength, level, exp;
+    int hp, maxHp, strength, level, exp, expLim;
 
     std::getline(inFile, name);
     inFile >> hp;
     inFile >> maxHp;
     inFile >> level;
     inFile >> exp;
+    inFile >> expLim;
     inFile >> strength;
     inFile.ignore();
     std::getline(inFile, location);
 
-    player = new Player(name, hp, maxHp, strength, location, level, exp);
+    player = new Player(name, hp, maxHp, strength, location, level, exp, expLim);
 
     int itemCount;
     inFile >> itemCount;
@@ -148,7 +177,8 @@ bool load_player(Player*& player) {
             quantity = std::stoi(temp);
 
             player->getInventory().addPotion(name, desc, value, quantity);
-        } else if (type == "spell") {
+        }
+        else if (type == "spell") {
             std::string name, desc, element, temp;
             int base, weak, strong;
 
