@@ -14,17 +14,13 @@
 #include "Minimap.h"
 #include "win.h"
 
-void playerInstanceOptions(int& choice) {
+void playerInstanceOptions(int& choice, std::string one, std::string two, std::string three) {
     std::cout << "─── CHOOSE AN OPTION ───\n";
-    std::cout << "1) New Game\n";
-    std::cout << "2) Load Game\n";
-    std::cout << "3) Quit\n";
+    std::cout << "1) " << one << "\n";
+    std::cout << "2) " << two << "\n";
+    std::cout << "3) " << three << "\n";
     std::cout << "\nChoice: ";
     std::cin >> choice;
-
-    if (choice < 1 || choice > 3 || std::cin.fail()) { // If invalid choice, clear input before re-running
-        clearBuffer(); terminateBuffer();
-    }
 }
 
 Player* selectPlayerInstance(Player*& p) {
@@ -37,7 +33,10 @@ Player* selectPlayerInstance(Player*& p) {
 
         Level::test(); // Ensure level class functions splendidly
 
-        playerInstanceOptions(choice);
+        playerInstanceOptions(choice, "New Game", "Load Game", "Quit");
+        if (choice < 1 || choice > 3 || std::cin.fail()) { // If invalid choice, clear input before re-running
+            clearBuffer(); terminateBuffer();
+        }
 
     } while (choice < 1 || choice > 3 || std::cin.fail());
 
@@ -59,12 +58,8 @@ Player* selectPlayerInstance(Player*& p) {
             std::cin.get();
 
             return selectPlayerInstance(p);
-        }
-        else {
-            return p;
-        }
-    }
-    else {
+        } else return p;
+    } else {
         std::string name;
         terminateBuffer();
         clearBuffer();
@@ -75,29 +70,18 @@ Player* selectPlayerInstance(Player*& p) {
         int choice;
 
         Game::gout() << "Welcome, " << name << "!\n";
-        Game::gout() << "You awaken in a town and are faced with a choice of spells, which will you choose?\n";
-        xbar();
-        std::cout << "\n── CHOOSE A SPELL ──\n";
-        std::cout << "1. Fire Spin\n";
-        std::cout << "2. Water Whip\n";
-        std::cout << "3. Leaf Slash\n";
-        std::cout << "Choice: ";
-        std::cin >> choice;
+        Game::gout() << "You awaken in a town and are faced with a choice of spells, which will you choose?\n"; xbar();
 
-        if (choice == 1)  // Add spell to player inventory.
-        {
+        playerInstanceOptions(choice, "Fire Spin", "Water Whip", "Leaf Slash");
+
+        if (choice == 1) { // Add spell to player inventory.
             p->getInventory().addSpell("Fire Spin", "Weak fire ability", 20, 10, 24, "fire");
-        }
-        else if (choice == 2)
-        {
+        } else if (choice == 2) {
             p->getInventory().addSpell("Water Whip", "Weak water ability", 15, 12, 25, "water");
-        }
-        else if (choice == 3)
-        {
+        } else if (choice == 3) {
             p->getInventory().addSpell("Leaf Slash", "Weak grass ability", 15, 5, 28, "grass");
-        }
+        } xbar();
 
-        xbar();
         std::cout << "\n>> Ahh, a fine choice!\n";
 
         std::cout << "\n>> Your first quest is to defeat a slime\n";
@@ -163,8 +147,7 @@ bool load_player(Player*& player) {
             quantity = std::stoi(temp);
 
             player->getInventory().addPotion(name, desc, value, quantity);
-        }
-        else if (type == "spell") {
+        } else if (type == "spell") {
             std::string name, desc, element, temp;
             int base, weak, strong;
 

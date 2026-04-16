@@ -1,4 +1,4 @@
-Player name: Asa
+Player name: w
 Current health: 100
 Maximum health: 100
 Level: 1
@@ -7,12 +7,12 @@ Strength: 5
 Location: Town
 
 Items: 2
-Spell: Fire Spin
-Description: Weak fire ability
-Base damage: 20
-Weak damage: 10
-Strong damage: 24
-Element: fire
+Spell: Water Whip
+Description: Weak water ability
+Base damage: 15
+Weak damage: 12
+Strong damage: 25
+Element: water
 Potion: Small Health Potion
 Description: Restores +25 HP
 Value: 25
