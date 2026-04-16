@@ -17,9 +17,12 @@
 void playerInstanceOptions(int& choice, std::string one, std::string two, std::string three) {
     std::cout << "─── CHOOSE AN OPTION ───\n";
     std::cout << "1) " << one << "\n";
-    std::cout << "2) " << two << "\n";
-    std::cout << "3) " << three << "\n";
-    std::cout << "\nChoice: ";
+    if (two != " ") {
+        std::cout << "2) " << two << "\n";
+        if (three != " ") {
+            std::cout << "3) " << three << "\n";
+        }
+    } std::cout << "\nChoice: ";
     std::cin >> choice;
 }
 
@@ -47,9 +50,7 @@ Player* selectPlayerInstance(Player*& p) {
         clearBuffer();
         std::cin.get();
         return p;
-    }
-
-    else if (choice == 2) {
+    } else if (choice == 2) {
         if (!load_player(p)) {
 
             std::cout << "Save game not found.\n";
@@ -70,7 +71,7 @@ Player* selectPlayerInstance(Player*& p) {
         int choice;
 
         Game::gout() << "Welcome, " << name << "!\n";
-        Game::gout() << "You awaken in a town and are faced with a choice of spells, which will you choose?\n"; xbar();
+        Game::gout() << "You awaken in a town and are faced with a choice of spells, which will you choose?\n"; xbar(); std::cout << '\n';
 
         playerInstanceOptions(choice, "Fire Spin", "Water Whip", "Leaf Slash");
 

@@ -10,6 +10,7 @@
 #include "combat.h"
 #include "Game_Level.h"
 #include "win.h"
+#include "menu.h"
 
 Game* Game::instance = nullptr; // Tells class that the game initially hasn't been created
 
@@ -135,7 +136,7 @@ bool Game::level_one() {
 	terminateBuffer();
 
 	std::cout << "═════════════════════════ GREEN HILL ZONE ═════════════════════════\n";
-	Game::gout() << "You leave step into a lush green hill range full of flowers.\n";
+	Game::gout() << "You step into a lush green hill range full of flowers.\n";
 	Game::gout() << "You progress on in your journey...\n\n";
 
 	Game::gout() << "All of a sudden, something jumps up at you out of nowhere!\n";
@@ -190,24 +191,48 @@ bool Game::level_one() {
 	return true;
 }
 
+bool Game::level_two_choices(int choice, Combat* c) {
+	if (choice == 1) { // ATTACK
+		if (!c->startCombat(p, "Slime", 50, 8, "water")) return false;
+	} else if (choice == 2) { // RUN
+		Game::gout() << "\nThe Mushroom Warrior is catching up to you\n";
+		Game::gout() << "Running away is a form of disrespect in their eyes\n";
+		Game::gout() << "You have offended it and you cannot evade it. What will you do?\n\n";
+		playerInstanceOptions(choice, "ATTACK", "STAY");
+		if (choice == 1) level_two_choices(1, c); // ATTACK
+		else if (choice == 2) level_two_choices(3, c); // STAY
+	} else if (choice == 3) { // STAY
+		Game::gout() << "You hand a stick to the warrior as as an attempt to ease the hostility";
+		std::cout << "???: AweR44 60Jlas w asd";
+		Game::gout() << "It seems that his compadres have been alerted. They troddle towards you, dragging their mushroom helmets"
+					 << "(FUN FACT: mushroom helmets are a part of their bone structure, just as tortoises have shells as part of their skeletal structure)";
+		Game::gout() << "You tell warriors your mission, and they thus deem you to be of no harm to them,"
+			<< "and decide to give you a gift to aid you in your journey.";
+	}
+}
+
 bool Game::level_two() {
+	int choice;
 	Combat* c = new Combat();
 
 	terminateBuffer();
 
 	std::cout << "═════════════════════════ MAGIC MOUNTAIN ═════════════════════════\n";
-	Game::gout() << "You leave step into a lush green hill range full of flowers.\n";
-	Game::gout() << "You progress on in your journey...\n\n";
+	Game::gout() << "As I venture through this forest engorged with shrooms, I can't help but wonder why this place was one of his fondest memories.\n";
+	Game::gout() << "As per the memoir, this was perhaps the last place on Earth devoid of human endeavour (aside from perhaps unliveable areas in the Arctic,"
+				 << "Antarctic, and the Sahara...).\n\n";
+	Game::gout() << "I smell something...\n\n";
 
-	Game::gout() << "All of a sudden, something jumps up at you out of nowhere!\n";
+	// Enemy 1
 
-	// Enemy 1 
-
-	Game::gout() << "A water slime appears!\n";
+	std::cout << "???: " << "ARHGH!!!\n\n";
+	Game::gout() << "A wild Mushroom Warrior has emerged from the marshlands embedded in the forest\n";
 	ask_to_continue();
-	if (!c->startCombat(p, "Slime", 50, 8, "water")) {
-		return false;
-	}
+	
+	Game::gout() << "\nWhat shall your plan of action be?\n";
+	
+	playerInstanceOptions(choice, "Attack", "Run", "Stay");
+	level_two_choices(choice, c);
 
 	// LEVEL COMPLETE
 	Level::isComplete[1] = true;
@@ -217,6 +242,13 @@ bool Game::level_two() {
 }
 
 bool Game::level_three() {
+	Combat* c = new Combat();
+
+	terminateBuffer();
+
+	std::cout << "═════════════════════════ THE ARM OF DISMAY ═════════════════════════\n";
+	Game::gout() << "You leave step into a lush green hill range full of flowers.\n";
+	Game::gout() << "You progress on in your journey...\n\n";
 
 	// LEVEL COMPLETE
 	Level::isComplete[1] = true;
@@ -319,8 +351,7 @@ void Game::menu(Player* p) {
 
 			for (auto& l : level) {
 				std::cout << l.first << ": " << l.second << std::endl;
-			} 
-			std::cout << std::endl;
+			} std::cout << std::endl;
 
 			auto first = Level::names.begin();
 			auto second = std::next(first);
@@ -329,9 +360,7 @@ void Game::menu(Player* p) {
 			level_selection();
 			if (p->location == first->first || p->location == second->first || p->location == third->first) {
 				break;
-			}
-			
-			break;
+			} break;
 		}
 		case 5: {
 			terminateBuffer();

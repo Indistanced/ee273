@@ -234,13 +234,11 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 				if (p->getInventory().addSpell("Water Wave", "Medium water ability", 30, 20, 35, "water")) {
 					std::cout << "- Water Wave spell\n";
 				}
-			}
-			else if (rand_element == 1) {
+			} else if (rand_element == 1) {
 				if (p->getInventory().addSpell("Flame Rush", "Medium fire ability", 30, 20, 35, "fire")) {
 					std::cout << "- Flame Rush spell\n";
 				}
-			}
-			else {
+			} else {
 				if (p->getInventory().addSpell("Grass Spikes", "Medium grass ability", 30, 20, 35, "grass")) {
 					std::cout << "- Grass Spikes spell\n";
 				}
@@ -255,13 +253,11 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 				if (p->getInventory().addSpell("Hydro Connon", "Strong water ability", 40, 30, 55, "water")) {
 					std::cout << "- Hydro Cannon spell\n";
 				}
-			}
-			else if (rand_element == 1) {
+			} else if (rand_element == 1) {
 				if (p->getInventory().addSpell("Inferno", "Strong fire ability", 40, 30, 55, "fire")) {
 					std::cout << "- Inferno spell\n";
 				}
-			}
-			else {
+			} else {
 				if (p->getInventory().addSpell("Leaf Tornado", "Strong grass ability", 40, 30, 55, "grass")) {
 					std::cout << "- Leaf Tornado spell\n";
 				}

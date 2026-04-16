@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Player.h"
+#include "combat.h"
 
 // Class created using singleton design pattern, which permits only one instance to be created
 class Game {
@@ -24,6 +25,7 @@ public:
 
 	bool level_one();
 	bool level_two();
+	bool level_two_choices(int choice, Combat* c);
 	bool level_three();
 
 private:

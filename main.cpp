@@ -11,9 +11,10 @@
 int main() {
 	
 	// INITIALISATIONS
+
 	WinMinimap();
 
-	srand(time(0)); // Random number generator set seed
+	srand(static_cast<unsigned int>(time(0))); // Random number generator set seed
 	unicode_init(); // Enable unicode
 	
 
