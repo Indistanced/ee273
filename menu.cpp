@@ -134,6 +134,27 @@ Player* selectPlayerInstance(Player*& p) {
     }
 }
 
+bool gameOverMenu() {
+    int choice;
+
+    do {
+    terminateBuffer();
+    
+    std::cout << "\n─── GAME OVER ───\n"; 
+    std::cout << "1) Restart Game\n";
+    std::cout << "2) Quit\n";
+    std::cout << "Choice: ";
+
+    std::cin >> choice;
+    if(std::cin.fail()) {
+        clearBuffer();
+    }
+
+    } while  if(choice != 1 && choice != 2);
+
+    return (choice == 1);
+}
+
 bool load_player(Player*& player) {
 
     const std::string file_name = "game_save_file.txt"; // Constant load file path (eliminates user error)

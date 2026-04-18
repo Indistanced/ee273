@@ -150,10 +150,6 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 
 		clearBuffer(); terminateBuffer();
 
-		if (enemy_name == "Slime") { create_slime(e); }
-		if (enemy_name == "Goblin") { create_goblin(e); }
-		if (enemy_name == "Fire Spirit") { create_fire_spirit(e); }
-
 		std::cout << "\n══════════════ Combat ══════════════\n";
 
 		std::cout << "\nPlayer Health: " << p->getHealth() << "\n";
@@ -165,11 +161,8 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 
 		// ENEMY TURN
 
-		clearBuffer(); terminateBuffer();
-
-		if (enemy_name == "Slime") { create_slime(e); }
-		if (enemy_name == "Goblin") { create_goblin(e); }
-		if (enemy_name == "Fire Spirit") { create_fire_spirit(e); }
+		clearBuffer(); 
+		terminateBuffer();
 
 		std::cout << "\n══════════════ Combat ══════════════\n";
 

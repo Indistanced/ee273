@@ -16,7 +16,7 @@ public:
 	// INITIALISATIONS
 	static Game* getInstance(Player* p);
 	void start(Player* p);
-	void run(Game* g, Player* p);
+	bool run(Game* g, Player* p);
 	static std::ostream& gout();
 
 	// MAIN
@@ -34,6 +34,7 @@ public:
 	bool level_two_choices(int choice, Combat* c);
 	bool level_three();
 
+	static void resetInstance();
 private:
 	static Game* instance;
 	Player* p;

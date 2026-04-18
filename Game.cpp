@@ -98,10 +98,12 @@ void Game::start(Player* p) {
 	return;
 }
 
-void Game::run(Game* g, Player* p) {
+bool Game::run(Game* g, Player* p) {
 	start(p);
 	save_player(p);
 	menu(p);
+
+	return p->isAlive();
 }
 
 std::ostream& Game::gout() {
@@ -138,8 +140,9 @@ bool Game::quit_game() {
 	
 }
 
+
 bool Game::level_one() {
-	Combat* c = new Combat();
+	Combat c;
 
 	terminateBuffer();
 
@@ -153,7 +156,7 @@ bool Game::level_one() {
 
 	Game::gout() << "A water slime appears!\n";
 	ask_to_continue();
-	if (!c->startCombat(p, "Slime", 50, 8, "water")) {
+	if (!c.startCombat(p, "Slime", 50, 8, "water")) {
 		return false;
 	}
 
@@ -172,7 +175,7 @@ bool Game::level_one() {
 	Game::gout() << "You move deeper into the hills...\n";
 	Game::gout() << "A wild grass goblin ambushes you!\n";
 	ask_to_continue();
-	if (!c->startCombat(p, "Goblin", 70, 10, "grass")) {
+	if (!c.startCombat(p, "Goblin", 70, 10, "grass")) {
 		return false;
 	}
 
@@ -185,7 +188,7 @@ bool Game::level_one() {
 	Game::gout() << "You reach the top of the hill...\n";
 	Game::gout() << "A powerful fire spirit blocks your path!\n";
 	ask_to_continue();
-	if (!c->startCombat(p, "Fire Spirit", 100, 12, "fire")) {
+	if (!c.startCombat(p, "Fire Spirit", 100, 12, "fire")) {
 		return false;
 	}
 
@@ -197,6 +200,140 @@ bool Game::level_one() {
 	Game::gout() << "You have a new quest! - Reach the portal at the peak of the Magic Mountain";
 	p->addQuest("Reach the portal at the peak of the Magic Mountain", false);
 
+	save_player(p);
+
+	return true;
+}
+
+
+bool Game::level_two() {
+	Combat c;
+
+	terminateBuffer();
+
+	std::cout << "═════════════════════════ MAGIC MOUNTAIN ═════════════════════════\n";
+	Game::gout() << "You enter a mysical place.\n";
+	Game::gout() << "You look around and admire the mystical atmosphere of the mountain.\n";
+	Game::gout() << "You progress on in your journey up the mountain...\n\n";
+
+	Game::gout() << "Suddenly, a rock starts to move!\n";
+
+	// Enemy 1 
+
+	Game::gout() << "A Grass Golomb awakens!\n";
+	ask_to_continue();
+	if (!c.startCombat(p, "Golomb", 120, 12, "Golumb")) {
+		return false;
+	}
+
+	Game::gout() << "\nThe Golomb perisies but not without a warning...\n";
+	std::cout << "Beware of the Water Serpent";
+
+	Game::gout() << "\nYou have a new quest! - Take down the Water Serpent\n";
+	p->addQuest("Take down the fire spirit", false);
+
+	ask_to_continue();
+
+	// Enemy 2 
+	terminateBuffer();
+
+	Game::gout() << "You move asend futher up the mountain...\n";
+	Game::gout() << "You stuble on a rock and fall into a bird nest.\n";
+	Game::gout() << "A Firebird takes you as a threat and attacks!\n";
+	ask_to_continue();
+	if (!c.startCombat(p, "Firebird", 150, 15, "fire")) {
+		return false;
+	}
+
+	// Enemy 3 (boss battle)
+	terminateBuffer();
+
+	Game::gout() << "You reach the peak of the mountain...\n";
+	Game::gout() << "A terrifying water serpent radiating with magic stands between you and the portal!\n";
+	ask_to_continue();
+	if (!c.startCombat(p, "Water Serpent", 200, 20, "water")) {
+		return false;
+	}
+
+	std::cout << "\nYou completed a quest! - Take down the Water Serpent\n";
+	p->completeQuest("Take down the Water Serpent");
+
+
+	// LEVEL COMPLETE
+	Game::gout() << "\n\nYou compose yourself and go through the portal.\n";
+	std::cout << "\n-- You completed Level 2! --\n";
+
+	std::cout << "\nYou completed a quest! - Reach the portal at the peak of the Magic Mountain\n";
+	p->completeQuest("Reach the portal at the peak of the Magic Mountain");
+	Level::isComplete[1] = true;
+
+	Game::gout() << "\n\nYou have a new quest! - concur The Arm of Dismay\n";
+	p->addQuest("concur The Arm of Dismay", false);
+
+	save_player(p);
+
+	return true;
+}
+
+bool Game::level_three() {
+
+	Combat c;
+
+	terminateBuffer();
+
+	std::cout << "═════════════════════════ THE ARM OF DISMAY ═════════════════════════\n";
+	Game::gout() << "You come of a the portal and sense a dark presence...\n";
+	Game::gout() << "You look around and feel a sense of dread.\n";
+	Game::gout() << "You progress on in your journey through the dark dungeon...\n\n";
+
+	// Enemy 1 
+	Game::gout() << "You cross a bridge over a lava pit\n";
+	Game::gout() << "Suddenly, something rises from the flames!\n";
+	Game::gout() << "An Ember Titan!\n";
+	ask_to_continue();
+	if (!c.startCombat(p, "Ember Titan", 220, 25, "fire")) {
+		return false;
+	}
+
+
+	// Enemy 2 
+	terminateBuffer();
+
+	Game::gout() << "You move futher through the dungeon...\n";
+	Game::gout() << "The air suddenly grows cold and damp.\n";
+	Game::gout() << "Water begins to drip from the ceiling...\n";
+	Game::gout() << "A pool forms beneath your feet.\n";
+	Game::gout() << "Without warning, it surges upward!\n";
+	Game::gout() << "An Aqua Phantom emerges!\n";
+
+	ask_to_continue();
+	if (!c.startCombat(p, "Aqua Phantom", 250, 30, "water")) {
+		return false;
+	}
+
+	// Enemy 3 (boss battle)
+	terminateBuffer();
+
+	Game::gout() << "You step into a vast chamber...\n";
+	Game::gout() << "Strangely... vines cover the walls.\n";
+	Game::gout() << "Roots twist through the stone, pulsing with life.\n";
+	Game::gout() << "The ground begins to shift beneath you.\n";
+	Game::gout() << "A massive form rises.\n";
+	Game::gout() << "Thornheart Dragon awakens!\n";
+	ask_to_continue();
+	if (!c.startCombat(p, "Thornheart Dragon", 300, 35, "grass")) {
+		return false;
+	}
+
+	// LEVEL COMPLETE
+	std::cout << "\nYou completed a quest! - concur The Arm of Dismay\n\n";
+	p->completeQuest("concur The Arm of Dismay");
+
+	Game::gout() << "The Dragon lets out a deep groan as the vines wither away...\n";
+	Game::gout() << "The dungeon falls silent.\n";
+	Game::gout() << "You stand victorious.\n\n";
+
+	Level::isComplete[2] = true;
 	save_player(p);
 
 	return true;
@@ -254,172 +391,8 @@ bool Game::level_two() {
 	return true;
 }
 
-bool Game::level_two() {
-	Combat* c = new Combat();
-
-	terminateBuffer();
-
-	std::cout << "═════════════════════════ MAGIC MOUNTAIN ═════════════════════════\n";
-	Game::gout() << "You reach the bottom the mountain.\n";
-	Game::gout() << "You look around and admire the mystical atmosphere.\n";
-	Game::gout() << "You progress on in your journey up the mountain...\n\n";
-
-	Game::gout() << "Suddenly, a rock starts to move!\n";
-
-	// Enemy 1 
-
-	Game::gout() << "A Grass Golomb awakens!\n";
-	ask_to_continue();
-	if (!c->startCombat(p, "Golomb", 120, 12, "Golumb")) {
-		return false;
-	}
-
-	Game::gout() << "\nThe Golomb falls but not without a warning...\n";
-	std::cout << "Beware of the Water Serpent";
-
-	Game::gout() << "\nYou have a new quest! - Take down the Water Serpent\n";
-	p->addQuest("Take down the fire spirit", false);
-
-	ask_to_continue();
-
-	// Enemy 2 
-	terminateBuffer();
-
-	Game::gout() << "You move asend futher up the mountain...\n";
-	Game::gout() << "You stuble on a rock and fall into a bird nest.\n";
-	Game::gout() << "A Firebird takes you as a threat and attacks!\n";
-	ask_to_continue();
-	if (!c->startCombat(p, "Firebird", 150, 15, "fire")) {
-		return false;
-	}
-
-	// Enemy 3 (boss battle)
-	terminateBuffer();
-
-	Game::gout() << "You reach the peak of the mountain...\n";
-	Game::gout() << "A terrifying water serpent radiating with magic stands between you and the portal!\n";
-	ask_to_continue();
-	if (!c->startCombat(p, "Water Serpent", 200, 20, "water")) {
-		return false;
-	}
-
-	std::cout << "\nYou completed a quest! - Take down the Water Serpent\n";
-	p->completeQuest("Take down the Water Serpent");
-
-
-	// LEVEL COMPLETE
-	Game::gout() << "\n\nYou compose yourself and go through the portal.\n";
-	std::cout << "\n-- You completed Level 2! --\n";
-
-	std::cout << "\nYou completed a quest! - Reach the portal at the peak of the Magic Mountain\n";
-	p->completeQuest("Reach the portal at the peak of the Magic Mountain");
-	Level::isComplete[1] = true;
-
-	Game::gout() << "\n\nYou have a new quest! - concur The Arm of Dismay\n";
-	p->addQuest("concur The Arm of Dismay", false);
-
-	save_player(p);
-
-	return true;
-}
-
-bool Game::level_three() {
-
-	Combat* c = new Combat();
-
-	terminateBuffer();
-
-	std::cout << "═════════════════════════ THE ARM OF DISMAY ═════════════════════════\n";
-	Game::gout() << "You come of a the portal and sense a dark presence...\n";
-	Game::gout() << "You look around and feel a sense of dread.\n";
-	Game::gout() << "You progress on in your journey through the dark dungeon...\n\n";
-
-	// Enemy 1 
-	Game::gout() << "You cross a bridge over a lava pit\n";
-	Game::gout() << "Suddenly, something rises from the flames!\n";
-	Game::gout() << "An Ember Titan!\n";
-	ask_to_continue();
-	if (!c->startCombat(p, "Ember Titan", 220, 25, "fire")) {
-		return false;
-	}
-
-
-	// Enemy 2 
-	terminateBuffer();
-
-	Game::gout() << "You move futher through the dungeon...\n";
-	Game::gout() << "The air suddenly grows cold and damp.\n";
-	Game::gout() << "Water begins to drip from the ceiling...\n";
-	Game::gout() << "A pool forms beneath your feet.\n";
-	Game::gout() << "Without warning, it surges upward!\n";
-	Game::gout() << "An Aqua Phantom emerges!\n";
-
-	ask_to_continue();
-	if (!c->startCombat(p, "Aqua Phantom", 250, 30, "water")) {
-		return false;
-	}
-
-	// Enemy 3 (boss battle)
-	terminateBuffer();
-
-	Game::gout() << "You step into a vast chamber...\n";
-	Game::gout() << "Strangely... vines cover the walls.\n";
-	Game::gout() << "Roots twist through the stone, pulsing with life.\n";
-	Game::gout() << "The ground begins to shift beneath you.\n";
-	Game::gout() << "A massive form rises.\n";
-	Game::gout() << "Thornheart Dragon awakens!\n";
-	ask_to_continue();
-	if (!c->startCombat(p, "Thornheart Dragon", 300, 35, "grass")) {
-		return false;
-	}
-
-	// LEVEL COMPLETE
-	std::cout << "\nYou completed a quest! - concur The Arm of Dismay\n\n";
-	p->completeQuest("concur The Arm of Dismay");
-
-	Game::gout() << "The Dragon lets out a deep groan as the vines wither away...\n";
-	Game::gout() << "The dungeon falls silent.\n";
-	Game::gout() << "You stand victorious.\n\n";
-
-	Level::isComplete[2] = true;
-	save_player(p);
-
-	return true;
-}
-
-void Game::level_selection() {
-	auto first = Level::names.begin();
-	auto second = std::next(first);
-	auto third = std::next(second);
-
-	if (p->getLocation() == "Town") {
-		p->setLocation(first->first);
-		std::cout << "You are entering level " << Level::names[p->getLocation()] << std::endl;
-
-		if (!level_one()) {
-			std::cout << "Game over!";
-		} ask_to_continue();
-		p->setLocation(second->first);
-		return;
-	}
-
-	if (p->getLocation() == second->first) {
-		std::cout << "You are entering level " << Level::names[p->getLocation()] << std::endl;
-		if (!level_two()) {
-			std::cout << "Game over!";
-		} ask_to_continue();
-		p->setLocation(third->first);
-		return;
-	}
-
-	if (p->getLocation() == third->first) {
-		std::cout << "You are entering level " << Level::names[p->getLocation()] << std::endl;
-		if (!level_three()) {
-			std::cout << "Game over!";
-		} ask_to_continue();
-		p->setLocation("End");
-		return;
-	}
+void Game::resetInstance() {
+	instance = nullptr;
 }
 
 void Game::menu(Player* p) {
@@ -492,6 +465,10 @@ void Game::menu(Player* p) {
 			if (p->getLocation() == first->first || p->getLocation() == second->first || p->getLocation() == third->first) {
 				break;
 			}
+
+
+			//need a way to return if level is not complete
+
 
 			break;
 		}

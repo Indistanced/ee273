@@ -1,4 +1,5 @@
 ﻿#include "clear.h"
+#include <limits>
 
 void clearBuffer() {
     std::cin.clear();

@@ -23,21 +23,34 @@ int main() {
 	srand(static_cast<unsigned int>(time(0))); // Random number generator set seed
 	unicode_init(); // Enable unicode
 	
-
-	Player* p = selectPlayerInstance(p); // Select game type
-	if (p == nullptr) return 0; // Check whether player exists
+	while (true) {
+	Player* p = nullptr;
+	p = selectPlayerInstance(p);
+	if (p == nullptr) {
+		return 0; // Check whether player exists
+	}
 
 	Game* g = Game::getInstance(p); // Create, load, or exit instance
-
-	// MAIN
-	g->run(g, p); // Run game instance
+	bool alive = g->run(g, p);
 
 	// TESTING
 	Level::test();
-
-	// DEALLOCATE MEMORY
-	delete p;
+	
 	delete g;
+	Game::resetInstance();
+	delete p;
+
+	if(!alive) {
+		if (gameOverMenu()) {
+			continue; // restart
+		}
+		else {
+			break; // quit game
+		}
+	}
+	else {
+		break; // normal exit
+	}
 
 	return 0;
 }
