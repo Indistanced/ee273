@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿//Author: Aidan Kelly and Kyle Simpson
+//Creation Date: 14/03/26
+
+//Changes made:
+//- added in levels functions
+
+
+#pragma once
 
 #include "Player.h"
 #include "combat.h"
@@ -17,7 +24,6 @@ public:
 	bool save_player(Player*& p);
 	void menu(Player* p);
 	bool quit_game();
-	void ask_to_continue();
 	
 	// LEVELS
 

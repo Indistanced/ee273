@@ -1,23 +1,31 @@
+//Author: Aidan Kelly and Kyle Simpson
+//Creation Date: 01/03/26
+
+//Changes made:
+//- removed attack() function as it was not needed.
+
 #include "Character.h"
 
 #include <string>
 
 void Character::takeDamage(int dmg) {
-    currentHealth -= dmg;
+    currentHealth -= dmg;   //update current health
 
-    if (currentHealth < 0) {
+    //check to ensure health dose not fall below 0.
+    if (currentHealth < 0) {  
         currentHealth = 0;
     }
 }
 
 bool Character::isAlive() const {
-    return currentHealth > 0;
+    return currentHealth > 0;  
 }
 
 void Character::addHealth(int health) {
 
-    currentHealth += health;
+    currentHealth += health; //update current health
 
+    //Make sure health dose not exceed maximum
     if (currentHealth > maxHealth) {
         currentHealth = maxHealth;
     }

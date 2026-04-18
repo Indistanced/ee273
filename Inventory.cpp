@@ -1,4 +1,13 @@
-﻿#include <vector>
+﻿//Author: Kyle Simpson
+//Creation Date: 22/03/26
+
+//Changes made:
+//- added in dynamic casting of potions and spells
+//- added in unicode to text
+//- added in selective potion and spell getter functions
+//- added in selective potion and spell display functions
+
+#include <vector>
 #include <iostream>
 #include <limits> 
 
@@ -77,7 +86,7 @@ void Inventory::displayPotions() {
 void  Inventory::displayItems(Player* p) {
 
     while (true) {
-        std::cout << "\033[3J\033[H\033[2J"; //Control sequence to clear terminal
+        terminateBuffer();
         std::cout << u8"═════════════════════════ PLAYER INVENTORY ═════════════════════════\n";
 
         displaySpells();
@@ -92,7 +101,7 @@ void  Inventory::displayItems(Player* p) {
 
         do {
             std::cin >> choice;
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // clear input stream
+            clearBuffer();
         } while (choice < 1 || choice > 2);
 
         if (choice == 1) {
@@ -118,6 +127,7 @@ void  Inventory::displayItems(Player* p) {
             do {
                 std::cout << "\nChoice: ";
                 std::cin >> potionChoice;
+                clearBuffer();
 
             } while (potionChoice < 1 || potionChoice > potions.size());
 
@@ -174,38 +184,4 @@ std::vector<Spell*> Inventory::getSpells() {
     }
 
     return spells;
-}
-
-
-void Inventory::ask_to_continue() {
-    std::string input;
-
-    std::cout << "\n>> Press enter to continue <<";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //claer input stream
-    std::getline(std::cin, input); //return when enter is recived.
-    return;
-}
-
-int Inventory::getSpellNumber() {
-    int count = 0;
-    for (auto& item : inventory) {
-        Spell* s = dynamic_cast<Spell*>(item);
-        if (s != nullptr) {
-            count++;
-        }
-    }
-
-    return count;
-
-}
-int Inventory::getPotionNumber() {
-    int count = 0;
-    for (auto& item : inventory) {
-        Potion* p = dynamic_cast<Potion*>(item);
-        if (p != nullptr) {
-            count++;
-        }
-    }
-
-    return count;
 }

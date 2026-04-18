@@ -1,4 +1,12 @@
-﻿#include "combat.h"
+﻿//Author:  Kyle Simpson and Aidan Kelly
+//Creation Date: 07/04/26
+
+//Changes made:
+//- added in extra enemy attack strategies
+//- added in random item drop change using rand() fucntion
+
+
+#include "combat.h"
 #include "unicode.h"
 #include "Game.h"
 #include "clear.h"

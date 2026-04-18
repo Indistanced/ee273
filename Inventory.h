@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿//Author: Kyle Simpson
+//Creation Date: 22/03/26
+
+//Changes made:
+//- added in selective potion and spell getter functions
+//- added in selective potion and spell display functions
+
+#pragma once
 #include <vector>
 #include <string>
 
@@ -16,14 +23,10 @@ public:
     void removeItem(Item* itemToRemove);
 
     void displayItems(Player* p);
-    void ask_to_continue();
     
     std::vector<Item*>& getItems();   // For saving and loading items
     std::vector<Potion*> getPotions(); 
     std::vector<Spell*> getSpells();
-
-    int getSpellNumber();
-    int getPotionNumber();
 
     void displaySpells();
     void displayPotions();

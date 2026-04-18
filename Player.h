@@ -1,3 +1,11 @@
+//Author: Aidan Kelly and Kyle Simpson
+//Creation Date: 02/03/26
+
+//Changes made:
+//- added in loaction atribute
+//- added in Level and experience attribute
+//- added in Inventory and quest management
+
 #pragma once
 
 #include "Character.h"
@@ -11,6 +19,7 @@
 class Player : public Character {
 public:
 
+	// Default variables
 	const unsigned int DEFAULT_LEVEL = 1;
 	const std::string START_LOCATION = "Town";
 	const int START_EXP = 0;
@@ -27,21 +36,24 @@ public:
 		this->level = level, this->location = location; this->exp = exp; this->expLimit = expLimit;
 	};
 
-	static std::istream& pin(Player* p);
-	void to_string();
+	
+	static std::istream& pin(Player* p);  //function to call player name before test i.e "John: "
 
+	void to_string(); // convert player stats to string
+
+	//Getters 
 	int getLevel() const { return level; };
-
-	void addExp(int exp_ammount);
 	int getExp() const { return exp; };
 	int getExpLimit() const { return expLimit; }
-
 	std::string getLocation();
+	Inventory& getInventory() { return inventory; } //get players inventroy 
+	std::vector<std::pair<std::string, bool>>& getQuests();
+
+	//Setters
+	void addExp(int exp_ammount);
 	void setLocation(std::string loc);
 
-	Inventory& getInventory() { return inventory; } //get players inventroy 
-
-	std::vector<std::pair<std::string, bool>>& getQuests();
+	//Quest management functions
 	bool addQuest(std::string description, bool complete);
 	bool completeQuest(std::string description);
 	void quests_to_string();

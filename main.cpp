@@ -1,4 +1,11 @@
-﻿#include "Player.h"
+﻿//Author: Aidan Kelly and Kyle Simpson
+//Creation Date: 01/03/26
+
+//Changes made:
+//- added in random number generator seed
+//- added unicode enable  
+
+#include "Player.h"
 #include "menu.h"
 #include "Game.h"
 #include "unicode.h"
@@ -11,7 +18,6 @@
 int main() {
 	
 	// INITIALISATIONS
-
 	WinMinimap();
 
 	srand(static_cast<unsigned int>(time(0))); // Random number generator set seed
@@ -24,15 +30,12 @@ int main() {
 	Game* g = Game::getInstance(p); // Create, load, or exit instance
 
 	// MAIN
-
 	g->run(g, p); // Run game instance
 
 	// TESTING
-
 	Level::test();
 
 	// DEALLOCATE MEMORY
-
 	delete p;
 	delete g;
 

@@ -1,15 +1,24 @@
-﻿#pragma once
+﻿//Author: Kyle Simpson
+//Creation Date: 22/03/26
+
+//Changes made:
+//- added in virtual destructor for item
+
+#pragma once
 #include <string>
 
 class Player;
 
 class Item {
 public: 
-    // Add a default constructor to fix E0291
-    Item() : name(""), description("") {}
+    // Constructors 
+    Item() : name(""), description("") {} 
     Item(std::string name, std::string description) : name(name), description(description) {}
-    virtual ~Item() {}
 
+    // destructor
+    virtual ~Item() {} 
+
+    //getters 
     std::string get_name();
     std::string get_description();
 protected:
@@ -19,8 +28,13 @@ protected:
 
 class Spell : public Item {
 public:
+    // Constructor 
     Spell(std::string name, std::string description, int weak, int base, int strong, std::string element): Item(name,description) , weak(weak), base(base), strong(strong), element(element) {}
-    ~Spell() {}
+    
+    // destructor
+    ~Spell() {}  
+
+    //getters
     int get_weak();
     int get_strong();
     int get_base();
@@ -35,11 +49,20 @@ private:
 
 class Potion : public Item {
 public:
+    // Constructor
     Potion(std::string name, std::string description, int value, int quantity) : Item(name, description), value(value), quantity(quantity) {}
+    
+    // destructor
     ~Potion() {}
+
+    //getters
     int get_value();
     int get_quantity();
+
+    //setter
     void set_quantity(int value);
+    
+    //use potion function
     bool use_potion(Player* p);
 
 private:

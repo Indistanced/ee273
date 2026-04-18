@@ -1,4 +1,10 @@
-﻿#pragma once
+﻿//Author: Aidan Kelly and Kyle Simpson
+//Creation Date: 08/03/26
+
+//Changes made:
+//- added in player choice function
+
+#pragma once
 #include <iostream>
 #include <string>
 #include "Player.h"

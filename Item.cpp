@@ -1,3 +1,7 @@
+//Author: Kyle Simpson
+//Creation Date: 22/03/26
+
+
 #include "Item.h"
 #include "Player.h"
 

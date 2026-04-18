@@ -1,4 +1,15 @@
-﻿#include <iostream> // Read and write functionality with console
+﻿//Author: Aidan Kelly and Kyle Simpson
+//Creation Date: 14/03/26
+
+//Changes made:
+//- updated game menue with player stats 
+//- updated game menue with inventory display
+//- updated game menue with quest display
+//- upadated save and quit options
+//- updated save file with loaction, level, experience, inventory and quests
+//- added in level story and combat interaction for levels 1 to 3
+
+#include <iostream> // Read and write functionality with console
 #include <fstream> // Read and write functionality with files
 #include <string> // Enable strings
 #include <map> // Enable maps
@@ -22,9 +33,6 @@ Game* Game::getInstance(Player* p) {
 //Save Game function
 bool Game::save_player(Player*& p) {
 	const std::string file_name = "game_save_file.txt"; // Constant load file path (eliminates user error)
-
-	std::string name{}, location{};
-	int hp{}, maxHp{}, strength{};
 
 	std::ofstream outFile(file_name);
 
@@ -66,7 +74,6 @@ bool Game::save_player(Player*& p) {
 		}
 	}
 
-
 	auto& quests = p->getQuests();
 
 	outFile << quests.size() << "\n";
@@ -80,7 +87,6 @@ bool Game::save_player(Player*& p) {
 }
 
 void Game::start(Player* p) {
-	std::string start;
 	terminateBuffer();
 
 	gout() << "Welcome, Adventurer " << p->getName() << "!\n"; // Introductory message
@@ -88,8 +94,7 @@ void Game::start(Player* p) {
 	std::cout << ">> Press enter to start <<"; // Confirmation
 
 	clearBuffer();
-
-	std::getline(std::cin, start); // Return when new line (enter is received)
+	std::cin.get();  // wait for player to press enter
 	return;
 }
 
@@ -106,31 +111,31 @@ std::ostream& Game::gout() {
 
 bool Game::quit_game() {
 
+	terminateBuffer();
 	std::string answer;
 
+	while (true) {
 	std::cout << "\n>> Are you sure you want to exit?\n";
 	std::cout << "\t>> Yes (Y) / No (N) <<\n";
-	std::cout << "Choice: ";
-	std::cin >> answer;
+	
+		std::cout << "Choice: ";
+		std::cin >> answer;
 
-	for (char& c : answer) {
-		c = tolower(c);
+		for (char& c : answer) {
+			c = tolower(c);
+		}
+
+		if (answer == "yes" || answer == "y") {
+			return true;
+		} 
+		else if (answer == "no" || answer == "n") {
+			return false;
+		}
+		else {
+			std::cout << "Invaild response, try again.\n\n";
+		}
 	}
-
-	if (answer == "yes" || answer == "y") {
-		return true;
-	} return false;
-}
-
-void Game::ask_to_continue() {
-	std::string input;
-
-	std::cout << "\n>> Press enter to continue <<";
-
-	clearBuffer();
-
-	std::getline(std::cin, input); // Return when new line (enter is received)
-	return;
+	
 }
 
 bool Game::level_one() {
@@ -255,8 +260,8 @@ bool Game::level_two() {
 	terminateBuffer();
 
 	std::cout << "═════════════════════════ MAGIC MOUNTAIN ═════════════════════════\n";
-	Game::gout() << "You enter a mysical place.\n";
-	Game::gout() << "You look around and admire the mystical atmosphere of the mountain.\n";
+	Game::gout() << "You reach the bottom the mountain.\n";
+	Game::gout() << "You look around and admire the mystical atmosphere.\n";
 	Game::gout() << "You progress on in your journey up the mountain...\n\n";
 
 	Game::gout() << "Suddenly, a rock starts to move!\n";
@@ -269,7 +274,7 @@ bool Game::level_two() {
 		return false;
 	}
 
-	Game::gout() << "\nThe Golomb perisies but not without a warning...\n";
+	Game::gout() << "\nThe Golomb falls but not without a warning...\n";
 	std::cout << "Beware of the Water Serpent";
 
 	Game::gout() << "\nYou have a new quest! - Take down the Water Serpent\n";

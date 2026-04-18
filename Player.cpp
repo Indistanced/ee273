@@ -1,4 +1,11 @@
-﻿#include "Player.h"
+﻿//Author: Aidan Kelly and Kyle Simpson
+//Creation Date: 02/03/26
+
+//Changes made:
+//- added in Level and experience functions
+//- added in quest management functions
+
+#include "Player.h"
 
 #include <fstream>
 #include <iostream>
@@ -8,6 +15,7 @@ std::istream& Player::pin(Player* p) {
 	return std::cin;
 }
 
+//Player stats to string
 void Player::to_string() {
 
 	std::cout << "Name: " << this->name << "\n";
@@ -19,15 +27,17 @@ void Player::to_string() {
 
 }
 
+//add experience 
 void Player::addExp(int exp_ammount) {
 
 	exp += exp_ammount;
 
+	//levelling up mechanic
 	if (exp >= exp_limit) {
 
 		level++;
 		exp = exp - exp_limit;
-		maxHealth += 20;
+		maxHealth += 50;
 		strength += 10;
 		currentHealth = maxHealth;
 
@@ -42,6 +52,7 @@ std::vector<std::pair<std::string, bool>>& Player::getQuests() {
 
 bool Player::addQuest(std::string description, bool complete) {
 
+	//check to make sure quest is not added twice
 	for (auto& q : quest) {
 		if (q.first == description) {
 			return false;

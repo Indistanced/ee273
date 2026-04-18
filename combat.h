@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿//Author:  Kyle Simpson and Aidan Kelly
+//Creation Date: 07/04/26
+
+//Changes made:
+//- added in seperate player and enemy moves 
+//- made comabt a struct 
+
+#pragma once
 #include "player.h"
 #include "enemy.h"
 

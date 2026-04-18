@@ -1,4 +1,13 @@
-﻿#include <iostream>
+﻿//Author: Aidan Kelly and Kyle Simpson
+//Creation Date: 08/03/26
+
+//Changes made:
+//- updated story telling text
+//- updated load function with location
+//- updated load fucntion with level and experince
+//- updated load function with inventory and quest
+
+#include <iostream>
 #include <string>
 #include <iomanip>
 #include <limits>
@@ -72,10 +81,9 @@ Player* selectPlayerInstance(Player*& p) {
 
         Game::gout() << "Welcome, " << name << "!\n";
         Game::gout() << "You awaken in the town square.\n";
-        Game::gout() << "The villagers talk amongst themselves, fear in their eyes.\n\n";
 
         Game::gout() << "For weeks, a dark force has been growing beneath the land...\n";
-        Game::gout() << "A cursed place known as the Arm of Dismay.\n";
+        Game::gout() << "A dark place known as the Arm of Dismay.\n";
         Game::gout() << "Creatures have begun emerging from it, attacking anything in their path.\n\n";
 
         Game::gout() << "If nothing is done, the town will fall.\n";
@@ -95,7 +103,8 @@ Player* selectPlayerInstance(Player*& p) {
         std::cout << "Choice: ";
         std::cin >> choice;
 
-        if (choice == 1)  // Add spell to player inventory.
+        // Add spell to player inventory.
+        if (choice == 1)  
         {
             p->getInventory().addSpell("Fire Spin", "Weak fire ability", 20, 10, 24, "fire");
         }
@@ -114,7 +123,7 @@ Player* selectPlayerInstance(Player*& p) {
         Game::gout() << "Your first quest is to defeat a slime\n";
         p->addQuest("Defeat a slime", false);
 
-        Game::gout() << "Prove your strength, then venture into the Arm of Dismay.\n\n";
+        Game::gout() << "Prove your strength, then venture to through the Green Hills!\n\n";
         std::cout << "Villager: Your adventure will be difficult - here, take this.\n";
 
         std::cout << "───── You receive a +25 health potion ─────\n";

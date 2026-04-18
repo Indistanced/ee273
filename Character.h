@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿//Author: Aidan Kelly and Kyle Simpson
+//Creation Date: 01/03/26
+
+//Changes made:
+//- updated to short hand notation
+//- removed attack() function as it was not needed.
+
+#pragma once
 
 #include <string>
 
@@ -14,7 +21,7 @@ public:
 	Character(std::string name, int hp, int maxHp, int strength) : name(name), currentHealth(hp), maxHealth(maxHp), strength(strength){};
 
 
-	virtual ~Character() {}; // Destructor───
+	virtual ~Character() {}; // Destructor
 
 	// Getter member functions
 	std::string getName() const { return name; };
