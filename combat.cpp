@@ -49,19 +49,19 @@ void Combat::playerMove(Player* p, Enemy*& e) {
 
 			Spell* sp = spells[spellChoice - 1]; // The chosen spell is selected
 
-			int damage = p->getStrength() + rand() % 10; // An element of randomness is appended in the definition of the player strength attribute
+			int damage = p->getStrength() + rand() % 5; // An element of randomness is appended in the definition of the player strength attribute
 
 			// Element X -> X = standard damage, Fire -> Water = weak damage, Water -> Fire = string damage, etc.
 			if (sp->get_element() == e->get_element()) {
-				damage += sp->get_base(); // Same elements are neither effective nor ineffective to one another
+				damage += sp->get_weak(); // If the attacker has the element of the enemy's strength, the attack is ineffective
+				dashText("Your spell was not very effective!");
 			}
 			else if (sp->get_element() == e->get_weakness_element()) {
 				damage += sp->get_strong(); // If the attacker has the element of the enemy's weakness, the attack is effective
-				std::cout << "\nYour spell was super effective!";
+				dashText("Your spell was super effective!");
 			}
 			else {
-				damage += sp->get_weak(); // If the attacker has the element of the enemy's strength, the attack is ineffective
-				std::cout << "\nYour spell was not very effective.";
+				damage += sp->get_base(); // If the attacker has another element the base damage will be delt
 			}
 
 			e->takeDamage(damage); // Subtract the corresponding damage value from the enemy's health
@@ -180,15 +180,17 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 	if (p->isAlive()) {
 
 		if (enemy_name == "Fire Spirit") { Level::isComplete[0] = true; } // Unlock next level if final level 1 enemy is defeated
-
+		xbar(50);
+	
+		int exp = e->getMaxHealth() / 2;
 		std::cout << "\nCongratulations! You defeated the " << e->getName() << "!\n";
-		std::cout << "── You Gained +" << e->getMaxHealth() << " Experience! ──\n";
+		std::cout << "  ── You Gained +" << exp << " Experience! ──\n";
 
-		p->addExp(e->getMaxHealth());
+		p->addExp(exp);
 
 		std::cout << "\nThe " << e->getName() << " dropped:\n";
 		item_drop_generator(p, e->getMaxHealth());
-
+		std::cout << "\n\n";
 		delete e;
 		return true;
 	}
@@ -206,43 +208,43 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 	// Lower tier of drops
 	if (enemy_health <= 50) {
 		std::cout << "- Small Health Potion\n";
-		p->getInventory().addPotion("Small Health Potion", "Restores 25 HP", 25, 1);
+		p->getInventory().addPotion("Small Health Potion", "Restores +25 HP", 25, 1);
 
 		if (rand_num < 70) {
 			if (rand_element == 0) {
-				if (p->getInventory().addSpell("Water Ball", "Weak water ability", 18, 15, 25, "water")) {
+				if (p->getInventory().addSpell("Water Ball", "Weak water ability", 18, 8, 25, "water")) {
 					std::cout << "- Water ball spell\n";
 				}
 			}
 			else if (rand_element == 1) {
-				if (p->getInventory().addSpell("Fire Ball", "Weak fire ability", 18, 15, 25, "fire")) {
+				if (p->getInventory().addSpell("Fire Ball", "Weak fire ability", 18, 8, 25, "fire")) {
 					std::cout << "- Fire Ball spell\n";
 				}
 			}
 			else {
-				if (p->getInventory().addSpell("Vine Whip", "Weak grass ability", 18, 15, 25, "grass")) {
+				if (p->getInventory().addSpell("Vine Whip", "Weak grass ability", 18, 8, 25, "grass")) {
 					std::cout << "- Vine Whip spell\n";
 				}
 			}
 		}
 	}
 	else if (enemy_health <= 100) {
-		std::cout << "── Medium Health Potion ──\n";
-		p->getInventory().addPotion("Medium Health Potion", "Restores 50 HP", 50, 1);
+		std::cout << "- Medium Health Potion\n";
+		p->getInventory().addPotion("Medium Health Potion", "Restores +50 HP", 50, 1);
 
 		if (rand_num < 60) {
 			if (rand_element == 0) {
-				if (p->getInventory().addSpell("Water Wave", "Medium water ability", 30, 20, 35, "water")) {
+				if (p->getInventory().addSpell("Water Wave", "Medium water ability", 25, 10, 35, "water")) {
 					std::cout << "- Water Wave spell\n";
 				}
 			}
 			else if (rand_element == 1) {
-				if (p->getInventory().addSpell("Flame Rush", "Medium fire ability", 30, 20, 35, "fire")) {
+				if (p->getInventory().addSpell("Flame Rush", "Medium fire ability", 26, 10, 35, "fire")) {
 					std::cout << "- Flame Rush spell\n";
 				}
 			}
 			else {
-				if (p->getInventory().addSpell("Grass Spikes", "Medium grass ability", 30, 20, 35, "grass")) {
+				if (p->getInventory().addSpell("Grass Spikes", "Medium grass ability", 24, 10, 35, "grass")) {
 					std::cout << "- Grass Spikes spell\n";
 				}
 			}
@@ -250,21 +252,21 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 	}
 	else if (enemy_health <= 200) {
 		std::cout << "- Large Health Potion\n";
-		p->getInventory().addPotion("Large Health Potion", "Restores 75 HP", 75, 1);
+		p->getInventory().addPotion("Large Health Potion", "Restores +75 HP", 75, 1);
 
 		if (rand_num < 50) {
 			if (rand_element == 0) {
-				if (p->getInventory().addSpell("Hydro Connon", "Strong water ability", 40, 30, 55, "water")) {
+				if (p->getInventory().addSpell("Hydro Connon", "Strong water ability", 31, 10, 40, "water")) {
 					std::cout << "- Hydro Cannon spell\n";
 				}
 			}
 			else if (rand_element == 1) {
-				if (p->getInventory().addSpell("Inferno", "Strong fire ability", 40, 30, 55, "fire")) {
+				if (p->getInventory().addSpell("Inferno", "Strong fire ability", 29, 10, 41, "fire")) {
 					std::cout << "- Inferno spell\n";
 				}
 			}
 			else {
-				if (p->getInventory().addSpell("Leaf Tornado", "Strong grass ability", 40, 30, 55, "grass")) {
+				if (p->getInventory().addSpell("Leaf Tornado", "Strong grass ability", 30, 10, 39, "grass")) {
 					std::cout << "- Leaf Tornado spell\n";
 				}
 			}
@@ -273,21 +275,21 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 
 	else {
 		std::cout << "- Mega Health Potion\n";
-		p->getInventory().addPotion("Mega Health Potion", "Restores 100 HP", 100, 1);
+		p->getInventory().addPotion("Mega Health Potion", "Restores +100 HP", 100, 1);
 
 		if (rand_num < 50) {
 			if (rand_element == 0) {
-				if (p->getInventory().addSpell("Tidal Cataclysm", "Legendary water ability", 50, 40, 65, "water")) {
+				if (p->getInventory().addSpell("Tidal Cataclysm", "Legendary water ability", 35, 10, 46, "water")) {
 					std::cout << "- Tidal Cataclysm spell\n";
 				}
 			}
 			else if (rand_element == 1) {
-				if (p->getInventory().addSpell("Emberstorm Dominion", "Legendary fire ability", 50, 40, 65, "fire")) {
+				if (p->getInventory().addSpell("Emberstorm Dominion", "Legendary fire ability", 36, 10, 45, "fire")) {
 					std::cout << "- Emberstorm Dominion spell\n";
 				}
 			}
 			else {
-				if (p->getInventory().addSpell("Nature’s Judgment", "Legendary grass ability", 50, 40, 65, "grass")) {
+				if (p->getInventory().addSpell("Nature’s Judgment", "Legendary grass ability", 34, 10, 44, "grass")) {
 					std::cout << "- Nature’s Judgment spell\n";
 				}
 			}

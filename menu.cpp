@@ -21,7 +21,6 @@
 #include "clear.h"
 #include "Game_Level.h"
 #include "Minimap.h"
-#include "main.h"
 
 void playerInstanceOptions(int& choice, std::string one, std::string two, std::string three, std::string header_text) {
     std::cout << "─── " << header_text << " ───\n";
@@ -43,9 +42,7 @@ Player* selectPlayerInstance(Player*& p) {
         terminateBuffer();
         enbox(title); std::cout << '\n';
 
-        Level::test(); // Ensure level class functions splendidly
-
-        playerInstanceOptions(choice, "New Game", "Load Game", "Quit");
+        playerInstanceOptions(choice, "New Game", "Load Game", "Quit", "Choose an Option");
         if (choice < 1 || choice > 3 || std::cin.fail()) { // If invalid choice, clear input before re-running
             clearBuffer(); terminateBuffer();
         }
@@ -85,34 +82,47 @@ Player* selectPlayerInstance(Player*& p) {
         Game::gout() << "Welcome, " << name << "!\n";
         Game::gout() << "You awaken in the town square.\n";
 
-        Game::gout() << "For weeks, a dark force has been growing beneath the land...\n";
-        Game::gout() << "A dark place known as the Arm of Dismay.\n";
-        Game::gout() << "Creatures have begun emerging from it, attacking anything in their path.\n\n";
+        Game::gout() << "You are surrounded by a crowd of terrified people.\n";
+        Game::gout() << "For weeks creatures have been appering from a dark place...\n";
+        Game::gout() << "A place known as the Arm of Dismay.\n";
+        Game::gout() << "They emerging and attacking anything in their path!\n\n";
 
-        Game::gout() << "If nothing is done, the town will fall.\n";
-        Game::gout() << "The guards have tried and failed.\n";
-        Game::gout() << "Now, all eyes turn to you - a beginner but powerful mage\n\n";
+        Game::gout() << "If nothing is done the town will fall...\n";
+        Game::gout() << "The Knites have tried and failed.\n";
+        Game::gout() << "Now, all eyes turn to you (a beginner but powerful mage).\n\n";
 
         Game::gout() << "You must enter the Arm of Dismay and put an end to whatever lies within.\n";
-        Game::gout() << "You are the towns only hope.\n\n";
+        Game::gout() << "You are the towns only hope!\n\n";
 
         Game::gout() << "Before you set out, you must choose a spell to aid you.\n";
         xbar(); std::cout << "\n";
 
-        playerInstanceOptions(choice, "Fire Spin", "Water Whip", "Lead Slash", "CHOOSE A SPELL");
 
-        // Add spell to player inventory.
-        if (choice == 1)
-        {
-            p->getInventory().addSpell("Fire Spin", "Weak fire ability", 20, 10, 24, "fire");
-        }
-        else if (choice == 2)
-        {
-            p->getInventory().addSpell("Water Whip", "Weak water ability", 15, 12, 25, "water");
-        }
-        else if (choice == 3)
-        {
-            p->getInventory().addSpell("Leaf Slash", "Weak grass ability", 15, 5, 28, "grass");
+        while(true) {
+
+
+            playerInstanceOptions(choice, "Fire Spin", "Water Whip", "Lead Slash", "CHOOSE A SPELL");
+
+            // Add spell to player inventory.
+            if (choice == 1)
+            {
+                p->getInventory().addSpell("Fire Spin", "Weak fire ability", 16, 10, 24, "fire");
+                break;
+            }
+            else if (choice == 2)
+            {
+                p->getInventory().addSpell("Water Whip", "Weak water ability", 15, 12, 25, "water");
+                break;
+            }
+            else if (choice == 3)
+            {
+                p->getInventory().addSpell("Leaf Slash", "Weak grass ability", 14, 8, 26, "grass");
+                break;
+            }
+            else {
+                std::cout << "Invaild choice, try again.\n\n";
+                clearBuffer();
+            }
         }
 
         xbar(); std::cout << "\n";
@@ -121,8 +131,8 @@ Player* selectPlayerInstance(Player*& p) {
         Game::gout() << "Your first quest is to defeat a slime\n";
         p->addQuest("Defeat a slime", false);
 
-        Game::gout() << "Prove your strength, then venture to through the Green Hills!\n\n";
-        std::cout << "Villager: Your adventure will be difficult - here, take this.\n";
+        Game::gout() << "Prove your strength then venture to through the Green Hills!\n\n";
+        std::cout << "Villager: Your adventure will be difficult here, take this.\n";
 
         std::cout << "───── You receive a +25 health potion ─────\n";
         p->getInventory().addPotion("Small Health Potion", "Restores +25 HP", 25, 1); // Add health potion to inventory.

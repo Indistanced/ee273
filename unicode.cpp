@@ -9,18 +9,23 @@ void unicode_init() {
 
 void xbar(int size) {
 	for (int i{}; i < size; i++) {
-		std::cout << u8"─";
+		std::cout << "─";
 	}
 }
 
 void xdbar(int size) {
 	for (int i{}; i < size; i++) {
-		std::cout << u8"═";
+		std::cout << "═";
 	}
 }
 
 void enbox(std::string text) {
-	std::cout << u8"┌"; xbar(text.size()); std::cout << u8"┐" << '\n';
-	std::cout << u8"│" << text << u8"│" << '\n';
-	std::cout << u8"└"; xbar(text.size()); std::cout << u8"┘";
+	std::cout << "┌"; xbar(text.size()); std::cout << "┐" << '\n';
+	std::cout << "│" << text << "│" << '\n';
+	std::cout << "└"; xbar(text.size()); std::cout << "┘";
+}
+
+
+void dashText(std::string text) {
+	std::cout << "  ── " << text << " ──\n";
 }

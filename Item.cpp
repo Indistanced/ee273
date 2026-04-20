@@ -24,6 +24,11 @@ void Potion::set_quantity(int value) { this->quantity = value; }
 bool Potion::use_potion(Player* p)
 {
 
+    if (p->getHealth() == p->getMaxHealth()) {
+        std::cout << "Your health is alreay full.\n";
+        return false;
+    }
+ 
     if (quantity > 0) {
         p->addHealth(value);
         quantity--;

@@ -5,7 +5,8 @@
 //- added in Level and experience functions
 //- added in quest management functions
 
-#include "Player.h"
+#include "player.h"
+#include "unicode.h"
 
 #include <fstream>
 #include <iostream>
@@ -36,11 +37,11 @@ void Player::addExp(int exp_amount) {
 
 		level++;
 		exp = exp - expLimit;
-		maxHealth += 50;
-		strength += 10;
+		maxHealth += 20;
+		strength += 5;
 		currentHealth = maxHealth;
 
-		std::cout << "── You levelled up! ──\n";
+		dashText("YOU LEVELED UP!");
 	}
 }
 
