@@ -59,7 +59,7 @@ void Inventory::removeItem(Item* itemToRemove) {
 
 
 void Inventory::displaySpells() {
-    std::cout << u8"\n────────── Spell List ──────────\n";
+    std::cout << "\n──────────────── Spell List ────────────────\n";
 
     std::vector<Spell*> spells = getSpells();
 
@@ -71,7 +71,7 @@ void Inventory::displaySpells() {
 }
 
 void Inventory::displayPotions() {
-    std::cout << u8"\n────────── Potion List ──────────\n";
+    std::cout << "\n──────────────── Potion List ────────────────\n";
 
     std::vector<Potion*> potions = getPotions();
 
@@ -87,14 +87,14 @@ void  Inventory::displayItems(Player* p) {
 
     while (true) {
         terminateBuffer();
-        std::cout << u8"═════════════════════════ PLAYER INVENTORY ═════════════════════════\n";
+        std::cout << "═════════════════════════ PLAYER INVENTORY ═════════════════════════\n";
 
         displaySpells();
         displayPotions();
 
         int choice = 0;
 
-        std::cout << u8"\n────────── Options ──────────\n";
+        std::cout << "\n────────── Options ──────────\n";
         std::cout << "1) Use a potion.\n";
         std::cout << "2) Exit inventory.\n";
         std::cout << "Choice: ";
@@ -121,7 +121,7 @@ void  Inventory::displayItems(Player* p) {
                     << " | Quantity: "
                     << potions[i]->get_quantity() << "\n";
             }
-
+      
             int potionChoice;
 
             do {
@@ -143,9 +143,7 @@ void  Inventory::displayItems(Player* p) {
                     removeItem(selectedPotion);
                 }
             }
-            else {
-                std::cout << "You do not have any left.\n";
-            }
+            
 
             ask_to_continue();
         }
@@ -185,3 +183,4 @@ std::vector<Spell*> Inventory::getSpells() {
 
     return spells;
 }
+

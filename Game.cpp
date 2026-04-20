@@ -21,7 +21,6 @@
 #include "combat.h"
 #include "Game_Level.h"
 #include "menu.h"
-#include "main.h"
 
 #include <Windows.h>
 #include <opencv2/core.hpp>
@@ -124,9 +123,9 @@ bool Game::save_player(Player*& p) {
 void Game::start(Player* p) {
 	terminateBuffer();
 
-	gout() << "Welcome, Adventurer " << p->getName() << "!\n"; // Introductory message
-	std::cout << "── Entering the " << p->getLocation() << " ──\n"; xbar(); std::cout << '\n'; // Location information
-	std::cout << ">> Press enter to start <<"; // Confirmation
+	std::cout << "\tWelcome, Adventurer " << p->getName() << "!\n"; // Introductory message
+	std::cout << "\t  ── Entering the " << p->getLocation() << " ──\n"; xbar(); std::cout << '\n'; // Location information
+	std::cout << "\t>> Press enter to start <<"; // Confirmation
 
 	clearBuffer();
 	std::cin.get();  // wait for player to press enter
@@ -178,8 +177,6 @@ bool Game::quit_game() {
 bool Game::level_one() {
 	Combat c;
 
-	terminateBuffer();
-
 	std::cout << "You are entering level " << Level::names["Green Hill Zone"] << "\n\n";
 
 	std::cout << "═════════════════════════ GREEN HILL ZONE ═════════════════════════\n";
@@ -199,8 +196,8 @@ bool Game::level_one() {
 	Game::gout() << "You completed a quest! - Defeat a slime\n\n";
 	p->completeQuest("Defeat a slime");
 
-	Game::gout() << "You have a new quest! - Take down the fire spirit";
-	p->addQuest("Take down the fire spirit", false);
+	Game::gout() << "You have a new quest! - Reach the magic mountain";
+	p->addQuest("Reach the magic mountain", false);
 
 	ask_to_continue();
 
@@ -221,7 +218,7 @@ bool Game::level_one() {
 
 	terminateBuffer();
 
-	Game::gout() << "You reach the top of the hill...\n";
+	Game::gout() << "You reach the bottom of the magic mountain...\n";
 	Game::gout() << "A powerful fire spirit blocks your path!\n";
 	ask_to_continue();
 	if (!c.startCombat(p, "Fire Spirit", 100, 12, "fire")) {
@@ -229,8 +226,8 @@ bool Game::level_one() {
 	}
 
 	// LEVEL COMPLETE
-	std::cout << "\nYou completed Level 1!\n";
-	p->completeQuest("Take down the fire spirit");
+	Game::gout() << "You completed Level 1!\n";
+	p->completeQuest("Reach the magic mountain");
 	Level::isComplete[0] = true;
 
 	Game::gout() << "You have a new quest! - Reach the portal at the peak of the Magic Mountain\n\n";
@@ -250,12 +247,6 @@ bool Game::level_two() {
 	std::cout << "You are entering level " << Level::names["Magic Mountain"] << "\n\n";
 
 	std::cout << "═════════════════════════ MAGIC MOUNTAIN ═════════════════════════\n";
-
-
-
-
-
-
 
 	Game::gout() << "You enter a mystical place.\n";
 	Game::gout() << "You look around and admire the mystical atmosphere of the mountain.\n";
@@ -508,7 +499,7 @@ void Game::menu(Player* p) {
 			//if (choice) save_player(p);
 			return;
 			// need a way to return if level is not complete
-		} 
+		}
 		case 5: {
 			terminateBuffer();
 			save_player(p);

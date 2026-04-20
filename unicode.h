@@ -8,3 +8,4 @@ void unicode_init();
 void xbar(int size = 50);
 void xdbar(int size);
 void enbox(std::string text);
+void dashText(std::string text);
