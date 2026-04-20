@@ -6,7 +6,7 @@
 #include <tchar.h>
 
 void Minimap::drawMinimap(int x, int y) {
-	constexpr int ROWS = 6; 
+	constexpr int ROWS = 6;
 	constexpr int COLS = 21;
 
 	std::array<std::array<char, COLS>, ROWS> map = { {

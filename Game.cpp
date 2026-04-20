@@ -2,11 +2,11 @@
 //Creation Date: 14/03/26
 
 //Changes made:
-//- updated game menue with player stats 
-//- updated game menue with inventory display
-//- updated game menue with quest display
-//- upadated save and quit options
-//- updated save file with loaction, level, experience, inventory and quests
+//- updated game menu with player stats 
+//- updated game menu with inventory display
+//- updated game menu with quest display
+//- updated save and quit options
+//- updated save file with location, level, experience, inventory and quests
 //- added in level story and combat interaction for levels 1 to 3
 
 #include <iostream> // Read and write functionality with console
@@ -21,6 +21,8 @@
 #include "combat.h"
 #include "Game_Level.h"
 #include "win.h"
+#include "menu.h"
+#include "main.h"
 
 Game* Game::instance = nullptr; // Tells class that the game initially hasn't been created
 
@@ -30,7 +32,68 @@ Game* Game::getInstance(Player* p) {
 	} return instance;
 }
 
-//Save Game function
+int gameOver(Player* p) {
+	return 0;
+}
+
+void Game::level_selection(int& choice) {
+	auto first = Level::names.begin();
+	auto second = std::next(first);
+	auto third = std::next(second);
+
+	if (p->getLocation() == "Town") {
+		p->setLocation(first->first);
+
+		if (!level_one()) {
+			if (!gameOverMenu(p)) {
+				//p->setLocation("Town");
+				//ask_to_continue();
+				return;
+			}
+			else return;
+			//ask_to_continue();
+		}
+		else {
+			p->setLocation(second->first);
+			playerInstanceOptions(choice, "Continue", "Close Game", "INVALID", "\nCONTINUE?");
+		} return;
+	}
+
+	if (p->getLocation() == second->first) {
+		if (!level_two()) {
+			if (gameOverMenu(p)) {
+				p->setLocation("Town");
+				//ask_to_continue();
+				return;
+			}
+			else return;
+		}
+		else {
+			p->setLocation(third->first);
+			playerInstanceOptions(choice, "Continue", "Close Game", "INVALID", "\nCONTINUE?");
+		} return;
+
+	}
+
+	if (p->getLocation() == third->first) {
+		if (!level_three()) {
+			if (gameOverMenu(p)) {
+				p->setLocation("Town");
+				//ask_to_continue();
+				return;
+			}
+			else return;
+		}
+		else {
+			p->setLocation("End");
+
+			playerInstanceOptions(choice, "Complete Game", "INVALID", "INVALID", "\nCONTINUE?");
+			return;
+		}
+	}
+}
+
+// Save Game function
 bool Game::save_player(Player*& p) {
 	const std::string file_name = "game_save_file.txt"; // Constant load file path (eliminates user error)
 
@@ -117,9 +180,9 @@ bool Game::quit_game() {
 	std::string answer;
 
 	while (true) {
-	std::cout << "\n>> Are you sure you want to exit?\n";
-	std::cout << "\t>> Yes (Y) / No (N) <<\n";
-	
+		std::cout << "\n>> Are you sure you want to exit?\n";
+		std::cout << "\t>> Yes (Y) / No (N) <<\n";
+
 		std::cout << "Choice: ";
 		std::cin >> answer;
 
@@ -129,22 +192,23 @@ bool Game::quit_game() {
 
 		if (answer == "yes" || answer == "y") {
 			return true;
-		} 
+		}
 		else if (answer == "no" || answer == "n") {
 			return false;
 		}
 		else {
-			std::cout << "Invaild response, try again.\n\n";
+			std::cout << "Invalid response, try again.\n\n";
 		}
 	}
-	
-}
 
+}
 
 bool Game::level_one() {
 	Combat c;
 
 	terminateBuffer();
+
+	std::cout << "You are entering level " << Level::names["Green Hill Zone"] << "\n\n";
 
 	std::cout << "═════════════════════════ GREEN HILL ZONE ═════════════════════════\n";
 	Game::gout() << "You step into a lush green hill range full of flowers.\n";
@@ -197,7 +261,7 @@ bool Game::level_one() {
 	p->completeQuest("Take down the fire spirit");
 	Level::isComplete[0] = true;
 
-	Game::gout() << "You have a new quest! - Reach the portal at the peak of the Magic Mountain";
+	Game::gout() << "You have a new quest! - Reach the portal at the peak of the Magic Mountain\n\n";
 	p->addQuest("Reach the portal at the peak of the Magic Mountain", false);
 
 	save_player(p);
@@ -211,8 +275,17 @@ bool Game::level_two() {
 
 	terminateBuffer();
 
+	std::cout << "You are entering level " << Level::names["Magic Mountain"] << "\n\n";
+
 	std::cout << "═════════════════════════ MAGIC MOUNTAIN ═════════════════════════\n";
-	Game::gout() << "You enter a mysical place.\n";
+
+
+
+
+
+
+
+	Game::gout() << "You enter a mystical place.\n";
 	Game::gout() << "You look around and admire the mystical atmosphere of the mountain.\n";
 	Game::gout() << "You progress on in your journey up the mountain...\n\n";
 
@@ -220,13 +293,13 @@ bool Game::level_two() {
 
 	// Enemy 1 
 
-	Game::gout() << "A Grass Golomb awakens!\n";
+	Game::gout() << "A Grass Golem awakens!\n";
 	ask_to_continue();
-	if (!c.startCombat(p, "Golomb", 120, 12, "Golumb")) {
+	if (!c.startCombat(p, "Golem", 120, 12, "Golem")) {
 		return false;
 	}
 
-	Game::gout() << "\nThe Golomb perisies but not without a warning...\n";
+	Game::gout() << "\nThe Golem perishes, but not without a warning...\n";
 	std::cout << "Beware of the Water Serpent";
 
 	Game::gout() << "\nYou have a new quest! - Take down the Water Serpent\n";
@@ -237,8 +310,8 @@ bool Game::level_two() {
 	// Enemy 2 
 	terminateBuffer();
 
-	Game::gout() << "You move asend futher up the mountain...\n";
-	Game::gout() << "You stuble on a rock and fall into a bird nest.\n";
+	Game::gout() << "You move ascend further up the mountain...\n";
+	Game::gout() << "You stumble on a rock and fall into a bird nest.\n";
 	Game::gout() << "A Firebird takes you as a threat and attacks!\n";
 	ask_to_continue();
 	if (!c.startCombat(p, "Firebird", 150, 15, "fire")) {
@@ -258,17 +331,16 @@ bool Game::level_two() {
 	std::cout << "\nYou completed a quest! - Take down the Water Serpent\n";
 	p->completeQuest("Take down the Water Serpent");
 
-
 	// LEVEL COMPLETE
 	Game::gout() << "\n\nYou compose yourself and go through the portal.\n";
 	std::cout << "\n-- You completed Level 2! --\n";
 
-	std::cout << "\nYou completed a quest! - Reach the portal at the peak of the Magic Mountain\n";
+	std::cout << "\nYou completed a quest! - Reach the portal at the peak of the Magic Mountain\n\n";
 	p->completeQuest("Reach the portal at the peak of the Magic Mountain");
 	Level::isComplete[1] = true;
 
 	Game::gout() << "\n\nYou have a new quest! - concur The Arm of Dismay\n";
-	p->addQuest("concur The Arm of Dismay", false);
+	p->addQuest("Conquer the Arm of Dismay", false);
 
 	save_player(p);
 
@@ -280,6 +352,8 @@ bool Game::level_three() {
 	Combat c;
 
 	terminateBuffer();
+
+	std::cout << "You are entering level " << Level::names["The Arm of Dismay"] << "\n\n";
 
 	std::cout << "═════════════════════════ THE ARM OF DISMAY ═════════════════════════\n";
 	Game::gout() << "You come of a the portal and sense a dark presence...\n";
@@ -299,7 +373,7 @@ bool Game::level_three() {
 	// Enemy 2 
 	terminateBuffer();
 
-	Game::gout() << "You move futher through the dungeon...\n";
+	Game::gout() << "You move further through the dungeon...\n";
 	Game::gout() << "The air suddenly grows cold and damp.\n";
 	Game::gout() << "Water begins to drip from the ceiling...\n";
 	Game::gout() << "A pool forms beneath your feet.\n";
@@ -339,57 +413,57 @@ bool Game::level_three() {
 	return true;
 }
 
-bool Game::level_two_choices(int choice, Combat* c) {
-	if (choice == 1) { // ATTACK
-		if (!c->startCombat(p, "Slime", 50, 8, "water")) return false;
-	}
-	else if (choice == 2) { // RUN
-		Game::gout() << "\nThe Mushroom Warrior is catching up to you\n";
-		Game::gout() << "Running away is a form of disrespect in their eyes\n";
-		Game::gout() << "You have offended it and you cannot evade it. What will you do?\n\n";
-		playerInstanceOptions(choice, "ATTACK", "STAY");
-		if (choice == 1) level_two_choices(1, c); // ATTACK
-		else if (choice == 2) level_two_choices(3, c); // STAY
-	}
-	else if (choice == 3) { // STAY
-		Game::gout() << "You hand a stick to the warrior as as an attempt to ease the hostility";
-		std::cout << "???: AweR44 60Jlas w asd";
-		Game::gout() << "It seems that his compadres have been alerted. They troddle towards you, dragging their mushroom helmets"
-			<< "(FUN FACT: mushroom helmets are a part of their bone structure, just as tortoises have shells as part of their skeletal structure)";
-		Game::gout() << "You tell warriors your mission, and they thus deem you to be of no harm to them,"
-			<< "and decide to give you a gift to aid you in your journey.";
-	}
-}
-
-bool Game::level_two() {
-	int choice;
-	Combat* c = new Combat();
-
-	terminateBuffer();
-
-	std::cout << "═════════════════════════ MAGIC MOUNTAIN ═════════════════════════\n";
-	Game::gout() << "As I venture through this forest engorged with shrooms, I can't help but wonder why this place was one of his fondest memories.\n";
-	Game::gout() << "As per the memoir, this was perhaps the last place on Earth devoid of human endeavour (aside from perhaps unliveable areas in the Arctic,"
-		<< "Antarctic, and the Sahara...).\n\n";
-	Game::gout() << "I smell something...\n\n";
-
-	// Enemy 1
-
-	std::cout << "???: " << "ARHGH!!!\n\n";
-	Game::gout() << "A wild Mushroom Warrior has emerged from the marshlands embedded in the forest\n";
-	ask_to_continue();
-
-	Game::gout() << "\nWhat shall your plan of action be?\n";
-
-	playerInstanceOptions(choice, "Attack", "Run", "Stay");
-	level_two_choices(choice, c);
-
-	// LEVEL COMPLETE
-	Level::isComplete[1] = true;
-	save_player(p);
-
-	return true;
-}
+//bool Game::level_two_choices(int choice, Combat* c) {
+//	if (choice == 1) { // ATTACK
+//		if (!c->startCombat(p, "Slime", 50, 8, "water")) return false;
+//	}
+//	else if (choice == 2) { // RUN
+//		Game::gout() << "\nThe Mushroom Warrior is catching up to you\n";
+//		Game::gout() << "Running away is a form of disrespect in their eyes\n";
+//		Game::gout() << "You have offended it and you cannot evade it. What will you do?\n\n";
+//		playerInstanceOptions(choice, "ATTACK", "STAY");
+//		if (choice == 1) level_two_choices(1, c); // ATTACK
+//		else if (choice == 2) level_two_choices(3, c); // STAY
+//	}
+//	else if (choice == 3) { // STAY
+//		Game::gout() << "You hand a stick to the warrior as as an attempt to ease the hostility";
+//		std::cout << "???: AweR44 60Jlas w asd";
+//		Game::gout() << "It seems that his compadres have been alerted. They troddle towards you, dragging their mushroom helmets"
+//			<< "(FUN FACT: mushroom helmets are a part of their bone structure, just as tortoises have shells as part of their skeletal structure)";
+//		Game::gout() << "You tell warriors your mission, and they thus deem you to be of no harm to them,"
+//			<< "and decide to give you a gift to aid you in your journey.";
+//	}
+//}
+//
+//bool Game::level_two() {
+//	int choice;
+//	Combat* c = new Combat();
+//	 
+//	terminateBuffer();
+//
+//	std::cout << "═════════════════════════ MAGIC MOUNTAIN ═════════════════════════\n";
+//	Game::gout() << "As I venture through this forest engorged with shrooms, I can't help but wonder why this place was one of his fondest memories.\n";
+//	Game::gout() << "As per the memoir, this was perhaps the last place on Earth devoid of human endeavour (aside from perhaps unliveable areas in the Arctic,"
+//		<< "Antarctic, and the Sahara...).\n\n";
+//	Game::gout() << "I smell something...\n\n";
+//
+//	// Enemy 1
+//
+//	std::cout << "???: " << "ARHGH!!!\n\n";
+//	Game::gout() << "A wild Mushroom Warrior has emerged from the marshlands embedded in the forest\n";
+//	ask_to_continue();
+//
+//	Game::gout() << "\nWhat shall your plan of action be?\n";
+//
+//	playerInstanceOptions(choice, "Attack", "Run", "Stay");
+//	level_two_choices(choice, c);
+//
+//	// LEVEL COMPLETE
+//	Level::isComplete[1] = true;
+//	save_player(p);
+//
+//	return true;
+//}
 
 void Game::resetInstance() {
 	instance = nullptr;
@@ -440,46 +514,39 @@ void Game::menu(Player* p) {
 
 			p->getInventory().displayItems(p);
 			break;
-		}
-		case 3: {
+		} case 3: {
 			terminateBuffer();
 
 			std::cout << "─── Quest List ───\n";
 			p->quests_to_string();
 			ask_to_continue();
 			break;
-		}
-		case 4: {
-			terminateBuffer();
-
-			for (auto& l : level) {
-				std::cout << l.first << ": " << l.second << std::endl;
-			}
-			std::cout << std::endl;
-
+		} case 4: {
 			auto first = Level::names.begin();
 			auto second = std::next(first);
 			auto third = std::next(second);
 
-			level_selection();
-			if (p->getLocation() == first->first || p->getLocation() == second->first || p->getLocation() == third->first) {
-				break;
-			}
+			int choice{};
 
+			terminateBuffer();
 
-			//need a way to return if level is not complete
+			for (auto& l : level) {
+				std::cout << l.first << ": " << l.second << std::endl;
+			} std::cout << std::endl;
 
+			level_selection(choice);
 
-			break;
-		}
+			//if (choice) save_player(p);
+			return;
+			// need a way to return if level is not complete
+		} 
 		case 5: {
 			terminateBuffer();
 			save_player(p);
 			std::cout << "\t>> Game saved <<\n";
 			ask_to_continue();
 			break;
-		}
-		case 6: {
+		} case 6: {
 			quit = quit_game();
 			break;
 		}

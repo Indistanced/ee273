@@ -12,10 +12,10 @@ class Enemy : public Character {
 
 public:
 	//constuctor using Character inheratance 
-	Enemy(std::string name ,int maxHealth, int strength, std::string element) : Character(name, maxHealth, maxHealth, strength) { this->element = element;}
+	Enemy(std::string name, int maxHealth, int strength, std::string element) : Character(name, maxHealth, maxHealth, strength) { this->element = element; }
 
 	//getters
-	std::string get_element() { return element;}
+	std::string get_element() { return element; }
 
 	std::string get_weakness_element() {
 		if (element == "water") return "grass";

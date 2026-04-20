@@ -22,13 +22,14 @@
 #include "Game_Level.h"
 #include "Minimap.h"
 #include "win.h"
+#include "main.h"
 
-void playerInstanceOptions(int& choice, std::string one, std::string two, std::string three) {
-    std::cout << "─── CHOOSE AN OPTION ───\n";
+void playerInstanceOptions(int& choice, std::string one, std::string two, std::string three, std::string header_text) {
+    std::cout << "─── " << header_text << " ───\n";
     std::cout << "1) " << one << "\n";
-    if (two != " ") {
+    if (two != "INVALID") {
         std::cout << "2) " << two << "\n";
-        if (three != " ") {
+        if (three != "INVALID") {
             std::cout << "3) " << three << "\n";
         }
     } std::cout << "\nChoice: ";
@@ -59,7 +60,8 @@ Player* selectPlayerInstance(Player*& p) {
         clearBuffer();
         std::cin.get();
         return p;
-    } else if (choice == 2) {
+    }
+    else if (choice == 2) {
         if (!load_player(p)) {
 
             std::cout << "Save game not found.\n";
@@ -68,8 +70,10 @@ Player* selectPlayerInstance(Player*& p) {
             std::cin.get();
 
             return selectPlayerInstance(p);
-        } else return p;
-    } else {
+        }
+        else return p;
+    }
+    else {
         std::string name;
         terminateBuffer();
         clearBuffer();
@@ -94,17 +98,12 @@ Player* selectPlayerInstance(Player*& p) {
         Game::gout() << "You are the towns only hope.\n\n";
 
         Game::gout() << "Before you set out, you must choose a spell to aid you.\n";
-        xbar();
+        xbar(); std::cout << "\n";
 
-        std::cout << "\n── CHOOSE A SPELL ──\n";
-        std::cout << "1. Fire Spin\n";
-        std::cout << "2. Water Whip\n";
-        std::cout << "3. Leaf Slash\n";
-        std::cout << "Choice: ";
-        std::cin >> choice;
+        playerInstanceOptions(choice, "Fire Spin", "Water Whip", "Lead Slash", "CHOOSE A SPELL");
 
         // Add spell to player inventory.
-        if (choice == 1)  
+        if (choice == 1)
         {
             p->getInventory().addSpell("Fire Spin", "Weak fire ability", 20, 10, 24, "fire");
         }
@@ -117,7 +116,7 @@ Player* selectPlayerInstance(Player*& p) {
             p->getInventory().addSpell("Leaf Slash", "Weak grass ability", 15, 5, 28, "grass");
         }
 
-        xbar();
+        xbar(); std::cout << "\n";
         Game::gout() << "Ahh, a fine choice!\n";
 
         Game::gout() << "Your first quest is to defeat a slime\n";
@@ -134,23 +133,24 @@ Player* selectPlayerInstance(Player*& p) {
     }
 }
 
-bool gameOverMenu() {
+bool gameOverMenu(Player* p) {
     int choice;
 
+    /*Game* g = Game::getInstance(Player::p);
+
+    Player* p = g->getPlayer();*/
+
     do {
-    terminateBuffer();
-    
-    std::cout << "\n─── GAME OVER ───\n"; 
-    std::cout << "1) Restart Game\n";
-    std::cout << "2) Quit\n";
-    std::cout << "Choice: ";
+        terminateBuffer();
 
-    std::cin >> choice;
-    if(std::cin.fail()) {
-        clearBuffer();
-    }
+        std::cout << "──── FINAL STATS ────\n";
+        p->to_string(); std::cout << "\n";
 
-    } while  if(choice != 1 && choice != 2);
+        playerInstanceOptions(choice, "Restart Game", "Quit", "INVALID", "GAME OVER!");
+
+        if (std::cin.fail()) clearBuffer();
+
+    } while (choice != 1 && choice != 2);
 
     return (choice == 1);
 }

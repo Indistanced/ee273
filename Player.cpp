@@ -21,52 +21,51 @@ void Player::to_string() {
 	std::cout << "Name: " << this->name << "\n";
 	std::cout << "Health: " << "(" << this->currentHealth << "/" << this->maxHealth << ")\n";
 	std::cout << "Level: " << this->level << "\n";
-	std::cout << "Exp: " << "(" << this->exp << "/" << this->exp_limit << ")\n";
+	std::cout << "Exp: " << "(" << this->exp << "/" << this->expLimit << ")\n";
 	std::cout << "Strength: " << this->strength << "\n";
 	std::cout << "Location: " << this->location << "\n";
-
 }
 
 //add experience 
-void Player::addExp(int exp_ammount) {
+void Player::addExp(int exp_amount) {
 
-	exp += exp_ammount;
+	exp += exp_amount;
 
 	//levelling up mechanic
-	if (exp >= exp_limit) {
+	if (exp >= expLimit) {
 
 		level++;
-		exp = exp - exp_limit;
+		exp = exp - expLimit;
 		maxHealth += 50;
 		strength += 10;
 		currentHealth = maxHealth;
 
-		std::cout << "-- You leveled up! --\n";
+		std::cout << "── You levelled up! ──\n";
 	}
 }
 
 
 std::vector<std::pair<std::string, bool>>& Player::getQuests() {
-	return quest;
+	return quests;
 }
 
 bool Player::addQuest(std::string description, bool complete) {
 
 	//check to make sure quest is not added twice
-	for (auto& q : quest) {
+	for (auto& q : quests) {
 		if (q.first == description) {
 			return false;
 		}
 	}
-	
-	quest.push_back(std::make_pair(description, complete));
+
+	quests.push_back(std::make_pair(description, complete));
 	return true;
 }
 
 bool Player::completeQuest(std::string description) {
-	for (int i = 0; i < quest.size(); i++) {
-		if (quest[i].first == description) {
-			quest[i].second = true;
+	for (int i = 0; i < quests.size(); i++) {
+		if (quests[i].first == description) {
+			quests[i].second = true;
 			return true;
 		}
 	}
@@ -75,10 +74,10 @@ bool Player::completeQuest(std::string description) {
 }
 
 void Player::quests_to_string() {
-	for (int i = 0; i < quest.size(); i++) {
-		std::cout << quest[i].first << " | ";
-		 
-		if (quest[i].second) {
+	for (int i = 0; i < quests.size(); i++) {
+		std::cout << quests[i].first << " | ";
+
+		if (quests[i].second) {
 			std::cout << "Complete\n";
 		}
 		else {
@@ -87,6 +86,6 @@ void Player::quests_to_string() {
 	}
 }
 
-int Player::questNumber() {	
-	return (int)quest.size();
+int Player::questNumber() {
+	return (int)quests.size();
 }

@@ -1,8 +1,8 @@
-//Author: Aidan Kelly and Kyle Simpson
+﻿//Author: Aidan Kelly and Kyle Simpson
 //Creation Date: 02/03/26
 
 //Changes made:
-//- added in loaction atribute
+//- added in location attribute
 //- added in Level and experience attribute
 //- added in Inventory and quest management
 
@@ -28,32 +28,33 @@ public:
 
 	// Inherit constructor initialisations from Character class
 	Player(std::string name) : Character{ name } { this->level = DEFAULT_LEVEL; this->location = START_LOCATION; this->exp = START_EXP; this->expLimit = DEFAULT_EXP_LIMIT; }
-	Player(std::string name, int hp) : Character{ name, hp } { this->level = DEFAULT_LEVEL; this->location = START_LOCATION; this->exp = START_EXP; this->expLimit = DEFAULT_EXP_LIMIT;}
-	Player(std::string name, int hp, int maxHp, int strength) : Character{ name, hp, maxHp, strength } { this->level = DEFAULT_LEVEL; this->location = START_LOCATION; this->exp = START_EXP; this->expLimit = DEFAULT_EXP_LIMIT;
+	Player(std::string name, int hp) : Character{ name, hp } { this->level = DEFAULT_LEVEL; this->location = START_LOCATION; this->exp = START_EXP; this->expLimit = DEFAULT_EXP_LIMIT; }
+	Player(std::string name, int hp, int maxHp, int strength) : Character{ name, hp, maxHp, strength } {
+		this->level = DEFAULT_LEVEL; this->location = START_LOCATION; this->exp = START_EXP; this->expLimit = DEFAULT_EXP_LIMIT;
 	}
-	Player(std::string name, int hp, int maxHp, int strength, std::string location, int level, int exp, int expLimit) : Character{ name, hp, maxHp, strength}
+	Player(std::string name, int hp, int maxHp, int strength, std::string location, int level, int exp, int expLimit) : Character{ name, hp, maxHp, strength }
 	{
 		this->level = level, this->location = location; this->exp = exp; this->expLimit = expLimit;
 	};
 
-	
-	static std::istream& pin(Player* p);  //function to call player name before test i.e "John: "
+
+	static std::istream& pin(Player* p);  // function to call player name before test i.e "John: "
 
 	void to_string(); // convert player stats to string
 
-	//Getters 
+	// Getters 
 	int getLevel() const { return level; };
 	int getExp() const { return exp; };
 	int getExpLimit() const { return expLimit; }
-	std::string getLocation();
-	Inventory& getInventory() { return inventory; } //get players inventroy 
+	std::string getLocation() { return location; };
+	Inventory& getInventory() { return inventory; } // Get Player inventory 
 	std::vector<std::pair<std::string, bool>>& getQuests();
 
-	//Setters
+	// Setters
 	void addExp(int exp_ammount);
-	void setLocation(std::string loc);
+	void setLocation(std::string loc) { this->location = loc; };
 
-	//Quest management functions
+	// Quest management functions
 	bool addQuest(std::string description, bool complete);
 	bool completeQuest(std::string description);
 	void quests_to_string();
@@ -66,5 +67,4 @@ private:
 	std::string location;
 	Inventory inventory; // player has an inventory 
 	std::vector<std::pair<std::string, bool>> quests;
-
 };

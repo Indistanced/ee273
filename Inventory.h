@@ -23,9 +23,9 @@ public:
     void removeItem(Item* itemToRemove);
 
     void displayItems(Player* p);
-    
+
     std::vector<Item*>& getItems();   // For saving and loading items
-    std::vector<Potion*> getPotions(); 
+    std::vector<Potion*> getPotions();
     std::vector<Spell*> getSpells();
 
     void displaySpells();
@@ -34,5 +34,5 @@ public:
 
 private:
     std::vector<Item*> inventory;
-   
+
 };

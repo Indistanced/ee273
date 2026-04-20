@@ -36,7 +36,7 @@ int WINAPI WinMinimap() {
 	static TCHAR szTitle[] = _T("Minimap");
 
 	// WINDOW INFORMATION
-	
+
 	WNDCLASSEX wcex{};
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
@@ -53,7 +53,7 @@ int WINAPI WinMinimap() {
 	wcex.hIconSm = LoadIcon(wcex.hInstance, IDI_APPLICATION);
 
 	// REGISTER WCEX STRUCTURE
-	
+
 	if (!RegisterClassEx(&wcex))
 	{
 		MessageBox(NULL,
@@ -76,7 +76,7 @@ int WINAPI WinMinimap() {
 	// hInstance: the first parameter from WinMain
 	// NULL: not used in this application
 	HWND hWnd = CreateWindowEx(0, szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 500, 100, NULL, NULL, hInstance, NULL);
-	
+
 	if (!hWnd)
 	{
 		MessageBox(NULL,
@@ -92,7 +92,7 @@ int WINAPI WinMinimap() {
 
 int DisplayMinimap() {
 	MSG msg;
-	 
+
 	while (true) {
 		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{

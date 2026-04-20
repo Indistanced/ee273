@@ -11,46 +11,65 @@
 #include "unicode.h"
 #include "Game_Level.h"
 #include "win.h"
-#include <thread>
+#include "main.h"
+#include "Game.h"
 
+#include <thread>
 #include <ctime>
 
 int main() {
-	
+
 	// INITIALISATIONS
 	WinMinimap();
 
 	srand(static_cast<unsigned int>(time(0))); // Random number generator set seed
 	unicode_init(); // Enable unicode
-	
+
 	while (true) {
-	Player* p = nullptr;
-	p = selectPlayerInstance(p);
-	if (p == nullptr) {
-		return 0; // Check whether player exists
-	}
+		Player* p = nullptr;
+		p = selectPlayerInstance(p);
+		if (p == nullptr) {
+			return 0; // Check whether player exists
+		} 
 
-	Game* g = Game::getInstance(p); // Create, load, or exit instance
-	bool alive = g->run(g, p);
+		Game* g = Game::getInstance(p); // Create, load, or exit instance
+		bool alive = g->run(g, p);
 
-	// TESTING
-	Level::test();
-	
-	delete g;
-	Game::resetInstance();
-	delete p;
+		// TESTING
+		Level::test();
 
-	if(!alive) {
-		if (gameOverMenu()) {
-			continue; // restart
-		}
-		else {
-			break; // quit game
-		}
-	}
-	else {
-		break; // normal exit
-	}
+		/*if (!p->isAlive()) {
+			delete g;
+			Game::resetInstance();
 
-	return 0;
+			std::cout << "NOOODOSAIODIASD";
+			if (gameOverMenu(p)) {
+				delete p;
+				Player* p = nullptr;
+				p = selectPlayerInstance(p);
+				if (p == nullptr) return 0;
+			} else {
+				exit(0);
+				delete p;
+			}
+		}*/
+
+		//else break; // normal exit
+		//delete p;
+
+		delete g;
+		Game::resetInstance();
+		if (!p->isAlive()) {
+			if (gameOverMenu(p)) {
+				delete p;
+				//p = new Player();
+				continue;
+			}
+			else {
+				delete p;
+				return 0;
+			}
+		} delete p;
+	} 
 }
+

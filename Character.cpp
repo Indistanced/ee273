@@ -1,4 +1,4 @@
-//Author: Aidan Kelly and Kyle Simpson
+﻿//Author: Aidan Kelly and Kyle Simpson
 //Creation Date: 01/03/26
 
 //Changes made:
@@ -12,13 +12,13 @@ void Character::takeDamage(int dmg) {
     currentHealth -= dmg;   //update current health
 
     //check to ensure health dose not fall below 0.
-    if (currentHealth < 0) {  
+    if (currentHealth < 0) {
         currentHealth = 0;
     }
 }
 
 bool Character::isAlive() const {
-    return currentHealth > 0;  
+    return currentHealth > 0;
 }
 
 void Character::addHealth(int health) {

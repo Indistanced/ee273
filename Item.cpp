@@ -1,4 +1,4 @@
-//Author: Kyle Simpson
+﻿//Author: Kyle Simpson
 //Creation Date: 22/03/26
 
 
@@ -16,22 +16,22 @@ int Spell::get_strong() { return strong; }
 int Spell::get_base() { return base; }
 std::string Spell::get_element() { return element; }
 
-int Potion::get_value() { return value;}
-int Potion::get_quantity() { return quantity;}
+int Potion::get_value() { return value; }
+int Potion::get_quantity() { return quantity; }
 void Potion::set_quantity(int value) { this->quantity = value; }
 
 
 bool Potion::use_potion(Player* p)
 {
-    
-     if (quantity > 0) {
+
+    if (quantity > 0) {
         p->addHealth(value);
         quantity--;
 
         std::cout << "Used " << name << " (+" << value << " HP)\n";
-  
+
         return true;
-     }
-   
+    }
+
     return false;
 }

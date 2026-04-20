@@ -14,7 +14,7 @@
 #include "inventory.h"
 #include "item.h"
 #include "player.h"
-
+#include "clear.h"
 
 Inventory::~Inventory() {
     for (auto item : inventory) {

@@ -12,13 +12,13 @@
 class Character {
 public:
 	// Default variables
-	const unsigned int DEFAULT_MAX_HEALTH = 100;
+	const unsigned int DEFAULT_MAX_HEALTH = 10;
 	const unsigned int DEFAULT_STRENGTH = 5;
 
 	// Constructor variations
 	Character(std::string name) : name(name), currentHealth(DEFAULT_MAX_HEALTH), maxHealth(DEFAULT_MAX_HEALTH), strength(DEFAULT_STRENGTH) {};
-	Character(std::string name, int hp) : name(name), currentHealth(hp), maxHealth(DEFAULT_MAX_HEALTH), strength(DEFAULT_STRENGTH){};
-	Character(std::string name, int hp, int maxHp, int strength) : name(name), currentHealth(hp), maxHealth(maxHp), strength(strength){};
+	Character(std::string name, int hp) : name(name), currentHealth(hp), maxHealth(DEFAULT_MAX_HEALTH), strength(DEFAULT_STRENGTH) {};
+	Character(std::string name, int hp, int maxHp, int strength) : name(name), currentHealth(hp), maxHealth(maxHp), strength(strength) {};
 
 
 	virtual ~Character() {}; // Destructor
@@ -39,5 +39,5 @@ protected:
 	int currentHealth;
 	int maxHealth;
 	unsigned int strength;
-	
+
 };

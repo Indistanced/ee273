@@ -161,7 +161,7 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 
 		// ENEMY TURN
 
-		clearBuffer(); 
+		clearBuffer();
 		terminateBuffer();
 
 		std::cout << "\n══════════════ Combat ══════════════\n";

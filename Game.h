@@ -23,11 +23,11 @@ public:
 
 	bool save_player(Player*& p);
 	void menu(Player* p);
-	bool quit_game();
-	
+	static bool quit_game();
+
 	// LEVELS
 
-	void level_selection();
+	void level_selection(int& choice);
 
 	bool level_one();
 	bool level_two();
@@ -35,6 +35,8 @@ public:
 	bool level_three();
 
 	static void resetInstance();
+
+	Player* getPlayer() { return p; };
 private:
 	static Game* instance;
 	Player* p;
