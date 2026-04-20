@@ -44,52 +44,24 @@ void Game::level_selection(int& choice) {
 	if (p->getLocation() == "Town") {
 		p->setLocation(first->first);
 
-		if (!level_one()) {
-			if (!gameOverMenu(p)) {
-				//p->setLocation("Town");
-				//ask_to_continue();
-				return;
-			}
-			else return;
-			//ask_to_continue();
-		}
-		else {
+		if (level_one()) {
 			p->setLocation(second->first);
 			playerInstanceOptions(choice, "Continue", "Close Game", "INVALID", "\nCONTINUE?");
 		} return;
 	}
 
 	if (p->getLocation() == second->first) {
-		if (!level_two()) {
-			if (gameOverMenu(p)) {
-				p->setLocation("Town");
-				//ask_to_continue();
-				return;
-			}
-			else return;
-		}
-		else {
+		if (level_two()) {
 			p->setLocation(third->first);
 			playerInstanceOptions(choice, "Continue", "Close Game", "INVALID", "\nCONTINUE?");
 		} return;
-
 	}
 
 	if (p->getLocation() == third->first) {
-		if (!level_three()) {
-			if (gameOverMenu(p)) {
-				p->setLocation("Town");
-				//ask_to_continue();
-				return;
-			}
-			else return;
-		}
-		else {
+		if (level_three()) {
 			p->setLocation("End");
-
 			playerInstanceOptions(choice, "Complete Game", "INVALID", "INVALID", "\nCONTINUE?");
-			return;
-		}
+		} return;
 	}
 }
 

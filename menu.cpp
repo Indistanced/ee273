@@ -147,8 +147,9 @@ bool gameOverMenu(Player* p) {
         p->to_string(); std::cout << "\n";
 
         playerInstanceOptions(choice, "Restart Game", "Quit", "INVALID", "GAME OVER!");
-
-        if (std::cin.fail()) clearBuffer();
+        if (choice < 1 || choice > 3 || std::cin.fail()) { // If invalid choice, clear input before re-running
+            clearBuffer(); terminateBuffer();
+        }
 
     } while (choice != 1 && choice != 2);
 
