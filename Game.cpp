@@ -21,6 +21,7 @@
 #include "combat.h"
 #include "Game_Level.h"
 #include "menu.h"
+#include "main.h"
 
 #include <Windows.h>
 #include <opencv2/core.hpp>

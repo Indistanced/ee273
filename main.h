@@ -1,5 +1,5 @@
-﻿int mainWindow(Player*& p);
-void mapWindow(Player*& p);
+﻿int mainLoop();
+void mapLoop();
 int main();
 
 extern bool running;

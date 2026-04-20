@@ -21,6 +21,7 @@
 #include "clear.h"
 #include "Game_Level.h"
 #include "Minimap.h"
+#include "main.h"
 
 #include <Windows.h>
 #include <opencv2/core.hpp>
