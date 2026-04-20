@@ -55,14 +55,14 @@ int gameLoop() {
 }
 
 void mapLoop() {
-	//if (!p) return;
+	std::array level_names = { "Town", "Green Hill Zone", "Magic Mountain", "The Arm of Dismay", "End" };
 
 	static std::unordered_map<std::string, cv::Mat> maps = {
-		{"town", cv::imread("D:\\repos\\ee273\\town_img.png")},
-		{"green hill zone", cv::imread("D:\\repos\\ee273\\ghz_img.png") },
-		{"magic mountain", cv::imread("D:\\repos\\ee273\\mm_img.png") },
-		{"the arm of dismay", cv::imread("D:\\repos\\ee273\\taos_img.png")},
-		{"end", cv::imread("D:\\repos\\ee273\\end_img.png") }
+		{"Town", cv::imread("D:\\repos\\ee273\\town_img.png")},
+		{"Green Hill Zone", cv::imread("D:\\repos\\ee273\\ghz_img.png") },
+		{"Magic Mountain", cv::imread("D:\\repos\\ee273\\mm_img.png") },
+		{"The Arm of Dismay", cv::imread("D:\\repos\\ee273\\taos_img.png")},
+		{"End", cv::imread("D:\\repos\\ee273\\end_img.png") }
 	};
 
 	static bool initialised = false;
@@ -77,7 +77,7 @@ void mapLoop() {
 		cv::namedWindow("Map", cv::WINDOW_NORMAL);
 		cv::resizeWindow("Map", 300, 300);
 		cv::moveWindow("Map", x, y);
-		cv::imshow("Map", maps["town"]);
+		cv::imshow("Map", maps[level_names[0]]);
 
 		initialised = true;
 	}
@@ -88,14 +88,10 @@ void mapLoop() {
 			continue;
 		}
 		
-		std::string currentLoc = p->getLocation();
-		static std::string lastLoc = "";
-
-		if (maps.find(p->getLocation()) != maps.end()) {
-			if (currentLoc != lastLoc) {
-				cv::imshow("Map", maps[currentLoc]);
+		for (int i{}; i < level_names.size(); i++) {
+			if (p->getLocation() == level_names[i]) {
+				cv::imshow("Map", maps[level_names[i]]);
 				cv::waitKey(1);
-				lastLoc = currentLoc;
 			}
 		}
 	}
