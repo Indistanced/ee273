@@ -20,7 +20,6 @@
 #include "unicode.h"
 #include "combat.h"
 #include "Game_Level.h"
-#include "win.h"
 #include "menu.h"
 #include "main.h"
 
@@ -448,11 +447,8 @@ void Game::menu(Player* p) {
 	std::map<std::string, int> level = { {"Green Hill Zone", 1 }, { "Magic Mountain", 2 }, { "The Arm of Dismay", 3 } };
 
 	do {
-		Sleep(1);
 		terminateBuffer();
 		enbox("Player Menu"); std::cout << '\n';
-
-		DisplayMinimap();
 
 		std::cout << "1) Display player stats\n";
 		std::cout << "2) View Inventory\n";

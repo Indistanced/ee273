@@ -21,7 +21,6 @@
 #include "clear.h"
 #include "Game_Level.h"
 #include "Minimap.h"
-#include "win.h"
 #include "main.h"
 
 void playerInstanceOptions(int& choice, std::string one, std::string two, std::string three, std::string header_text) {

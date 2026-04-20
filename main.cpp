@@ -10,7 +10,6 @@
 #include "Game.h"
 #include "unicode.h"
 #include "Game_Level.h"
-#include "win.h"
 #include "main.h"
 #include "Game.h"
 
@@ -19,8 +18,7 @@
 
 int main() {
 
-	// INITIALISATIONS
-	WinMinimap();
+	// INITIALISATIONS;
 
 	srand(static_cast<unsigned int>(time(0))); // Random number generator set seed
 	unicode_init(); // Enable unicode
