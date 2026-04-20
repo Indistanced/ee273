@@ -22,51 +22,11 @@
 #include <iostream>
 
 bool running = true;
-
-void mapWindow(Player*& p) {
-	if (!p) return;
-
-	static std::unordered_map<std::string, cv::Mat> maps = {
-		{"town", cv::imread("D:\\repos\\ee273\\town_img.png")},
-		{"green hill zone", cv::imread("D:\\repos\\ee273\\ghz_img.png") },
-		{"magic mountain", cv::imread("D:\\repos\\ee273\\mm_img.png") },
-		{"the arm of dismay", cv::imread("D:\\repos\\ee273\\taos_img.png")},
-		{"end", cv::imread("D:\\repos\\ee273\\end_img.png") }
-	};
-	
-
-	static bool initialised = false;
-	if (!initialised) {
-		int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-		int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-		int windowSize = 300;
-
-		int x = (screenWidth - windowSize) / 2;
-		int y = (screenHeight - windowSize) / 2;
-
-		cv::namedWindow("Map", cv::WINDOW_NORMAL);
-		cv::resizeWindow("Map", 300, 300);
-		cv::moveWindow("Map", x, y);
-
-		initialised = true;
-	}
-
-	std::string currentLoc = p->getLocation();
-	static std::string lastLoc = "";
-
-	if (maps.find(p->getLocation()) != maps.end()){
-		if (currentLoc != lastLoc) {
-			cv::imshow("Map", maps[currentLoc]);
-			cv::waitKey(1);
-			lastLoc = currentLoc;
-		}
-		
-	}
-}
+Player* p = nullptr;
 
 int gameLoop() {
 	while (running) {
-		Player* p = nullptr;
+		p = nullptr;
 		p = selectPlayerInstance(p);
 		if (p == nullptr) {
 			return 0; // Check whether player exists
@@ -74,8 +34,6 @@ int gameLoop() {
 
 		Game* g = Game::getInstance(p); // Create, load, or exit instance
 		bool alive = g->run(g, p);
-
-
 
 		// TESTING
 		Level::test();
@@ -97,22 +55,51 @@ int gameLoop() {
 }
 
 void mapLoop() {
-	cv::Mat img = cv::imread("D:\\repos\\ee273\\town_img.png");
-	int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-	int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-	int windowSize = 300;
+	//if (!p) return;
 
-	int x = (screenWidth - windowSize) / 2;
-	int y = (screenHeight - windowSize) / 2;
+	static std::unordered_map<std::string, cv::Mat> maps = {
+		{"town", cv::imread("D:\\repos\\ee273\\town_img.png")},
+		{"green hill zone", cv::imread("D:\\repos\\ee273\\ghz_img.png") },
+		{"magic mountain", cv::imread("D:\\repos\\ee273\\mm_img.png") },
+		{"the arm of dismay", cv::imread("D:\\repos\\ee273\\taos_img.png")},
+		{"end", cv::imread("D:\\repos\\ee273\\end_img.png") }
+	};
 
-	cv::namedWindow("Map", cv::WINDOW_NORMAL);
-	cv::resizeWindow("Map", 300, 300);
-	cv::moveWindow("Map", x, y);
-	cv::imshow("Map", img);
+	static bool initialised = false;
+	if (!initialised) {
+		int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+		int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+		int windowSize = 300;
 
-	while (running) cv::waitKey(1);
+		int x = (screenWidth - windowSize) / 2;
+		int y = (screenHeight - windowSize) / 2;
+
+		cv::namedWindow("Map", cv::WINDOW_NORMAL);
+		cv::resizeWindow("Map", 300, 300);
+		cv::moveWindow("Map", x, y);
+		cv::imshow("Map", maps["town"]);
+
+		initialised = true;
+	}
+	
+	while (running) {
+		if (p == nullptr) {
+			cv::waitKey(1);
+			continue;
+		}
+		
+		std::string currentLoc = p->getLocation();
+		static std::string lastLoc = "";
+
+		if (maps.find(p->getLocation()) != maps.end()) {
+			if (currentLoc != lastLoc) {
+				cv::imshow("Map", maps[currentLoc]);
+				cv::waitKey(1);
+				lastLoc = currentLoc;
+			}
+		}
+	}
 }
-
 
 
 int main() {
@@ -126,4 +113,3 @@ int main() {
 	t1.join();
 	t2.join();
 }
-

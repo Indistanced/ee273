@@ -498,8 +498,10 @@ void Game::menu(Player* p) {
 			level_selection(choice);
 
 			//if (choice) save_player(p);
-			return;
-			// need a way to return if level is not complete
+			if (choice == 1) break;
+			else {
+				quit = quit_game();
+			} break;
 		}
 		case 5: {
 			terminateBuffer();
