@@ -21,9 +21,9 @@ public:
 
 	// MAIN
 
-	bool save_player(Player*& p);
+	static bool save_player(Player*& p);
 	void menu(Player* p);
-	static bool quit_game();
+	static bool quit_game(Player* p);
 
 	// LEVELS
 

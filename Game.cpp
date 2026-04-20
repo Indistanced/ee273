@@ -146,7 +146,7 @@ std::ostream& Game::gout() {
 }
 
 
-bool Game::quit_game() {
+bool Game::quit_game(Player* p) {
 
 	terminateBuffer();
 	std::string answer;
@@ -163,6 +163,7 @@ bool Game::quit_game() {
 		}
 
 		if (answer == "yes" || answer == "y") {
+			save_player(p);
 			return true;
 		}
 		else if (answer == "no" || answer == "n") {
@@ -500,7 +501,8 @@ void Game::menu(Player* p) {
 			//if (choice) save_player(p);
 			if (choice == 1) break;
 			else {
-				quit = quit_game();
+				return;
+				//quit = quit_game();
 			} break;
 		}
 		case 5: {
@@ -510,7 +512,7 @@ void Game::menu(Player* p) {
 			ask_to_continue();
 			break;
 		} case 6: {
-			quit = quit_game();
+			quit = quit_game(p);
 			break;
 		}
 		default: {
