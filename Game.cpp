@@ -23,16 +23,17 @@
 #include "menu.h"
 #include "main.h"
 
+#include <Windows.h>
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
+
 Game* Game::instance = nullptr; // Tells class that the game initially hasn't been created
 
 Game* Game::getInstance(Player* p) {
 	if (instance == nullptr) { // If game hasn't been created yet
 		instance = new Game(p); // Create an instance of the game
 	} return instance;
-}
-
-int gameOver(Player* p) {
-	return 0;
 }
 
 void Game::level_selection(int& choice) {
@@ -525,4 +526,5 @@ void Game::menu(Player* p) {
 		}
 
 	} while (quit == false);
+	running = false;
 }

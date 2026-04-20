@@ -23,6 +23,11 @@
 #include "Minimap.h"
 #include "main.h"
 
+#include <Windows.h>
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
+
 void playerInstanceOptions(int& choice, std::string one, std::string two, std::string three, std::string header_text) {
     std::cout << "─── " << header_text << " ───\n";
     std::cout << "1) " << one << "\n";
@@ -56,6 +61,7 @@ Player* selectPlayerInstance(Player*& p) {
         terminateBuffer();
         std::cout << "\n>> Quitting game <<\n";
         std::cout << "\nPress Enter to close...";
+        running = false;
         clearBuffer();
         std::cin.get();
         return p;
