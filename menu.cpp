@@ -86,11 +86,13 @@ Player* selectPlayerInstance(Player*& p) {
         p = new Player(name);
         int choice;
 
-        Game::gout() << "Welcome, " << name << "!\n";
+        std::cout << '\n';
+        Game::gout() << "Welcome, " << name << "!\n\n";
+
         Game::gout() << "You awaken in the town square.\n";
 
         Game::gout() << "You are surrounded by a crowd of terrified people.\n";
-        Game::gout() << "For weeks creatures have been appering from a dark place...\n";
+        Game::gout() << "For weeks creatures have been appearing from a dark place...\n";
         Game::gout() << "A place known as the Arm of Dismay.\n";
         Game::gout() << "They emerging and attacking anything in their path!\n\n";
 
@@ -101,8 +103,8 @@ Player* selectPlayerInstance(Player*& p) {
         Game::gout() << "You must enter the Arm of Dismay and put an end to whatever lies within.\n";
         Game::gout() << "You are the towns only hope!\n\n";
 
-        Game::gout() << "Before you set out, you must choose a spell to aid you.\n";
-        xbar(); std::cout << "\n";
+        Game::gout() << "Before you set out, you must choose a spell to aid you.\n\n";
+        xbar(); std::cout << "\n\n";
 
 
         while(true) {
@@ -127,12 +129,13 @@ Player* selectPlayerInstance(Player*& p) {
                 break;
             }
             else {
-                std::cout << "Invaild choice, try again.\n\n";
+                terminateBuffer();
+                std::cout << "Invalid choice, try again.\n\n";
                 clearBuffer();
             }
         }
 
-        xbar(); std::cout << "\n";
+        std::cout << '\n'; xbar(); std::cout << "\n\n";
         Game::gout() << "Ahh, a fine choice!\n";
 
         Game::gout() << "Your first quest is to defeat a slime\n";

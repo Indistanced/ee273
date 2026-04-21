@@ -24,7 +24,7 @@ void Combat::playerMove(Player* p, Enemy*& e) {
 		std::cout << "\n═══════ Player's Move ═══════\n\n";
 		std::cout << "1) Cast a spell\n";
 		std::cout << "2) Use a potion\n";
-		std::cout << "3) Exit game\n";
+		std::cout << "3) Exit game\n\n";
 		std::cout << "Choice: ";
 		std::cin >> choice;
 
@@ -94,7 +94,8 @@ void Combat::playerMove(Player* p, Enemy*& e) {
 
 				if (po->get_quantity() == 0) {
 					p->getInventory().removeItem(po);
-				}
+				} ask_to_continue();
+				
 			}
 			else {
 				std::cout << "\nYou have no potions left.\n";
@@ -178,19 +179,19 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 	// END
 
 	if (p->isAlive()) {
+		int exp = e->getMaxHealth() / 2;
 
 		if (enemy_name == "Fire Spirit") { Level::isComplete[0] = true; } // Unlock next level if final level 1 enemy is defeated
-		xbar(50);
+
+		std::cout << '\n'; xbar(50); std::cout << '\n';
 	
-		int exp = e->getMaxHealth() / 2;
 		std::cout << "\nCongratulations! You defeated the " << e->getName() << "!\n";
 		std::cout << "  ── You Gained +" << exp << " Experience! ──\n";
 
 		p->addExp(exp);
 
 		std::cout << "\nThe " << e->getName() << " dropped:\n";
-		item_drop_generator(p, e->getMaxHealth());
-		std::cout << "\n\n";
+		item_drop_generator(p, e->getMaxHealth()); std::cout << "\n";
 		delete e;
 		return true;
 	}

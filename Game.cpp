@@ -125,9 +125,9 @@ bool Game::save_player(Player*& p) {
 void Game::start(Player* p) {
 	terminateBuffer();
 
-	std::cout << "\tWelcome, Adventurer " << p->getName() << "!\n"; // Introductory message
-	std::cout << "\t  ── Entering the " << p->getLocation() << " ──\n"; xbar(); std::cout << '\n'; // Location information
-	std::cout << "\t>> Press enter to start <<"; // Confirmation
+	std::cout << "Welcome, Adventurer " << p->getName() << "!\n"; // Introductory message
+	std::cout << "── Entering the " << p->getLocation() << " ──\n"; std::cout << '\n'; // Location information
+	std::cout << ">> Press enter to start <<"; // Confirmation
 
 	clearBuffer();
 	std::cin.get();  // wait for player to press enter
