@@ -26,6 +26,8 @@ bool running = true;
 Player* p = nullptr;
 
 int gameLoop() {
+	running = true;
+	Player* p = nullptr;
 	while (running) {
 		p = nullptr;
 		p = selectPlayerInstance(p);
@@ -44,14 +46,14 @@ int gameLoop() {
 		if (!p->isAlive()) {
 			if (gameOverMenu(p)) { // If RESTART
 				delete p;
-				continue;
+				gameLoop();
 			}
 			else { // IF EXIT GAME
 				running = false;
 				delete p;
 				return 0;
 			}
-		} delete p;
+		}
 	}
 }
 

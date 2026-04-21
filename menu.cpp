@@ -95,7 +95,7 @@ Player* selectPlayerInstance(Player*& p) {
         Game::gout() << "They emerging and attacking anything in their path!\n\n";
 
         Game::gout() << "If nothing is done the town will fall...\n";
-        Game::gout() << "The Knites have tried and failed.\n";
+        Game::gout() << "The knights have tried and failed.\n";
         Game::gout() << "Now, all eyes turn to you (a beginner but powerful mage).\n\n";
 
         Game::gout() << "You must enter the Arm of Dismay and put an end to whatever lies within.\n";
