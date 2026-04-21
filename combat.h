@@ -14,7 +14,7 @@ struct Combat {
 	void enemyMove(Player* p, Enemy*& e);
 
 	bool startCombat(Player* p, std::string enemy_name, int health, int attack, std::string element);
-	void item_drop_generator(Player* p, int enemy_health);
+	static void item_drop_generator(Player* p, int enemy_health);
 };
 
 

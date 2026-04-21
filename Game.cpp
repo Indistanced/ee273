@@ -22,6 +22,7 @@
 #include "Game_Level.h"
 #include "menu.h"
 #include "main.h"
+#include "combat.h"
 
 #include <Windows.h>
 #include <opencv2/core.hpp>
@@ -240,8 +241,42 @@ bool Game::level_one() {
 	return true;
 }
 
+bool Game::level_two_choices(int choice, Combat c) {
+	int maxHealth = 111;
+	int exp = maxHealth / 2;
+	std::string enemy_name = "Mushroom Warrior";
+
+	if (choice == 1) { // ATTACK
+		Game::gout() << "You prepare to strike.\n";
+		if (!c.startCombat(p, enemy_name, maxHealth, 13, "grass")) {
+			return false;
+		}
+		Game::gout() << "You have exhausted the mushroom warrior. It drops some loot and digs into the ground.\n";
+	}
+	else if (choice == 2) { // RUN
+		Game::gout() << "\nThe Mushroom Warrior is catching up to you\n";
+		Game::gout() << "Running away is a form of disrespect in their eyes\n";
+		Game::gout() << "You have offended it and you cannot evade it. What will you do?\n\n";
+		playerInstanceOptions(choice, "ATTACK", "STAY");
+		if (choice == 1) level_two_choices(1, c); // ATTACK
+		else if (choice == 2) level_two_choices(3, c); // STAY
+	}
+	else if (choice == 3) { // STAY
+		Game::gout() << "You hand a stick to the warrior as as an attempt to ease the hostility\n";
+		std::cout << "???: AweR44 60Jlas w asd\n";
+		Game::gout() << "It seems that his compadres have been alerted. They troddle towards you, dragging their mushroom helmets\n";
+		Game::gout() << "FUN FACT : mushroom helmets are a part of their bone structure, just as tortoises have shells as part of their skeletal structure\n";
+		Game::gout() << "You tell warriors your mission, and they thus deem you to be of no harm to them, and decide to give you some gifts to aid you in your journey.\n";
+		std::cout << "  ── You Gained +" << exp << " Experience! ──\n";
+		p->addExp(exp);
+		std::cout << "\nThe " << enemy_name << " dropped:\n";
+		Combat::item_drop_generator(p, maxHealth);
+	}
+}
+
 
 bool Game::level_two() {
+	int choice;
 	Combat c;
 
 	terminateBuffer();
@@ -250,8 +285,24 @@ bool Game::level_two() {
 
 	std::cout << "═════════════════════════ MAGIC MOUNTAIN ═════════════════════════\n";
 
-	Game::gout() << "You enter a mystical place.\n";
-	Game::gout() << "You look around and admire the mystical atmosphere of the mountain.\n";
+	Game::gout() << "As I venture through this forest engorged with shrooms, I can't help but wonder why this place was one of his fondest memories.\n";
+	Game::gout() << "As per the memoir, this was perhaps the last place on Earth devoid of human endeavour (aside from perhaps unliveable areas in the Arctic,"
+		<< "Antarctic, and the Sahara...).\n\n";
+	Game::gout() << "I smell something...\n\n";
+
+	// Enemy
+
+	std::cout << "???: " << "ARHGH!!!\n\n";
+	Game::gout() << "A wild Mushroom Warrior has emerged from the marshlands embedded in the forest\n";
+	ask_to_continue();
+
+	Game::gout() << "\nWhat shall your plan of action be?\n";
+
+	playerInstanceOptions(choice, "Attack", "Run", "Stay");
+	level_two_choices(choice, c);
+
+	Game::gout() << "You venture henceforth, entering through a creaky wooden gate with a surrounding cobbled wall, leading you through the forest to a mystical place.\n";
+	Game::gout() << "You look around and admire the synthetic-like geometry and ominous atmosphere of the mountain.\n";
 	Game::gout() << "You progress on in your journey up the mountain...\n\n";
 
 	Game::gout() << "Suddenly, a rock starts to move!\n";
@@ -304,7 +355,7 @@ bool Game::level_two() {
 	p->completeQuest("Reach the portal at the peak of the Magic Mountain");
 	Level::isComplete[1] = true;
 
-	Game::gout() << "\n\nYou have a new quest! - concur The Arm of Dismay\n";
+	Game::gout() << "\n\nYou have a new quest! - conquer The Arm of Dismay\n";
 	p->addQuest("Conquer the Arm of Dismay", false);
 
 	save_player(p);
@@ -333,7 +384,6 @@ bool Game::level_three() {
 	if (!c.startCombat(p, "Ember Titan", 220, 25, "fire")) {
 		return false;
 	}
-
 
 	// Enemy 2 
 	terminateBuffer();
@@ -366,7 +416,7 @@ bool Game::level_three() {
 
 	// LEVEL COMPLETE
 	std::cout << "\nYou completed a quest! - concur The Arm of Dismay\n\n";
-	p->completeQuest("concur The Arm of Dismay");
+	p->completeQuest("conquer The Arm of Dismay");
 
 	Game::gout() << "The Dragon lets out a deep groan as the vines wither away...\n";
 	Game::gout() << "The dungeon falls silent.\n";
@@ -377,58 +427,6 @@ bool Game::level_three() {
 
 	return true;
 }
-
-//bool Game::level_two_choices(int choice, Combat* c) {
-//	if (choice == 1) { // ATTACK
-//		if (!c->startCombat(p, "Slime", 50, 8, "water")) return false;
-//	}
-//	else if (choice == 2) { // RUN
-//		Game::gout() << "\nThe Mushroom Warrior is catching up to you\n";
-//		Game::gout() << "Running away is a form of disrespect in their eyes\n";
-//		Game::gout() << "You have offended it and you cannot evade it. What will you do?\n\n";
-//		playerInstanceOptions(choice, "ATTACK", "STAY");
-//		if (choice == 1) level_two_choices(1, c); // ATTACK
-//		else if (choice == 2) level_two_choices(3, c); // STAY
-//	}
-//	else if (choice == 3) { // STAY
-//		Game::gout() << "You hand a stick to the warrior as as an attempt to ease the hostility";
-//		std::cout << "???: AweR44 60Jlas w asd";
-//		Game::gout() << "It seems that his compadres have been alerted. They troddle towards you, dragging their mushroom helmets"
-//			<< "(FUN FACT: mushroom helmets are a part of their bone structure, just as tortoises have shells as part of their skeletal structure)";
-//		Game::gout() << "You tell warriors your mission, and they thus deem you to be of no harm to them,"
-//			<< "and decide to give you a gift to aid you in your journey.";
-//	}
-//}
-//
-//bool Game::level_two() {
-//	int choice;
-//	Combat* c = new Combat();
-//	 
-//	terminateBuffer();
-//
-//	std::cout << "═════════════════════════ MAGIC MOUNTAIN ═════════════════════════\n";
-//	Game::gout() << "As I venture through this forest engorged with shrooms, I can't help but wonder why this place was one of his fondest memories.\n";
-//	Game::gout() << "As per the memoir, this was perhaps the last place on Earth devoid of human endeavour (aside from perhaps unliveable areas in the Arctic,"
-//		<< "Antarctic, and the Sahara...).\n\n";
-//	Game::gout() << "I smell something...\n\n";
-//
-//	// Enemy 1
-//
-//	std::cout << "???: " << "ARHGH!!!\n\n";
-//	Game::gout() << "A wild Mushroom Warrior has emerged from the marshlands embedded in the forest\n";
-//	ask_to_continue();
-//
-//	Game::gout() << "\nWhat shall your plan of action be?\n";
-//
-//	playerInstanceOptions(choice, "Attack", "Run", "Stay");
-//	level_two_choices(choice, c);
-//
-//	// LEVEL COMPLETE
-//	Level::isComplete[1] = true;
-//	save_player(p);
-//
-//	return true;
-//}
 
 void Game::resetInstance() {
 	instance = nullptr;

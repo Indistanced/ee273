@@ -31,7 +31,7 @@ public:
 
 	bool level_one();
 	bool level_two();
-	bool level_two_choices(int choice, Combat* c);
+	bool level_two_choices(int choice, Combat c);
 	bool level_three();
 
 	static void resetInstance();
