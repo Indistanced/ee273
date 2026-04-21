@@ -11,6 +11,7 @@
 #include "unicode.h"
 #include "Game_Level.h"
 #include "main.h"
+#include "Minimap.h"
 
 #include <thread>
 #include <ctime>
@@ -54,57 +55,13 @@ int gameLoop() {
 	}
 }
 
-void mapLoop() {
-	std::array level_names = { "Town", "Green Hill Zone", "Magic Mountain", "The Arm of Dismay", "End" };
-
-	static std::unordered_map<std::string, cv::Mat> maps = {
-		{"Town", cv::imread("D:\\repos\\ee273\\town_img.png")},
-		{"Green Hill Zone", cv::imread("D:\\repos\\ee273\\ghz_img.png") },
-		{"Magic Mountain", cv::imread("D:\\repos\\ee273\\mm_img.png") },
-		{"The Arm of Dismay", cv::imread("D:\\repos\\ee273\\taos_img.png")},
-		{"End", cv::imread("D:\\repos\\ee273\\end_img.png") }
-	};
-
-	static bool initialised = false;
-	if (!initialised) {
-		int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-		int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-		int windowSize = 300;
-
-		int x = (screenWidth - windowSize) / 2;
-		int y = (screenHeight - windowSize) / 2;
-
-		cv::namedWindow("Map", cv::WINDOW_NORMAL);
-		cv::resizeWindow("Map", 300, 300);
-		cv::moveWindow("Map", x, y);
-		cv::imshow("Map", maps[level_names[0]]);
-
-		initialised = true;
-	}
-	
-	while (running) {
-		if (p == nullptr) {
-			cv::waitKey(1);
-			continue;
-		}
-		
-		for (int i{}; i < level_names.size(); i++) {
-			if (p->getLocation() == level_names[i]) {
-				cv::imshow("Map", maps[level_names[i]]);
-				cv::waitKey(1);
-			}
-		}
-	}
-}
-
-
 int main() {
 	// INITIALISATIONS;
 	srand(static_cast<unsigned int>(time(0))); // Random number generator set seed
 	unicode_init(); // Enable unicode
 	
 	std::thread t1(gameLoop);
-	std::thread t2(mapLoop);
+	std::thread t2(Minimap::mapLoop);
 
 	t1.join();
 	t2.join();

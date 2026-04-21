@@ -1,6 +1,9 @@
-﻿int mainLoop();
-void mapLoop();
-int main();
+﻿#pragma once
 
-extern bool running;
+#include "Player.h"
+
 extern Player* p;
+extern bool running;
+
+int gameLoop();
+int main();

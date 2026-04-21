@@ -1,31 +1,52 @@
 ﻿#include "Minimap.h"
+#include "main.h"
 
 #include <array>
 
 #include <windows.h>
 #include <tchar.h>
+#include <map>
+#include <string>
 
+void Minimap::mapLoop() {
+	std::array level_names = { "Town", "Green Hill Zone", "Magic Mountain", "The Arm of Dismay", "End" };
 
+	static std::unordered_map<std::string, cv::Mat> maps = {
+		{"Town", cv::imread("D:\\repos\\ee273\\town_img.png")},
+		{"Green Hill Zone", cv::imread("D:\\repos\\ee273\\ghz_img.png") },
+		{"Magic Mountain", cv::imread("D:\\repos\\ee273\\mm_img.png") },
+		{"The Arm of Dismay", cv::imread("D:\\repos\\ee273\\taos_img.png")},
+		{"End", cv::imread("D:\\repos\\ee273\\end_img.png") }
+	};
 
-void Minimap::drawMinimap(int x, int y) {
-	constexpr int ROWS = 6;
-	constexpr int COLS = 21;
+	static bool initialised = false;
+	if (!initialised) {
+		int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+		int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+		int windowSize = 300;
 
-	std::array<std::array<char, COLS>, ROWS> map = { {
-		{{' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#'}},
-		{{'#', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#'}},
-		{{' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#'}},
-		{{'#', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#'}},
-		{{' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#'}},
-		{{'#', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#'}}
-	} };
+		int x = (screenWidth - windowSize) / 2;
+		int y = (screenHeight - windowSize) / 2;
 
-	std::cout << "\033[-;32H";
-	for (int i{}; i < ROWS; i++) {
+		cv::namedWindow("Map", cv::WINDOW_NORMAL);
+		cv::resizeWindow("Map", 300, 300);
+		cv::moveWindow("Map", x, y);
+		cv::imshow("Map", maps[level_names[0]]);
 
-		for (int j{}; j < COLS; j++) {
+		initialised = true;
+	}
 
-			std::cout << map[i][j];
-		} std::cout << '\n';
-	} std::cout << "\033[u";
+	while (running) {
+		if (p == nullptr) {
+			cv::waitKey(1);
+			continue;
+		}
+
+		for (int i{}; i < level_names.size(); i++) {
+			if (p->getLocation() == level_names[i]) {
+				cv::imshow("Map", maps[level_names[i]]);
+				cv::waitKey(1);
+			}
+		}
+	}
 }
