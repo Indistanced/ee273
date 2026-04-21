@@ -1,4 +1,9 @@
-﻿#include "Minimap.h"
+﻿//Author: Aidan Kelly 
+//Creation Date: 
+
+//Changes made:
+
+#include "Minimap.h"
 #include "main.h"
 
 #include <array>

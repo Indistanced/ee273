@@ -8,19 +8,22 @@
 
 #include <string>
 
+// Reduces the characters health by the specified damage amount
 void Character::takeDamage(int dmg) {
     currentHealth -= dmg;   //update current health
 
-    //check to ensure health dose not fall below 0.
+    //check to ensure health dose not fall below 0
     if (currentHealth < 0) {
         currentHealth = 0;
     }
 }
 
+// Checks whether the character is still alive
 bool Character::isAlive() const {
     return currentHealth > 0;
 }
 
+// Increases the characters health by a specified amount
 void Character::addHealth(int health) {
 
     currentHealth += health; //update current health

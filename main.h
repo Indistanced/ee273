@@ -1,4 +1,9 @@
-﻿#pragma once
+﻿//Author: Aidan Kelly and Kyle Simpson
+//Creation Date: 
+
+//Changes made:
+
+#pragma once
 
 #include "Player.h"
 

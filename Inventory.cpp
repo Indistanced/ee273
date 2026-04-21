@@ -18,7 +18,7 @@
 
 Inventory::~Inventory() {
     for (auto item : inventory) {
-        delete item;
+        delete item;  //when inventory is destroyed free all allocated item space 
     }
 }
 

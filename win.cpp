@@ -1,6 +1,11 @@
-﻿#include "win.h"
+﻿//Author: Aidan Kelly 
+//Creation Date: 
 
+//Changes made:
+//- added in dashText() fucntion to help reduce repatition.
+//- added in unicode_init() to initilise Unicode
 
+#include "win.h"
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {

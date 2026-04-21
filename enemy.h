@@ -17,7 +17,7 @@ public:
 	//getters
 	std::string get_element() { return element; }
 
-	std::string get_weakness_element() {
+	std::string get_weakness_element() {  //retuns the enemys weakness using their assinged element 
 		if (element == "water") return "grass";
 		else if (element == "fire") return "water";
 		else if (element == "grass") return "fire";

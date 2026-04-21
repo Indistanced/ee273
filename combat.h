@@ -1,4 +1,4 @@
-﻿//Author:  Kyle Simpson and Aidan Kelly
+﻿//Author:  Kyle Simpson 
 //Creation Date: 07/04/26
 
 //Changes made:
@@ -10,7 +10,7 @@
 #include "enemy.h"
 
 struct Combat {
-	void playerMove(Player* p, Enemy*& e);
+	void playerMove(Player* p, Enemy*& e); 
 	void enemyMove(Player* p, Enemy*& e);
 
 	bool startCombat(Player* p, std::string enemy_name, int health, int attack, std::string element);

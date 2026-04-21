@@ -1,4 +1,4 @@
-﻿//Author:  Kyle Simpson and Aidan Kelly
+﻿//Author:  Kyle Simpson and Aidan Kelly 
 //Creation Date: 07/04/26
 
 //Changes made:
@@ -71,44 +71,45 @@ void Combat::playerMove(Player* p, Enemy*& e) {
 			break;
 		}
 		case 2: {
-			auto potions = p->getInventory().getPotions();
+			auto potions = p->getInventory().getPotions(); //get all potions from inventory
 
-			if (potions.empty()) {
-				std::cout << "\nYou have no potions!\n";
+			if (potions.empty()) { //check to make sure player has potions
+				std::cout << "\nYou have no potions!\n";  
 				return;
 			}
 
-			p->getInventory().displayPotions();
+			p->getInventory().displayPotions(); // display all available potions 
 
 			int potionChoice;
+			//get the user to select a potion
 			do {
 				std::cout << "Choose potion: ";
 				std::cin >> potionChoice;
-			} while (potionChoice < 1 || potionChoice > potions.size());
+			} while (potionChoice < 1 || potionChoice > potions.size());  
 
-			Potion* po = potions[potionChoice - 1];
+			Potion* po = potions[potionChoice - 1];  //gets the potion with the correct index
 
+			//try to use potion 
 			if (po->use_potion(p)) {
 				std::cout << "\nHealth: " << p->getHealth()
 					<< "/" << p->getMaxHealth() << "\n";
 
+				//if quantity drops to zero remove potion from inventory 
 				if (po->get_quantity() == 0) {
 					p->getInventory().removeItem(po);
 				} ask_to_continue();
 				
 			}
-			else {
-				std::cout << "\nYou have no potions left.\n";
-			}
+			
 			break;
 		}
 		case 3: {
-			exit(0);
+			exit(0); // quit program
 		}
-		default: std::cout << "\nInvalid choice.\n";
+		default: std::cout << "\nInvalid choice.\n"; 
 		}
 
-	} while (choice != 1);
+	} while (choice != 1); // loop until player attacks 
 }
 
 
@@ -143,21 +144,22 @@ void Combat::enemyMove(Player* p, Enemy*& e) {
 
 bool Combat::startCombat(Player* p, std::string enemy_name, int health, int attack, std::string element) {
 
-	Enemy* e = new Enemy(enemy_name, health, attack, element);
+	Enemy* e = new Enemy(enemy_name, health, attack, element);  // create enemy entity using stats
 
-	while (p->isAlive() && e->isAlive()) {
+	while (p->isAlive() && e->isAlive()) {  //game loop while both entites are alive 
 
 		// PLAYER TURN
 
-		clearBuffer(); terminateBuffer();
+		clearBuffer(); 
+		terminateBuffer(); 
 
 		std::cout << "\n══════════════ Combat ══════════════\n";
 
 		std::cout << "\nPlayer Health: " << p->getHealth() << "\n";
 		std::cout << e->getName() << " Health: " << e->getHealth() << "\n";
 
-		playerMove(p, e);
-		if (!e->isAlive()) break;
+		playerMove(p, e);  //let player attack
+		if (!e->isAlive()) break;  //check if enemy is still alive
 		system("pause");
 
 		// ENEMY TURN
@@ -170,8 +172,8 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 		std::cout << "\nPlayer Health: " << p->getHealth() << "\n";
 		std::cout << e->getName() << " Health: " << e->getHealth() << "\n";
 
-		enemyMove(p, e);
-		if (!e->isAlive()) break;
+		enemyMove(p, e); //enemy move 
+		if (!p->isAlive()) break; //check if player is avlive 
 		system("pause");
 
 	}
@@ -179,7 +181,7 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 	// END
 
 	if (p->isAlive()) {
-		int exp = e->getMaxHealth() / 2;
+		int exp = e->getMaxHealth() / 2; //calculate experience 
 
 		if (enemy_name == "Fire Spirit") { Level::isComplete[0] = true; } // Unlock next level if final level 1 enemy is defeated
 
@@ -188,17 +190,17 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 		std::cout << "\nCongratulations! You defeated the " << e->getName() << "!\n";
 		std::cout << "  ── You Gained +" << exp << " Experience! ──\n";
 
-		p->addExp(exp);
+		p->addExp(exp); //add experince points to player 
 
 		std::cout << "\nThe " << e->getName() << " dropped:\n";
-		item_drop_generator(p, e->getMaxHealth());
-		delete e;
+		item_drop_generator(p, e->getMaxHealth());  //generate random items using enemy health
+		delete e; //delete enemey 
 		return true;
 	}
 
 	std::cout << "\n\nYou were defeated...\n";
 	delete e;
-	return false;
+	return false; 
 }
 
 void Combat::item_drop_generator(Player* p, int enemy_health) {
@@ -229,6 +231,8 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 			}
 		}
 	}
+
+	//medium teir drops
 	else if (enemy_health <= 100) {
 		std::cout << "- Medium Health Potion\n";
 		p->getInventory().addPotion("Medium Health Potion", "Restores +50 HP", 50, 1);
@@ -251,6 +255,8 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 			}
 		}
 	}
+
+	//upper teir drops 
 	else if (enemy_health <= 200) {
 		std::cout << "- Large Health Potion\n";
 		p->getInventory().addPotion("Large Health Potion", "Restores +75 HP", 75, 1);
@@ -274,6 +280,7 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 		}
 	}
 
+	//lengendary drops 
 	else {
 		std::cout << "- Mega Health Potion\n";
 		p->getInventory().addPotion("Mega Health Potion", "Restores +100 HP", 100, 1);

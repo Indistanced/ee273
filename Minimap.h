@@ -1,4 +1,9 @@
-﻿#pragma once
+﻿//Author: Aidan Kelly 
+//Creation Date: 
+
+//Changes made:
+
+#pragma once
 
 #include "clear.h"
 #include "unicode.h"
