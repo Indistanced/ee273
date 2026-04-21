@@ -47,6 +47,7 @@ void Game::level_selection(int& choice) {
 
 		if (level_one()) {
 			p->setLocation(second->first);
+			save_player(p);
 			playerInstanceOptions(choice, "Continue", "Close Game", "INVALID", "\nCONTINUE?");
 		} return;
 	}
@@ -54,6 +55,7 @@ void Game::level_selection(int& choice) {
 	if (p->getLocation() == second->first) {
 		if (level_two()) {
 			p->setLocation(third->first);
+			save_player(p);
 			playerInstanceOptions(choice, "Continue", "Close Game", "INVALID", "\nCONTINUE?");
 		} return;
 	}
@@ -61,6 +63,7 @@ void Game::level_selection(int& choice) {
 	if (p->getLocation() == third->first) {
 		if (level_three()) {
 			p->setLocation("End");
+			save_player(p);
 			playerInstanceOptions(choice, "Complete Game", "INVALID", "INVALID", "\nCONTINUE?");
 		} return;
 	}
@@ -293,7 +296,7 @@ bool Game::level_two() {
 	// Enemy
 
 	std::cout << "???: " << "ARHGH!!!\n\n";
-	Game::gout() << "A wild Mushroom Warrior has emerged from the marshlands embedded in the forest\n";
+	Game::gout() << "A wild Mushroom Warrior has emerged from the marshlands embedded in the forest.\n";
 	ask_to_continue();
 
 	Game::gout() << "\nWhat shall your plan of action be?\n";
@@ -351,7 +354,7 @@ bool Game::level_two() {
 	Game::gout() << "\n\nYou compose yourself and go through the portal.\n";
 	std::cout << "\n-- You completed Level 2! --\n";
 
-	std::cout << "\nYou completed a quest! - Reach the portal at the peak of the Magic Mountain\n\n";
+	std::cout << "\nYou completed a quest! - Reach the portal at the peak of the Magic Mountain\n";
 	p->completeQuest("Reach the portal at the peak of the Magic Mountain");
 	Level::isComplete[1] = true;
 

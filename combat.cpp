@@ -191,7 +191,7 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 		p->addExp(exp);
 
 		std::cout << "\nThe " << e->getName() << " dropped:\n";
-		item_drop_generator(p, e->getMaxHealth()); std::cout << "\n";
+		item_drop_generator(p, e->getMaxHealth());
 		delete e;
 		return true;
 	}
