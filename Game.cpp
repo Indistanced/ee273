@@ -288,10 +288,10 @@ bool Game::level_two() {
 
 	std::cout << "═════════════════════════ MAGIC MOUNTAIN ═════════════════════════\n";
 
-	Game::gout() << "As I venture through this forest engorged with shrooms, I can't help but wonder why this place was one of his fondest memories.\n";
-	Game::gout() << "As per the memoir, this was perhaps the last place on Earth devoid of human endeavour (aside from perhaps unliveable areas in the Arctic,"
+	Player::pout(p) << "As I venture through this forest engorged with shrooms, I can't help but wonder why this place was one of his fondest memories.\n";
+	Player::pout(p) << "As per the memoir, this was perhaps the last place on Earth devoid of human endeavour (aside from perhaps unliveable areas in the Arctic, "
 		<< "Antarctic, and the Sahara...).\n\n";
-	Game::gout() << "I smell something...\n\n";
+	Player::pout(p) << "Something smells particularly off...\n\n";
 
 	// Enemy
 

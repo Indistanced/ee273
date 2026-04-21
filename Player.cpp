@@ -45,6 +45,10 @@ void Player::addExp(int exp_amount) {
 	}
 }
 
+std::ostream& Player::pout(Player* p) {
+	return std::cout << p->getName() << ": ";
+}
+
 
 std::vector<std::pair<std::string, bool>>& Player::getQuests() {
 	return quests;

@@ -37,12 +37,14 @@ public:
 		this->level = level, this->location = location; this->exp = exp; this->expLimit = expLimit;
 	};
 
+	static std::ostream& pout(Player* p);
 
 	static std::istream& pin(Player* p);  // function to call player name before test i.e "John: "
 
 	void to_string(); // convert player stats to string
 
 	// Getters 
+	std::string getName() const { return name; };
 	int getLevel() const { return level; };
 	int getExp() const { return exp; };
 	int getExpLimit() const { return expLimit; }
