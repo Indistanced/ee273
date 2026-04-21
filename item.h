@@ -2,7 +2,7 @@
 //Creation Date: 22/03/26
 
 //Changes made:
-//- added in virtual destructor for item
+//-speratrated potions and spells into seperate classes
 
 #pragma once
 #include <string>
@@ -21,6 +21,7 @@ public:
     //getters 
     std::string get_name();
     std::string get_description();
+    
 protected:
     std::string name;
     std::string description;

@@ -16,17 +16,21 @@
 #include "player.h"
 #include "clear.h"
 
+// Destructor - frees all dynamically allocated items in the inventory
 Inventory::~Inventory() {
     for (auto item : inventory) {
-        delete item;  //when inventory is destroyed free all allocated item space 
+        delete item; 
     }
 }
 
+// Adds a new spell to the inventory
 bool Inventory::addSpell(std::string name, std::string description, int base, int weak, int strong, std::string element) {
     inventory.push_back(new Spell(name, description, weak, base, strong, element));
     return true;
 }
 
+// Adds a potion to the inventory
+// If the potion already exists its quantity is increased instead of adding a duplicate
 bool Inventory::addPotion(std::string name, std::string description, int value, int quantity) {
     for (auto& item : inventory)
     {
@@ -34,23 +38,25 @@ bool Inventory::addPotion(std::string name, std::string description, int value, 
         {
             Potion* p = dynamic_cast<Potion*>(item);
             if (p != nullptr) {
-                p->set_quantity(p->get_quantity() + quantity);
+                p->set_quantity(p->get_quantity() + quantity);  
                 return true;
             }
         }
     }
 
+    // If potion does not exist create and add a new one
     inventory.push_back(new Potion(name, description, value, quantity));
     return true;
 }
 
+// Removes a specific item from the inventory
 void Inventory::removeItem(Item* itemToRemove) {
 
     for (int i = 0; i < inventory.size(); i++) {
 
         if (inventory[i] == itemToRemove) {
 
-            delete inventory[i];
+            delete inventory[i];   // Free memory
             inventory.erase(inventory.begin() + i);
             return;
         }
@@ -58,10 +64,11 @@ void Inventory::removeItem(Item* itemToRemove) {
 }
 
 
+// Displays all spells currently in the players inventory
 void Inventory::displaySpells() {
     std::cout << "\n──────────────── Spell List ────────────────\n";
 
-    std::vector<Spell*> spells = getSpells();
+    std::vector<Spell*> spells = getSpells(); //get all spells
 
     for (int i = 0; i < spells.size(); i++) {
         std::cout << i + 1 << ") "
@@ -70,10 +77,11 @@ void Inventory::displaySpells() {
     }
 }
 
+// Displays all potions currently in the players inventory
 void Inventory::displayPotions() {
     std::cout << "\n──────────────── Potion List ────────────────\n";
 
-    std::vector<Potion*> potions = getPotions();
+    std::vector<Potion*> potions = getPotions(); //get all potions 
 
     for (int i = 0; i < potions.size(); i++) {
 
@@ -83,6 +91,7 @@ void Inventory::displayPotions() {
     }
 }
 
+// Allows the player to view items, use potions or exit the inventory
 void  Inventory::displayItems(Player* p) {
 
     while (true) {
@@ -99,6 +108,7 @@ void  Inventory::displayItems(Player* p) {
         std::cout << "2) Exit inventory.\n";
         std::cout << "Choice: ";
 
+        // Input validation loop
         do {
             std::cin >> choice;
             clearBuffer();
@@ -108,11 +118,13 @@ void  Inventory::displayItems(Player* p) {
 
             std::vector<Potion*> potions = getPotions();
 
+            // Handle case where no potions exist
             if (potions.empty()) {
                 std::cout << "You have no potions!\n";
                 ask_to_continue();
                 continue;
             }
+
 
             std::cout << "\nChoose a potion: \n";
             for (int i = 0; i < potions.size(); i++) {
@@ -124,6 +136,7 @@ void  Inventory::displayItems(Player* p) {
       
             int potionChoice;
 
+            // Input loop for user selecting a vaild potion 
             do {
                 std::cout << "\nChoice: ";
                 std::cin >> potionChoice;
@@ -134,11 +147,13 @@ void  Inventory::displayItems(Player* p) {
             Potion* selectedPotion = potions[potionChoice - 1];
 
 
+            // Attempt to use the selected potion
             if (selectedPotion->use_potion(p)) {
                 std::cout << "\nYour new health is: ("
                     << p->getHealth() << "/"
                     << p->getMaxHealth() << ")\n";
 
+                //remove item if quantity reaches zero
                 if (selectedPotion->get_quantity() == 0) {
                     removeItem(selectedPotion);
                 }
@@ -149,21 +164,23 @@ void  Inventory::displayItems(Player* p) {
         }
 
         else {
-            return;
+            return;  // Exit inventory
         }
     }
 }
 
 
+// Returns reference to full inventory (used for saving and loading functionality)
 std::vector<Item*>& Inventory::getItems() {
     return inventory;
 }
 
+// Returns a filtered list of Potions only 
 std::vector<Potion*> Inventory::getPotions() {
     std::vector<Potion*> potions;
 
     for (auto& item : inventory) {
-        Potion* p = dynamic_cast<Potion*>(item);
+        Potion* p = dynamic_cast<Potion*>(item);  // Uses dynamic_cast to identify correct type
         if (p != nullptr) {
             potions.push_back(p);
         }
@@ -171,11 +188,13 @@ std::vector<Potion*> Inventory::getPotions() {
 
     return potions;
 }
+
+// Returns a filtered list of Spells only 
 std::vector<Spell*> Inventory::getSpells() {
     std::vector<Spell*> spells;
 
     for (auto& item : inventory) {
-        Spell* s = dynamic_cast<Spell*>(item);
+        Spell* s = dynamic_cast<Spell*>(item);  // Uses dynamic_cast to identify correct type
         if (s != nullptr) {
             spells.push_back(s);
         }

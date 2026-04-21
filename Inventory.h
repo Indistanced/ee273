@@ -11,28 +11,32 @@
 
 #include "Item.h"
 
-class Player;  // Player has an inventory 
+class Player;  // Forward declaration of Player for composition relationship 
 
 class Inventory {
 public:
-    ~Inventory();
+    ~Inventory(); // Destructor - ensures all dynamically allocated items are deallocated
+
+    //add item functions
     bool addPotion(std::string name, std::string description, int value, int quantity);
     bool addSpell(std::string name, std::string description, int base, int weak, int strong, std::string element);
 
-    // Bool useSpell(std::string name, Enemy& enemy_name);
+   
     void removeItem(Item* itemToRemove);
 
-    void displayItems(Player* p);
+    
 
     std::vector<Item*>& getItems();   // For saving and loading items
-    std::vector<Potion*> getPotions();
-    std::vector<Spell*> getSpells();
+    std::vector<Potion*> getPotions(); //retuns all potions 
+    std::vector<Spell*> getSpells(); //retuns all spells
 
+    //display functions
     void displaySpells();
     void displayPotions();
+    void displayItems(Player* p);
 
 
 private:
-    std::vector<Item*> inventory;
+    std::vector<Item*> inventory; // Stores all items as pointers to the base Item class
 
 };
