@@ -297,9 +297,9 @@ bool Game::level_two() {
 
 	std::cout << "???: " << "ARHGH!!!\n\n";
 	Game::gout() << "A wild Mushroom Warrior has emerged from the marshlands embedded in the forest.\n";
-	ask_to_continue();
+	ask_to_continue(); std::cout << '\n';
 
-	Game::gout() << "\nWhat shall your plan of action be?\n";
+	Game::gout() << "What shall your plan of action be?\n\n";
 
 	playerInstanceOptions(choice, "Attack", "Run", "Stay");
 	level_two_choices(choice, c);
