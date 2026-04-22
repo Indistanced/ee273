@@ -17,26 +17,21 @@ class Inventory {
 public:
     ~Inventory(); // Destructor - ensures all dynamically allocated items are deallocated
 
-    //add item functions
+    // Add item functions
     bool addPotion(std::string name, std::string description, int value, int quantity);
     bool addSpell(std::string name, std::string description, int base, int weak, int strong, std::string element);
 
-   
-    void removeItem(Item* itemToRemove); //remove item from inventory using name of item
-
-    
+    void removeItem(Item* itemToRemove); // Remove item from inventory using name of item
 
     std::vector<Item*>& getItems();   // For saving and loading items
     std::vector<Potion*> getPotions(); // Return all potions 
     std::vector<Spell*> getSpells(); // Return all spells
 
-    //display functions
+    // Display functions
     void displaySpells();
     void displayPotions();
     void displayItems(Player* p);
 
-
 private:
-    std::vector<Item*> inventory; // Stores all items as pointers to the base Item class
-
+    std::vector<Item*> inventory; // Store all items as pointers to the base Item class
 };
