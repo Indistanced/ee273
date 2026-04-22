@@ -193,7 +193,7 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 	// END
 
 	if (p->isAlive()) {
-		int exp = e->getMaxHealth() / 2; //calculate experience 
+		int exp = e->getMaxHealth() / 2; // Calculate experience 
 
 		if (enemy_name == "Fire Spirit") { Level::isComplete[0] = true; } // Unlock next level if final level 1 enemy is defeated
 

@@ -106,7 +106,6 @@ Player* selectPlayerInstance(Player*& p) {
         Game::gout() << "Before you set out, you must choose a spell to aid you.\n\n";
         xbar(); std::cout << "\n\n";
 
-
         while (true) {
 
 
@@ -200,7 +199,6 @@ bool load_player(Player*& player) {
     inFile >> itemCount;
     inFile.ignore();
 
-
     for (int i = 0; i < itemCount; i++)
     {
         std::string line;
@@ -270,7 +268,5 @@ bool load_player(Player*& player) {
         else {
             player->addQuest(description, false);
         }
-    }
-
-    return true;
+    } return true;
 }

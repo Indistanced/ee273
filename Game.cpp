@@ -40,12 +40,14 @@ Game* Game::getInstance(Player* p) {
 }
 
 // Move through levels in order
-void Game::level_selection(int& choice) {
+void Game::level_selection(int& choice, bool& ends) {
 	auto first = Level::names.begin();
 	auto second = std::next(first);
 	auto third = std::next(second);
 
-	//level 1 progression
+	ends = false;
+
+	// Level 1 progression
 	if (p->getLocation() == "Town") {
 		p->setLocation(first->first);
 
@@ -56,7 +58,7 @@ void Game::level_selection(int& choice) {
 		} return;
 	}
 
-	//level 2 progression
+	// Level 2 progression
 	if (p->getLocation() == second->first) {
 		if (level_two()) {
 			p->setLocation(third->first);
@@ -65,13 +67,28 @@ void Game::level_selection(int& choice) {
 		} return;
 	}
 
-	//level 3 progression
+	// Level 3 progression
 	if (p->getLocation() == third->first) {
 		if (level_three()) {
 			p->setLocation("End");
 			save_player(p);
 			playerInstanceOptions(choice, "Complete Game", "INVALID", "INVALID", "CONTINUE?");
 		} return;
+	}
+
+	if (p->getLocation() == "End") {
+		if (end()) {
+			ends = true;
+			playerInstanceOptions(choice, "Restart Game", "Back", "INVALID", "CONTINUE?");
+			if (choice == 1) {
+				ask_to_continue();
+			}
+			else if (choice == 2) {
+				p->setLocation("End");
+				save_player(p);
+				ask_to_continue();
+			} return;
+		} 
 	}
 }
 
@@ -464,12 +481,12 @@ bool Game::level_three() {
 	
 	ask_to_continue();
 
-	if (!c.startCombat(p, "Thornheart Dragon", 300, 35, "grass")) { //start combat 
+	if (!c.startCombat(p, "Thornheart Dragon", 300, 35, "grass")) { // Start combat 
 		return false;
 	}
 
-	std::cout << "\nYou completed a quest! - concur The Arm of Dismay\n\n";
-	p->completeQuest("conquer The Arm of Dismay"); //complete quest 
+	std::cout << "\nYou completed a quest! - conquer The Arm of Dismay\n\n";
+	p->completeQuest("conquer The Arm of Dismay"); // Complete quest 
 
 	// LEVEL COMPLETE
 
@@ -490,9 +507,14 @@ bool Game::level_three() {
 
 	Game::gout() << "Thank you for playing!!\n";
 
-	Level::isComplete[2] = true;  //complete level 3 (go to end)
+	Level::isComplete[2] = true;  // Complete level 3 (go to end)
 	save_player(p);
 
+	return true;
+}
+
+bool Game::end() {
+	Game::gout() << "CONGRATULATIONS! YOU HAVE COMPLETED THE GAME!\n";
 	return true;
 }
 
@@ -520,7 +542,6 @@ void Game::menu(Player* p) {
 		std::cout << "5) Save Game\n";
 		std::cout << "6) Quit\n";
 
-		
 			std::cout << "Choice: ";
 			std::cin >> choice;
 
@@ -535,20 +556,20 @@ void Game::menu(Player* p) {
 			terminateBuffer();
 
 			std::cout << "─── PLAYER STATS ───\n";
-			p->to_string();  //display player info
+			p->to_string();  // Display player info
 			clearBuffer();
 			ask_to_continue();
 			break;
 		}
 		case 2: {
 			terminateBuffer();
-			p->getInventory().displayItems(p); //display all items 
+			p->getInventory().displayItems(p); // Display all items 
 			break;
 		} case 3: {
 			terminateBuffer();
 
 			std::cout << "─── Quest List ───\n";
-			p->quests_to_string(); //display all active quests 
+			p->quests_to_string(); // Display all active quests 
 			clearBuffer();
 			ask_to_continue();
 			break;
@@ -558,29 +579,30 @@ void Game::menu(Player* p) {
 			auto third = std::next(second);
 
 			int choice{};
+			bool ends = false;
 
 			terminateBuffer();
 
-			// display available levels
+			// Display available levels
 			for (auto& l : level) {
 				std::cout << l.first << ": " << l.second << std::endl;
 			} std::cout << std::endl;
 
-			level_selection(choice); // handle level progression
+			level_selection(choice, ends); // handle level progression
 
-			// if player chooses to continue, stay in menu loop
-			if (choice == 1) break;
+			// If player chooses to continue, stay in menu loop
+			if ((choice == 1 && ends == false) || (choice == 2 && ends == true)) break;
 			else return; // Exit menu 
 			break;
 		}
-		case 5: { //save game 
+		case 5: { // Save game 
 			terminateBuffer();
 			save_player(p);
 			std::cout << "\t>> Game saved <<\n";
 			clearBuffer();
 			ask_to_continue();
 			break;
-		} case 6: { //quit game 
+		} case 6: { // quit game 
 			quit = quit_game(p);
 			break;
 		}

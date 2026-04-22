@@ -25,12 +25,13 @@ public:
 	static bool quit_game(Player* p);
 
 	// LEVELS
-	void level_selection(int& choice);
+	void level_selection(int& choice, bool& ends);
 
 	bool level_one();
 	bool level_two();
 	bool level_two_choices(int choice, Combat c);
 	bool level_three();
+	bool end();
 
 	// RESET GAME
 	static void resetInstance();
