@@ -12,7 +12,7 @@
 class Character {
 public:
 	// Default variables
-	const unsigned int DEFAULT_MAX_HEALTH = 10;
+	const unsigned int DEFAULT_MAX_HEALTH = 100;
 	const unsigned int DEFAULT_STRENGTH = 5;
 
 	// Constructor variations

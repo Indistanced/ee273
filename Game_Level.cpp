@@ -1,8 +1,6 @@
 ﻿//Author: Aidan Kelly 
 //Creation Date: 15/04/2026
 
-//Changes made:
-
 #include <iostream>
 
 #include "Game_Level.h"
@@ -21,7 +19,7 @@ int Level::test() {
 	}
 }
 
-// Tell user the completion state of each level.
+// Tell user the completion state of each level
 void Level::isCompleteString() {
 	std::cout << "[ ";
 	for (int i{}; i < NUMBER_OF_LEVELS; i++) {
