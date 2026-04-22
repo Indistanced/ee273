@@ -2,15 +2,15 @@
 //Creation Date: 14/03/26
 
 //Changes made:
-//- Update game menu with player stats 
-//- Update game menu with inventory display
-//- Update game menu with quest display
-//- Update save and quit options
-//- Update save file with location, level, experience, inventory and quests
+//- updated game menu with player stats 
+//- updated game menu with inventory display
+//- updated game menu with quest display
+//- updated save and quit options
+//- updated save file with location, level, experience, inventory and quests
 //- Implement Game class using singleton design pattern
-//- Add in level story and combat interaction for levels 1 to 3
-//- Add in reset/ game over operations 
-//- Add in level two choices for game variety 
+//- added in level story and combat interaction for levels 1 to 3
+//- added in reset/ game over operations 
+//- added in level two choices for game variety 
 
 #include <iostream> // Read and write functionality with console
 #include <fstream> // Read and write functionality with files
@@ -239,7 +239,8 @@ bool Game::level_one() {
 	}
 
 	// LEVEL COMPLETE
-	Game::gout() << "── You completed Level 1! ──\n";
+	dashText("You completed Level 1!");
+	std::cout << "\n";
 	p->completeQuest("Reach the magic mountain");
 	Level::isComplete[0] = true;
 
@@ -267,7 +268,8 @@ bool Game::level_two_choices(int choice, Combat c) {
 		Game::gout() << "You have exhausted the mushroom warrior. It drops some loot and digs into the ground.\n";
 	}
 	else if (choice == 2) { // RUN
-		Game::gout() << "\nThe Mushroom Warrior is catching up to you\n";
+		std::cout << "\n";
+		Game::gout() << "The Mushroom Warrior is catching up to you\n";
 		Game::gout() << "Running away is a form of disrespect in their eyes\n";
 		Game::gout() << "You have offended it and you cannot evade it. What will you do?\n\n";
 		playerInstanceOptions(choice, "ATTACK", "STAY");
@@ -337,21 +339,24 @@ bool Game::level_two() {
 	std::cout << "Beware of the Water Serpent";
 
 	Game::gout() << "\nYou have a new quest! - Take down the Water Serpent\n";
-	p->addQuest("Take down the fire spirit", false);
+	p->addQuest("Take down the Water Serpent", false);
 
-
+	clearBuffer();
 	ask_to_continue();
 
 	// Enemy 2 
 	terminateBuffer();
 
-	Game::gout() << "You move ascend further up the mountain...\n";
+	Game::gout() << "You ascend further up the mountain...\n";
 	Game::gout() << "You stumble on a rock and fall into a bird nest.\n";
 	Game::gout() << "A Firebird takes you as a threat and attacks!\n";
 	ask_to_continue();
 	if (!c.startCombat(p, "Firebird", 150, 15, "fire")) {
 		return false;
 	}
+
+	clearBuffer();
+	ask_to_continue();
 
 	// Enemy 3 (boss battle)
 	terminateBuffer();
@@ -363,18 +368,21 @@ bool Game::level_two() {
 		return false;
 	}
 
+	
 	std::cout << "\nYou completed a quest! - Take down the Water Serpent\n";
 	p->completeQuest("Take down the Water Serpent");
 
 	// LEVEL COMPLETE
-	Game::gout() << "\n\nYou compose yourself and go through the portal.\n";
-	std::cout << "\n── You completed Level 2! ──\n";
+	std::cout << "\n\n";
+	Game::gout() << "You compose yourself and go through the portal.\n";
+	dashText("You completed Level 2!");
+	std::cout << "\n";
 
 	std::cout << "\nYou completed a quest! - Reach the portal at the peak of the Magic Mountain\n";
 	p->completeQuest("Reach the portal at the peak of the Magic Mountain");
 	Level::isComplete[1] = true;
 
-	Game::gout() << "\n\nYou have a new quest! - conquer The Arm of Dismay\n";
+	Game::gout() << "You have a new quest! - conquer The Arm of Dismay\n";
 	p->addQuest("Conquer the Arm of Dismay", false);
 
 	save_player(p);
@@ -399,11 +407,15 @@ bool Game::level_three() {
 	Game::gout() << "You cross a bridge over a lava pit\n";
 	Game::gout() << "Suddenly, something rises from the flames!\n";
 	Game::gout() << "An Ember Titan!\n";
+
 	
 	ask_to_continue();
 	if (!c.startCombat(p, "Ember Titan", 220, 25, "fire")) {
 		return false;
 	}
+
+	clearBuffer();
+	ask_to_continue();
 
 	// Enemy 2 
 	terminateBuffer();
@@ -412,20 +424,24 @@ bool Game::level_three() {
 	Game::gout() << "The air suddenly grows cold and damp.\n";
 	Game::gout() << "Water begins to drip from the ceiling...\n";
 	Game::gout() << "A pool forms beneath your feet.\n";
-	Game::gout() << "Without warning, it surges upwards!\n";
+	Game::gout() << "Without warning, it surges upward!\n";
 	Game::gout() << "An Aqua Phantom emerges!\n";
+
 
 	ask_to_continue();
 	if (!c.startCombat(p, "Aqua Phantom", 250, 30, "water")) {
 		return false;
 	}
 
+	clearBuffer();
+	ask_to_continue();
+
 	// Enemy 3 (boss battle)
 	terminateBuffer();
 
 	Game::gout() << "You step into a vast chamber...\n";
 	Game::gout() << "Strangely... vines cover the walls.\n";
-	Game::gout() << "Roots twist through the stone, pulsing with life.\n";
+	Game::gout() << "Roots twist through the stone pulsing with life.\n";
 	Game::gout() << "The ground begins to shift beneath you.\n";
 	Game::gout() << "A massive form rises.\n";
 	Game::gout() << "Thornheart Dragon awakens!\n";
@@ -437,9 +453,13 @@ bool Game::level_three() {
 		return false;
 	}
 
+	std::cout << "\nYou completed a quest! - concur The Arm of Dismay\n\n";
+	p->completeQuest("conquer The Arm of Dismay");
+
 	// LEVEL COMPLETE
-	std::cout << "\nYou completed a quest - Conquer The Arm of Dismay\n\n";
-	p->completeQuest("Conquer The Arm of Dismay");
+
+	clearBuffer();
+	ask_to_continue();
 
 	Game::gout() << "The Dragon lets out a deep groan as the vines wither away...\n";
 	Game::gout() << "The dungeon falls silent.\n";
@@ -450,7 +470,6 @@ bool Game::level_three() {
 
 	Game::gout() << "The Arm of Dismay is no more!\n";
 	Game::gout() << "Its darkness has been lifted from the land.\n\n";
-	Game::gout() << "The prophecy has been fulfilled\n\n";
 
 	Game::gout() << "You are a hero!\n\n";
 
@@ -484,6 +503,7 @@ void Game::menu(Player* p) {
 		std::cout << "5) Save Game\n";
 		std::cout << "6) Quit\n";
 
+		
 			std::cout << "Choice: ";
 			std::cin >> choice;
 
