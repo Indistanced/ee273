@@ -471,10 +471,12 @@ bool Game::level_three() {
 	std::cout << "\nYou completed a quest! - concur The Arm of Dismay\n\n";
 	p->completeQuest("conquer The Arm of Dismay"); //complete quest 
 
-	// LEVEL COMPLETE
-
 	clearBuffer();
 	ask_to_continue();
+
+	// LEVEL COMPLETE
+
+	terminateBuffer();
 
 	Game::gout() << "The Dragon lets out a deep groan as the vines wither away...\n";
 	Game::gout() << "The dungeon falls silent.\n";
