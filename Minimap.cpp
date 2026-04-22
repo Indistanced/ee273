@@ -1,17 +1,8 @@
-﻿//Author: Aidan Kelly 
-//Creation Date: 
-
-//Changes made:
-
-#include "Minimap.h"
-#include "main.h"
-
+﻿#include "Minimap.h"
 #include <array>
-
-#include <windows.h>
-#include <tchar.h>
 #include <map>
-#include <string>
+#include <Windows.h>
+#include <unordered_map>
 
 void Minimap::mapLoop() {
 	std::array level_names = { "Town", "Green Hill Zone", "Magic Mountain", "The Arm of Dismay", "End" };

@@ -1,9 +1,9 @@
 ﻿//Author: Aidan Kelly and Kyle Simpson
-//Creation Date: 02/03/26
+//Creation Date: 01/03/26
 
 //Changes made:
 //- added in random number generator seed
- 
+//- added unicode enable  
 
 #include "Player.h"
 #include "menu.h"
@@ -15,6 +15,8 @@
 
 #include <thread>
 #include <ctime>
+#include <array>
+#include <map>
 
 #include <Windows.h>
 #include <opencv2/core.hpp>
@@ -26,8 +28,6 @@ bool running = true;
 Player* p = nullptr;
 
 int gameLoop() {
-	running = true;
-	Player* p = nullptr;
 	while (running) {
 		p = nullptr;
 		p = selectPlayerInstance(p);
@@ -46,14 +46,14 @@ int gameLoop() {
 		if (!p->isAlive()) {
 			if (gameOverMenu(p)) { // If RESTART
 				delete p;
-				gameLoop();
+				continue;
 			}
 			else { // IF EXIT GAME
 				running = false;
 				delete p;
 				return 0;
 			}
-		}
+		} delete p;
 	}
 }
 
@@ -61,7 +61,7 @@ int main() {
 	// INITIALISATIONS;
 	srand(static_cast<unsigned int>(time(0))); // Random number generator set seed
 	unicode_init(); // Enable unicode
-	
+
 	std::thread t1(gameLoop);
 	std::thread t2(Minimap::mapLoop);
 
