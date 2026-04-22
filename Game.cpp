@@ -351,10 +351,10 @@ bool Game::level_two() {
 		return false;
 	}
 
-	Game::gout() << "\nThe Golem perishes, but not without a warning...\n";
-	std::cout << "Beware of the Water Serpent";
+	Game::gout() << "The Golem perishes, but not without a warning...\n";
+	std::cout << "Golem: Beware of the Water Serpent!\n\n";
 
-	Game::gout() << "\nYou have a new quest! - Take down the Water Serpent\n";
+	Game::gout() << "You have a new quest! - Take down the Water Serpent\n";
 	p->addQuest("Take down the Water Serpent", false);
 
 	clearBuffer();

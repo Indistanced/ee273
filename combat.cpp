@@ -269,7 +269,7 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 		}
 	}
 
-	// Upper tier drops 
+	// Upper-tier drops 
 	else if (enemy_health <= 200) {
 		std::cout << "- Large Health Potion\n";
 		p->getInventory().addPotion("Large Health Potion", "Restores +75 HP", 75, 1);
