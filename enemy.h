@@ -2,7 +2,7 @@
 //Creation Date: 07/04/26
 
 //Changes made:
-//- updated to include weakness for combat sequence
+//- Include weakness for combat sequence
 
 #pragma once
 #include <string>
@@ -11,13 +11,13 @@
 class Enemy : public Character {
 
 public:
-	//constuctor using Character inheratance 
+	// Constructor using Character inheritance 
 	Enemy(std::string name, int maxHealth, int strength, std::string element) : Character(name, maxHealth, maxHealth, strength) { this->element = element; }
 
-	//getters
+	// Getters
 	std::string get_element() { return element; }
 
-	 //retuns the enemys weakness using their assinged element 
+	 // Return the enemy's weakness using their assigned element 
 	std::string get_weakness_element() { 
 		if (element == "water") return "grass";
 		else if (element == "fire") return "water";

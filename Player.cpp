@@ -2,8 +2,8 @@
 //Creation Date: 02/03/26
 
 //Changes made:
-//- added in Level and experience functions
-//- added in quest management functions
+//- Add in Level and experience functions
+//- Add in quest management functions
 
 #include "player.h"
 #include "unicode.h"

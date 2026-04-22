@@ -2,11 +2,11 @@
 //Creation Date: 08/03/26
 
 //Changes made:
-//- updated story telling text
-//- updated load function with location
-//- updated load fucntion with level and experince
-//- updated load function with inventory and quest
-//- added playerInstanceOptions to crete a user selection menu
+//- Update story telling text
+//- Update load function with location
+//- Update load function with level and experience
+//- Update load function with inventory and quest
+//- Add playerInstanceOptions to create a user selection menu
 
 #include <iostream>
 #include <string>
@@ -29,7 +29,7 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 
-// Displays a generic menu and handles user input selection
+// Display a generic menu and handles user input selection
 void playerInstanceOptions(int& choice, std::string one, std::string two, std::string three, std::string header_text) {
     std::cout << "\n─── " << header_text << " ───\n";
     std::cout << "1) " << one << "\n";
@@ -42,6 +42,7 @@ void playerInstanceOptions(int& choice, std::string one, std::string two, std::s
     std::cin >> choice;
 }
 
+// Ask player to create a new game, load the most recent save file, or quit game
 Player* selectPlayerInstance(Player*& p) {
     int choice;
     std::string title = "Spells and Potions RPG";
@@ -65,8 +66,7 @@ Player* selectPlayerInstance(Player*& p) {
         clearBuffer();
         std::cin.get();
         return p;
-    }
-    else if (choice == 2) {
+    }else if (choice == 2) {
         if (!load_player(p)) {
 
             std::cout << "Save game not found.\n";
@@ -75,10 +75,8 @@ Player* selectPlayerInstance(Player*& p) {
             std::cin.get();
 
             return selectPlayerInstance(p);
-        }
-        else return p;
-    }
-    else {
+        } else return p;
+    } else {
         std::string name;
         terminateBuffer();
         clearBuffer();
@@ -154,12 +152,9 @@ Player* selectPlayerInstance(Player*& p) {
     }
 }
 
+// Menu that displays when player is defeated
 bool gameOverMenu(Player* p) {
     int choice;
-
-    /*Game* g = Game::getInstance(Player::p);
-
-    Player* p = g->getPlayer();*/
 
     do {
         terminateBuffer();
@@ -177,6 +172,7 @@ bool gameOverMenu(Player* p) {
     return (choice == 1);
 }
 
+// Load most recent game save
 bool load_player(Player*& player) {
 
     const std::string file_name = "game_save_file.txt"; // Constant load file path (eliminates user error)

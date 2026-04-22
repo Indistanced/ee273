@@ -1,4 +1,10 @@
-﻿#pragma once
+﻿//Author: Aidan Kelly
+//Creation Date: 20/04/26
+
+//Changes made:
+//- Create Minimap class
+
+#pragma once
 
 #include "clear.h"
 #include "unicode.h"
@@ -11,6 +17,7 @@
 #include <opencv2/highgui.hpp>
 #include <iostream>
 
+// Allow only one Minimap instance to exist at once
 class Minimap {
 public:
 	static void mapLoop();

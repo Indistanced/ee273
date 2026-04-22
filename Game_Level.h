@@ -1,7 +1,10 @@
-﻿// Author: Aidan Kelly
-// Creation Date: 
+﻿//Author: Aidan Kelly
+//Creation Date: 15/04/2026
 
 // Changes made:
+//- Define main levels
+//- Store level state
+//- Create means of printing level state
 
 #pragma once
 

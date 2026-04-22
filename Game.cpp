@@ -2,15 +2,15 @@
 //Creation Date: 14/03/26
 
 //Changes made:
-//- updated game menu with player stats 
-//- updated game menu with inventory display
-//- updated game menu with quest display
-//- updated save and quit options
-//- updated save file with location, level, experience, inventory and quests
+//- Update game menu with player stats 
+//- Update game menu with inventory display
+//- Update game menu with quest display
+//- Update save and quit options
+//- Update save file with location, level, experience, inventory and quests
 //- Implement Game class using singleton design pattern
-//- added in level story and combat interaction for levels 1 to 3
-//- added in reset/ game over operations 
-//- added in level two choices for game variety 
+//- Add in level story and combat interaction for levels 1 to 3
+//- Add in reset/ game over operations 
+//- Add in level two choices for game variety 
 
 #include <iostream> // Read and write functionality with console
 #include <fstream> // Read and write functionality with files

@@ -2,10 +2,10 @@
 //Creation Date: 07/04/26
 
 //Changes made:
-//-seperated enemy and player attack cycles to enhance readability 
-//- added in extra enemy attack strategies
-//- added in random item drop change using rand() fucntion
-//- added in exit game option to combat sequence 
+//- Separate enemy and player attack cycles to enhance readability 
+//- Add in extra enemy attack strategies
+//- Add in random item drop change using rand() fucntion
+//- Add in exit game option to combat sequence 
 
 
 #include "combat.h"

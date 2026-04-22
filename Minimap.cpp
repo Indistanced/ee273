@@ -1,4 +1,12 @@
-﻿#include "Minimap.h"
+﻿//Author: Aidan Kelly
+//Creation Date: 20/04/26
+
+//Changes made:
+//- Use OpenCV for displaying images
+//- Display static image concurrently with the game loop
+//- Make the image shown depend on the level the user is at
+
+#include "Minimap.h"
 #include <array>
 #include <map>
 #include <Windows.h>
@@ -16,7 +24,7 @@ void Minimap::mapLoop() {
 	};
 
 	static bool initialised = false;
-	if (!initialised) {
+	if (!initialised) { // Ensures the default window parameters are only defined once
 		int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 		int screenHeight = GetSystemMetrics(SM_CYSCREEN);
 		int windowSize = 300;
@@ -24,6 +32,7 @@ void Minimap::mapLoop() {
 		int x = (screenWidth - windowSize) / 2;
 		int y = (screenHeight - windowSize) / 2;
 
+		// Set default window parameters
 		cv::namedWindow("Map", cv::WINDOW_NORMAL);
 		cv::resizeWindow("Map", 300, 300);
 		cv::moveWindow("Map", x, y);
@@ -38,6 +47,7 @@ void Minimap::mapLoop() {
 			continue;
 		}
 
+		// Image shown corresponds with player level
 		for (int i{}; i < level_names.size(); i++) {
 			if (p->getLocation() == level_names[i]) {
 				cv::imshow("Map", maps[level_names[i]]);

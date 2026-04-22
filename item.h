@@ -2,7 +2,7 @@
 //Creation Date: 22/03/26
 
 //Changes made:
-//-speratrated potions and spells into seperate classes
+//-Separated potions and spells into separate classes
 
 #pragma once
 #include <string>
@@ -32,7 +32,7 @@ public:
     // Constructor 
     Spell(std::string name, std::string description, int weak, int base, int strong, std::string element) : Item(name, description), weak(weak), base(base), strong(strong), element(element) {}
 
-    // destructor
+    // Destructor
     ~Spell() {}
 
     //getters
@@ -53,17 +53,14 @@ public:
     // Constructor
     Potion(std::string name, std::string description, int value, int quantity) : Item(name, description), value(value), quantity(quantity) {}
 
-    // destructor
+    // Destructor
     ~Potion() {}
 
-    //getters
     int get_value();
     int get_quantity();
 
-    //setter
     void set_quantity(int value);
 
-    //use potion function
     bool use_potion(Player* p);
 
 private:

@@ -2,8 +2,8 @@
 //Creation Date: 22/03/26
 
 //Changes made:
-//- added in seperate potion and spell getter functions
-//- added in seperate potion and spell display functions
+//- Add in separate potion and spell getter functions
+//- Add in separate potion and spell display functions
 
 #pragma once
 #include <vector>
@@ -27,8 +27,8 @@ public:
     
 
     std::vector<Item*>& getItems();   // For saving and loading items
-    std::vector<Potion*> getPotions(); //retuns all potions 
-    std::vector<Spell*> getSpells(); //retuns all spells
+    std::vector<Potion*> getPotions(); // Return all potions 
+    std::vector<Spell*> getSpells(); // Return all spells
 
     //display functions
     void displaySpells();

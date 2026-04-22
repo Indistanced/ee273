@@ -1,9 +1,9 @@
-﻿//Author:  Kyle Simpson 
+﻿//Author: Kyle Simpson 
 //Creation Date: 07/04/26
 
 //Changes made:
-//- added in seperate player and enemy moves 
-//- made comabt a struct 
+//- Add in separate player and enemy moves 
+//- Make combat a struct (since we only need public variables and member functions, and struct gives us this by default)
 
 #pragma once
 #include "player.h"

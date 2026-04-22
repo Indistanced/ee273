@@ -1,9 +1,9 @@
 ﻿//Author: Aidan Kelly and Kyle Simpson
-//Creation Date: 
+//Creation Date: 17/03/2026
 
 //Changes made:
-//- added in dashText() fucntion to help reduce repatition.
-//- added in unicode_init() to initilise Unicode
+//- Add in dashText() function to help reduce repetition.
+//- Add in unicode_init() to initialise Unicode
 
 #include "unicode.h"
 #include <iostream>

@@ -2,8 +2,8 @@
 //Creation Date: 01/03/26
 
 //Changes made:
-//- added in random number generator seed
-//- added unicode enable  
+//- Add in pseudorandom number generator seed
+//- Add unicode enable  
 
 #include "Player.h"
 #include "menu.h"

@@ -2,10 +2,10 @@
 //Creation Date: 22/03/26
 
 //Changes made:
-//- added in dynamic casting of potions and spells
-//- added in unicode to text
-//- added in seperate potion and spell getter functions
-//- added in seperate potion and spell display functions
+//- Add in dynamic casting of potions and spells
+//- Add in unicode to text
+//- Add in separate potion and spell getter functions
+//- Add in separate potion and spell display functions
 
 #include <vector>
 #include <iostream>
@@ -56,7 +56,7 @@ void Inventory::removeItem(Item* itemToRemove) {
 
         if (inventory[i] == itemToRemove) {
 
-            delete inventory[i];   // Free memory
+            delete inventory[i]; // Free memory
             inventory.erase(inventory.begin() + i);
             return;
         }
@@ -81,7 +81,7 @@ void Inventory::displaySpells() {
 void Inventory::displayPotions() {
     std::cout << "\n──────────────── Potion List ────────────────\n";
 
-    std::vector<Potion*> potions = getPotions(); //get all potions 
+    std::vector<Potion*> potions = getPotions(); // Get all potions 
 
     for (int i = 0; i < potions.size(); i++) {
 
@@ -136,7 +136,7 @@ void  Inventory::displayItems(Player* p) {
 
             int potionChoice;
 
-            // Input loop for user selecting a vaild potion 
+            // Input loop for user selecting a valid potion 
             do {
                 std::cout << "\nChoice: ";
                 std::cin >> potionChoice;
@@ -164,23 +164,23 @@ void  Inventory::displayItems(Player* p) {
         }
 
         else {
-            return;  // Exit inventory
+            return; // Exit inventory
         }
     }
 }
 
 
-// Returns reference to full inventory (used for saving and loading functionality)
+// Return reference to full inventory (used for saving and loading functionality)
 std::vector<Item*>& Inventory::getItems() {
     return inventory;
 }
 
-// Returns a filtered list of Potions only 
+// Return a filtered list of Potions only 
 std::vector<Potion*> Inventory::getPotions() {
     std::vector<Potion*> potions;
 
     for (auto& item : inventory) {
-        Potion* p = dynamic_cast<Potion*>(item);  // Uses dynamic_cast to identify correct type
+        Potion* p = dynamic_cast<Potion*>(item); // Use dynamic_cast to identify correct type
         if (p != nullptr) {
             potions.push_back(p);
         }
@@ -189,12 +189,12 @@ std::vector<Potion*> Inventory::getPotions() {
     return potions;
 }
 
-// Returns a filtered list of Spells only 
+// Return a filtered list of Spells only 
 std::vector<Spell*> Inventory::getSpells() {
     std::vector<Spell*> spells;
 
     for (auto& item : inventory) {
-        Spell* s = dynamic_cast<Spell*>(item);  // Uses dynamic_cast to identify correct type
+        Spell* s = dynamic_cast<Spell*>(item); // Use dynamic_cast to identify correct type
         if (s != nullptr) {
             spells.push_back(s);
         }

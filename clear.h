@@ -1,8 +1,8 @@
 ﻿//Author: Aidan Kelly and Kyle Simpson
-//Creation Date: 
+//Creation Date: 17/03/2026 
 
 //Changes made:
-//-Added in ask_to_continue() decloration
+//- Add in ask_to_continue() declaration
 
 #pragma once
 
@@ -10,4 +10,4 @@
 
 void clearBuffer(); // Clears the input stream to prevent leftover or invalid input from affecting cin operations
 void terminateBuffer(); // Clears terminal screen
-void ask_to_continue(); // Pauses program until the user pesses enter
+void ask_to_continue(); // Pauses program until the user presses enter

@@ -2,9 +2,9 @@
 //Creation Date: 02/03/26
 
 //Changes made:
-//- added in location attribute
-//- added in Level and experience attribute
-//- added in Inventory and quest management
+//- Add in location attribute
+//- Add in Level and experience attribute
+//- Add in Inventory and quest management
 
 #pragma once
 
@@ -25,7 +25,6 @@ public:
 	const int START_EXP = 0;
 	const int DEFAULT_EXP_LIMIT = 100;
 
-
 	// Inherit constructor initialisations from Character class
 	Player(std::string name) : Character{ name } { this->level = DEFAULT_LEVEL; this->location = START_LOCATION; this->exp = START_EXP; this->expLimit = DEFAULT_EXP_LIMIT; }
 	Player(std::string name, int hp) : Character{ name, hp } { this->level = DEFAULT_LEVEL; this->location = START_LOCATION; this->exp = START_EXP; this->expLimit = DEFAULT_EXP_LIMIT; }
@@ -39,9 +38,9 @@ public:
 
 	static std::ostream& pout(Player* p);
 
-	static std::istream& pin(Player* p);  // function to call player name before test i.e "John: "
+	static std::istream& pin(Player* p); // Function to call player name before test i.e "John: "
 
-	void to_string(); // convert player stats to string
+	void to_string(); // Convert player stats to string
 
 	// Getters 
 	std::string getName() const { return name; };
@@ -67,6 +66,6 @@ private:
 	unsigned int exp;
 	unsigned int expLimit;
 	std::string location;
-	Inventory inventory; // player has an inventory 
+	Inventory inventory; // Player has an inventory 
 	std::vector<std::pair<std::string, bool>> quests;
 };

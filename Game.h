@@ -2,9 +2,8 @@
 //Creation Date: 14/03/26
 
 //Changes made:
-//- added in levels functions
-//-added level two choices
-
+//- Add in levels functions
+//- Add level two choices
 
 #pragma once
 

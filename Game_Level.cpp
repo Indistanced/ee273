@@ -1,5 +1,5 @@
 ﻿//Author: Aidan Kelly 
-//Creation Date: 
+//Creation Date: 15/04/2026
 
 //Changes made:
 
@@ -7,6 +7,7 @@
 
 #include "Game_Level.h"
 
+// Test integrity of the singleton implementation
 int Level::test() {
 	Level& l = Level::getInstance();
 	Level& l2 = Level::getInstance();
@@ -20,6 +21,7 @@ int Level::test() {
 	}
 }
 
+// Tell user the completion state of each level.
 void Level::isCompleteString() {
 	std::cout << "[ ";
 	for (int i{}; i < NUMBER_OF_LEVELS; i++) {
