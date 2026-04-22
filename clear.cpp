@@ -2,7 +2,7 @@
 //Creation Date: 17/03/2026
 
 //Changes made:
-//-Add in ask_to_continue() function to provent repetition within code
+//-Add in ask_to_continue() function to prevent repetition within code
 
 #include "clear.h"
 #include <limits>
