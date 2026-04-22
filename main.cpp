@@ -38,12 +38,12 @@ int gameLoop() {
 		bool alive = g->run(g, p);
 
 		// TESTING
-		Level::test();
+		//Level::test();
 
 		delete g;
 		Game::resetInstance();
 		if (!p->isAlive()) {
-			if (gameOverMenu(p)) { // If RESTART
+			if (gameOverMenu(p)) { // IF RESTART
 				delete p;
 				continue;
 			}
