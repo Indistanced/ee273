@@ -27,8 +27,16 @@ void Combat::playerMove(Player* p, Enemy*& e) {
 		std::cout << "1) Cast a spell\n";
 		std::cout << "2) Use a potion\n";
 		std::cout << "3) Exit game\n\n";
-		std::cout << "Choice: ";
-		std::cin >> choice;
+		do {
+			std::cout << "Choice: ";
+			std::cin >> choice;
+
+			if (choice < 1 || choice > 3 || std::cin.fail()) {
+				clearBuffer();
+				std::cout << "Invaild choice, try again.\n";
+			}
+		} while (choice < 1 && choice > 3);
+		
 
 		switch (choice) {
 		case 1: {
@@ -45,9 +53,10 @@ void Combat::playerMove(Player* p, Enemy*& e) {
 
 			// Input validation to ensure user selects a valid spell index
 			do {
+				clearBuffer();
 				std::cout << "Choose spell: ";
 				std::cin >> spellChoice;
-			} while (spellChoice < 1 || spellChoice > spells.size());
+			} while (spellChoice < 1 || spellChoice > spells.size() || std::cin.fail());
 
 			Spell* sp = spells[spellChoice - 1]; // The chosen spell is selected
 
@@ -76,8 +85,8 @@ void Combat::playerMove(Player* p, Enemy*& e) {
 			auto potions = p->getInventory().getPotions(); //get all potions from inventory
 
 			if (potions.empty()) { //check to make sure player has potions
-				std::cout << "\nYou have no potions!\n";  
-				return;
+				std::cout << "\nYou have no potions!\n";
+				break;
 			}
 
 			p->getInventory().displayPotions(); // display all available potions 
@@ -85,9 +94,10 @@ void Combat::playerMove(Player* p, Enemy*& e) {
 			int potionChoice;
 			//get the user to select a potion
 			do {
+				clearBuffer();
 				std::cout << "Choose potion: ";
 				std::cin >> potionChoice;
-			} while (potionChoice < 1 || potionChoice > potions.size());  
+			} while (potionChoice < 1 || potionChoice > potions.size() || std::cin.fail());
 
 			Potion* po = potions[potionChoice - 1];  //gets the potion with the correct index
 
@@ -99,16 +109,16 @@ void Combat::playerMove(Player* p, Enemy*& e) {
 				//if quantity drops to zero remove potion from inventory 
 				if (po->get_quantity() == 0) {
 					p->getInventory().removeItem(po);
-				} ask_to_continue();
-				
+				} 
+
 			}
-			
+
 			break;
 		}
 		case 3: {
 			exit(0); // quit program
 		}
-		default: std::cout << "\nInvalid choice.\n"; 
+		default: std::cout << "\nInvalid choice.\n";
 		}
 
 	} while (choice != 1); // loop until player attacks 
@@ -152,8 +162,8 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 
 		// PLAYER TURN
 
-		clearBuffer(); 
-		terminateBuffer(); 
+		clearBuffer();
+		terminateBuffer();
 
 		std::cout << "\n══════════════ Combat ══════════════\n";
 
@@ -188,7 +198,7 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 		if (enemy_name == "Fire Spirit") { Level::isComplete[0] = true; } // Unlock next level if final level 1 enemy is defeated
 
 		std::cout << '\n'; xbar(50); std::cout << '\n';
-	
+
 		std::cout << "\nCongratulations! You defeated the " << e->getName() << "!\n";
 		std::cout << "  ── You Gained +" << exp << " Experience! ──\n";
 
@@ -202,7 +212,7 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 
 	std::cout << "\n\nYou were defeated...\n";
 	delete e;
-	return false; 
+	return false;
 }
 
 void Combat::item_drop_generator(Player* p, int enemy_health) {
@@ -306,4 +316,6 @@ void Combat::item_drop_generator(Player* p, int enemy_health) {
 			}
 		}
 	}
+
+	std::cout << "\n";
 }

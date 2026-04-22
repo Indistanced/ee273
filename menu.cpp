@@ -31,7 +31,7 @@
 
 // Displays a generic menu and handles user input selection
 void playerInstanceOptions(int& choice, std::string one, std::string two, std::string three, std::string header_text) {
-    std::cout << "─── " << header_text << " ───\n";
+    std::cout << "\n─── " << header_text << " ───\n";
     std::cout << "1) " << one << "\n";
     if (two != "INVALID") {
         std::cout << "2) " << two << "\n";
@@ -109,7 +109,7 @@ Player* selectPlayerInstance(Player*& p) {
         xbar(); std::cout << "\n\n";
 
 
-        while(true) {
+        while (true) {
 
 
             playerInstanceOptions(choice, "Fire Spin", "Water Whip", "Lead Slash", "CHOOSE A SPELL");

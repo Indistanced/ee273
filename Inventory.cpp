@@ -19,7 +19,7 @@
 // Destructor - frees all dynamically allocated items in the inventory
 Inventory::~Inventory() {
     for (auto item : inventory) {
-        delete item; 
+        delete item;
     }
 }
 
@@ -38,7 +38,7 @@ bool Inventory::addPotion(std::string name, std::string description, int value, 
         {
             Potion* p = dynamic_cast<Potion*>(item);
             if (p != nullptr) {
-                p->set_quantity(p->get_quantity() + quantity);  
+                p->set_quantity(p->get_quantity() + quantity);
                 return true;
             }
         }
@@ -133,7 +133,7 @@ void  Inventory::displayItems(Player* p) {
                     << " | Quantity: "
                     << potions[i]->get_quantity() << "\n";
             }
-      
+
             int potionChoice;
 
             // Input loop for user selecting a vaild potion 
@@ -158,7 +158,7 @@ void  Inventory::displayItems(Player* p) {
                     removeItem(selectedPotion);
                 }
             }
-            
+
 
             ask_to_continue();
         }
@@ -202,4 +202,3 @@ std::vector<Spell*> Inventory::getSpells() {
 
     return spells;
 }
-

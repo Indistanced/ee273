@@ -21,7 +21,6 @@ void terminateBuffer() {
 // Pauses the program until the user presses Enter
 void ask_to_continue() {
 	std::cout << "\n>> Press enter to continue <<";
-	clearBuffer();
 	std::cin.get();
 	return;
 }
