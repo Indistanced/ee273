@@ -39,11 +39,13 @@ Game* Game::getInstance(Player* p) {
 	} return instance;
 }
 
+// Move through levels in order
 void Game::level_selection(int& choice) {
 	auto first = Level::names.begin();
 	auto second = std::next(first);
 	auto third = std::next(second);
 
+	//level 1 progression
 	if (p->getLocation() == "Town") {
 		p->setLocation(first->first);
 
@@ -54,6 +56,7 @@ void Game::level_selection(int& choice) {
 		} return;
 	}
 
+	//level 2 progression
 	if (p->getLocation() == second->first) {
 		if (level_two()) {
 			p->setLocation(third->first);
@@ -62,6 +65,7 @@ void Game::level_selection(int& choice) {
 		} return;
 	}
 
+	//level 3 progression
 	if (p->getLocation() == third->first) {
 		if (level_three()) {
 			p->setLocation("End");
@@ -71,17 +75,19 @@ void Game::level_selection(int& choice) {
 	}
 }
 
-// Save Game function
+// Saves all player data to a file
 bool Game::save_player(Player*& p) {
 	const std::string file_name = "game_save_file.txt"; // Constant load file path (eliminates user error)
 
 	std::ofstream outFile(file_name);
 
+	// Check file opened successfully
 	if (!outFile) {
 		std::cerr << "Error opening file: " << file_name << '\n';
 		return false;
 	}
 
+	// Save basic player stats
 	outFile << p->getName() << "\n";
 	outFile << p->getHealth() << "\n";
 	outFile << p->getMaxHealth() << "\n";
@@ -91,6 +97,7 @@ bool Game::save_player(Player*& p) {
 	outFile << p->getStrength() << "\n";
 	outFile << p->getLocation() << "\n";
 
+	// Save inventory items
 	auto& items = p->getInventory().getItems();
 
 	outFile << items.size() << "\n";
@@ -115,6 +122,7 @@ bool Game::save_player(Player*& p) {
 		}
 	}
 
+	// Save quest data
 	auto& quests = p->getQuests();
 
 	outFile << quests.size() << "\n";
@@ -127,6 +135,7 @@ bool Game::save_player(Player*& p) {
 	return true;
 }
 
+// Starts the game and displays the introduction message
 void Game::start(Player* p) {
 	terminateBuffer();
 
@@ -139,19 +148,22 @@ void Game::start(Player* p) {
 	return;
 }
 
+// Main game loop 
 bool Game::run(Game* g, Player* p) {
-	start(p);
-	save_player(p);
-	menu(p);
+	start(p); //show introduction 
+	save_player(p); //initial save of player 
+	menu(p); //open menu 
 
-	return p->isAlive();
+	return p->isAlive(); // Continue while player is alive
 }
 
+// Custom output stream prefix for consistent UI
 std::ostream& Game::gout() {
 	return std::cout << ">> ";
 }
 
 
+// Handles quit game sequance  
 bool Game::quit_game(Player* p) {
 
 	terminateBuffer();
@@ -164,8 +176,9 @@ bool Game::quit_game(Player* p) {
 		std::cout << "Choice: ";
 		std::cin >> answer;
 
+		//convert answer to lower to hande all variations
 		for (char& c : answer) {
-			c = tolower(c);
+			c = tolower(c); 
 		}
 
 		if (answer == "yes" || answer == "y") {
@@ -176,14 +189,16 @@ bool Game::quit_game(Player* p) {
 			return false;
 		}
 		else {
+			clearBuffer();
 			std::cout << "Invalid response, try again.\n\n";
 		}
 	}
 
 }
 
+
 bool Game::level_one() {
-	Combat c;
+	Combat c;  
 
 	std::cout << "You are entering level " << Level::names["Green Hill Zone"] << "\n\n";
 
@@ -198,15 +213,15 @@ bool Game::level_one() {
 	Game::gout() << "A water slime appears!\n";
 	ask_to_continue();
 
-	if (!c.startCombat(p, "Slime", 50, 8, "water")) {
-		return false;
+	if (!c.startCombat(p, "Slime", 50, 8, "water")) {  //start combat 
+		return false;  //if player is defeated return 
 	}
 
 	Game::gout() << "You completed a quest! - Defeat a slime\n\n";
-	p->completeQuest("Defeat a slime");
+	p->completeQuest("Defeat a slime");  //update quest completion 
 
 	Game::gout() << "You have a new quest! - Reach the magic mountain";
-	p->addQuest("Reach the magic mountain", false);
+	p->addQuest("Reach the magic mountain", false); // add a new quest to track 
 
 	clearBuffer();
 	ask_to_continue();
@@ -219,7 +234,7 @@ bool Game::level_one() {
 	Game::gout() << "A wild grass goblin ambushes you!\n";
 	ask_to_continue();
 
-	if (!c.startCombat(p, "Goblin", 70, 10, "grass")) {
+	if (!c.startCombat(p, "Goblin", 70, 10, "grass")) {  //start combat 
 		return false;
 	}
 
@@ -234,7 +249,7 @@ bool Game::level_one() {
 	Game::gout() << "A powerful fire spirit blocks your path!\n";
 	ask_to_continue();
 
-	if (!c.startCombat(p, "Fire Spirit", 100, 12, "fire")) {
+	if (!c.startCombat(p, "Fire Spirit", 100, 12, "fire")) { //start combat 
 		return false;
 	}
 
@@ -242,10 +257,10 @@ bool Game::level_one() {
 	dashText("You completed Level 1!");
 	std::cout << "\n";
 	p->completeQuest("Reach the magic mountain");
-	Level::isComplete[0] = true;
+	Level::isComplete[0] = true;  //complete level 1 more to next level 
 
 	Game::gout() << "You have a new quest! - Reach the portal at the peak of the Magic Mountain\n\n";
-	p->addQuest("Reach the portal at the peak of the Magic Mountain", false);
+	p->addQuest("Reach the portal at the peak of the Magic Mountain", false); // add a new quest to track 
 
 	clearBuffer();
 	ask_to_continue();
@@ -255,6 +270,7 @@ bool Game::level_one() {
 	return true;
 }
 
+// Handles branching decision for the Mushroom Warrior encounter
 bool Game::level_two_choices(int choice, Combat c) {
 	int maxHealth = 111;
 	int exp = maxHealth / 2;
@@ -285,7 +301,7 @@ bool Game::level_two_choices(int choice, Combat c) {
 		std::cout << "  ── You Gained +" << exp << " Experience! ──\n";
 		p->addExp(exp);
 		std::cout << "\nThe " << enemy_name << " dropped:\n";
-		Combat::item_drop_generator(p, maxHealth);
+		Combat::item_drop_generator(p, maxHealth);  //generate items 
 	}
 }
 
@@ -335,10 +351,10 @@ bool Game::level_two() {
 		return false;
 	}
 
-	Game::gout() << "\nThe Golem perishes, but not without a warning...\n";
-	std::cout << "Beware of the Water Serpent";
+	Game::gout() << "The Golem perishes, but not without a warning...\n";
+	std::cout << "Golem: Beware of the Water Serpent!\n\n";
 
-	Game::gout() << "\nYou have a new quest! - Take down the Water Serpent\n";
+	Game::gout() << "You have a new quest! - Take down the Water Serpent\n";
 	p->addQuest("Take down the Water Serpent", false);
 
 	clearBuffer();
@@ -409,7 +425,7 @@ bool Game::level_three() {
 
 	
 	ask_to_continue();
-	if (!c.startCombat(p, "Ember Titan", 220, 25, "fire")) {
+	if (!c.startCombat(p, "Ember Titan", 220, 25, "fire")) { //start combat 
 		return false;
 	}
 
@@ -428,7 +444,7 @@ bool Game::level_three() {
 
 
 	ask_to_continue();
-	if (!c.startCombat(p, "Aqua Phantom", 250, 30, "water")) {
+	if (!c.startCombat(p, "Aqua Phantom", 250, 30, "water")) { //start combat 
 		return false;
 	}
 
@@ -448,12 +464,12 @@ bool Game::level_three() {
 	
 	ask_to_continue();
 
-	if (!c.startCombat(p, "Thornheart Dragon", 300, 35, "grass")) {
+	if (!c.startCombat(p, "Thornheart Dragon", 300, 35, "grass")) { //start combat 
 		return false;
 	}
 
 	std::cout << "\nYou completed a quest! - concur The Arm of Dismay\n\n";
-	p->completeQuest("conquer The Arm of Dismay");
+	p->completeQuest("conquer The Arm of Dismay"); //complete quest 
 
 	// LEVEL COMPLETE
 
@@ -474,20 +490,22 @@ bool Game::level_three() {
 
 	Game::gout() << "Thank you for playing!!\n";
 
-	Level::isComplete[2] = true;
+	Level::isComplete[2] = true;  //complete level 3 (go to end)
 	save_player(p);
 
 	return true;
 }
 
 void Game::resetInstance() {
-	instance = nullptr;
+	instance = nullptr;  // Remove existing instance so a new one can be created
 }
 
 void Game::menu(Player* p) {
 
 	int choice;
 	bool quit = false;
+
+	// Map storing level names and their corresponding level numbers
 	std::map<std::string, int> level = { {"Green Hill Zone", 1 }, { "Magic Mountain", 2 }, { "The Arm of Dismay", 3 } };
 
 	do {
@@ -517,25 +535,25 @@ void Game::menu(Player* p) {
 			terminateBuffer();
 
 			std::cout << "─── PLAYER STATS ───\n";
-			p->to_string();
+			p->to_string();  //display player info
 			clearBuffer();
 			ask_to_continue();
 			break;
 		}
 		case 2: {
 			terminateBuffer();
-			p->getInventory().displayItems(p);
+			p->getInventory().displayItems(p); //display all items 
 			break;
 		} case 3: {
 			terminateBuffer();
 
 			std::cout << "─── Quest List ───\n";
-			p->quests_to_string();
+			p->quests_to_string(); //display all active quests 
 			clearBuffer();
 			ask_to_continue();
 			break;
-		} case 4: {
-			auto first = Level::names.begin();
+		} case 4: { // Enter game / levels
+			auto first = Level::names.begin();  
 			auto second = std::next(first);
 			auto third = std::next(second);
 
@@ -543,33 +561,42 @@ void Game::menu(Player* p) {
 
 			terminateBuffer();
 
+			// display available levels
 			for (auto& l : level) {
 				std::cout << l.first << ": " << l.second << std::endl;
 			} std::cout << std::endl;
 
-			level_selection(choice);
+			level_selection(choice); // handle level progression
 
+<<<<<<< HEAD
 			if (choice == 1) break;
 			else return;
 			break;
+=======
+			// if player chooses to continue, stay in menu loop
+			if (choice == 1) break;
+			else {
+				return; // exit menu 
+			} break;
+>>>>>>> 6c20ed2df3b14b567833da1c25774cc54a6e3679
 		}
-		case 5: {
+		case 5: { //save game 
 			terminateBuffer();
 			save_player(p);
 			std::cout << "\t>> Game saved <<\n";
 			clearBuffer();
 			ask_to_continue();
 			break;
-		} case 6: {
+		} case 6: { //quit game 
 			quit = quit_game(p);
 			break;
 		}
 		default: {
-			std::cout << "Invalid Choice.\n";
+			std::cout << "Invalid Choice.\n"; //default case 
 			break;
 		};
 		}
 
-	} while (quit == false);
-	running = false;
+	} while (quit == false); // Keep looping until player  quits
+	running = false;  // Stop the game loop 
 }
