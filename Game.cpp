@@ -568,17 +568,10 @@ void Game::menu(Player* p) {
 
 			level_selection(choice); // handle level progression
 
-<<<<<<< HEAD
-			if (choice == 1) break;
-			else return;
-			break;
-=======
 			// if player chooses to continue, stay in menu loop
 			if (choice == 1) break;
-			else {
-				return; // exit menu 
-			} break;
->>>>>>> 6c20ed2df3b14b567833da1c25774cc54a6e3679
+			else return; // Exit menu 
+			break;
 		}
 		case 5: { //save game 
 			terminateBuffer();
