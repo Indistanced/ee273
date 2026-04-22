@@ -94,7 +94,7 @@ Player* selectPlayerInstance(Player*& p) {
         Game::gout() << "You are surrounded by a crowd of terrified people.\n";
         Game::gout() << "For weeks creatures have been appearing from a dark place...\n";
         Game::gout() << "A place known as the Arm of Dismay.\n";
-        Game::gout() << "They emerging and attacking anything in their path!\n\n";
+        Game::gout() << "They have begun emerging and attacking anything in their path!\n\n";
 
         Game::gout() << "If nothing is done the town will fall...\n";
         Game::gout() << "The knights have tried and failed.\n";
