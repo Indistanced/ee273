@@ -10,15 +10,12 @@
 #include "enemy.h"
 
 struct Combat {
-	void playerMove(Player* p, Enemy*& e); // Handles the players turn during combat
-	void enemyMove(Player* p, Enemy*& e); // Handles the enemys turn during combat
+	void playerMove(Player* p, Enemy*& e); // Handle the player's turn during combat
+	void enemyMove(Player* p, Enemy*& e); // Handle the enemy's turn during combat
 
-	// Initializes and manages the combat cycle between the player and a newly created enemy
+	// Initialise and manage the combat cycle between the player and a newly created enemy
 	bool startCombat(Player* p, std::string enemy_name, int health, int attack, std::string element);
 
-	// Generates item drops after combat based on the defeated enemys health
+	// Generate item drops after combat based on the defeated enemy's health
 	static void item_drop_generator(Player* p, int enemy_health);
 };
-
-
-

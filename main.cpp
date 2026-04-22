@@ -29,7 +29,6 @@ Player* p = nullptr;
 
 int gameLoop() {
 	while (running) {
-		p = nullptr;
 		p = selectPlayerInstance(p);
 		if (p == nullptr) {
 			return 0; // Check whether player exists
@@ -53,7 +52,7 @@ int gameLoop() {
 				delete p;
 				return 0;
 			}
-		} delete p;
+		}
 	}
 }
 
