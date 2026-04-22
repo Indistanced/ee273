@@ -1,7 +1,7 @@
-﻿//Author: Aidan Kelly
-//Creation Date: 
+﻿// Author: Aidan Kelly
+// Creation Date: 
 
-//Changes made:
+// Changes made:
 
 #pragma once
 

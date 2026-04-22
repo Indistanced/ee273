@@ -8,11 +8,11 @@ void Minimap::mapLoop() {
 	std::array level_names = { "Town", "Green Hill Zone", "Magic Mountain", "The Arm of Dismay", "End" };
 
 	static std::unordered_map<std::string, cv::Mat> maps = {
-		{"Town", cv::imread("town_img.png")},
-		{"Green Hill Zone", cv::imread("ghz_img.png") },
-		{"Magic Mountain", cv::imread("mm_img.png") },
-		{"The Arm of Dismay", cv::imread("taos_img.png")},
-		{"End", cv::imread("end_img.png") }
+		{"Town", cv::imread("town.png")},
+		{"Green Hill Zone", cv::imread("green_hill_zone.png") },
+		{"Magic Mountain", cv::imread("magic_mountain.png") },
+		{"The Arm of Dismay", cv::imread("the_arm_of_dismay.png")},
+		{"End", cv::imread("end.png") }
 	};
 
 	static bool initialised = false;

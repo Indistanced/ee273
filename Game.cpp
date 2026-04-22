@@ -239,7 +239,7 @@ bool Game::level_one() {
 	}
 
 	// LEVEL COMPLETE
-	Game::gout() << "You completed Level 1!\n";
+	Game::gout() << "── You completed Level 1! ──\n";
 	p->completeQuest("Reach the magic mountain");
 	Level::isComplete[0] = true;
 
@@ -368,7 +368,7 @@ bool Game::level_two() {
 
 	// LEVEL COMPLETE
 	Game::gout() << "\n\nYou compose yourself and go through the portal.\n";
-	std::cout << "\n-- You completed Level 2! --\n";
+	std::cout << "\n── You completed Level 2! ──\n";
 
 	std::cout << "\nYou completed a quest! - Reach the portal at the peak of the Magic Mountain\n";
 	p->completeQuest("Reach the portal at the peak of the Magic Mountain");
@@ -399,7 +399,6 @@ bool Game::level_three() {
 	Game::gout() << "You cross a bridge over a lava pit\n";
 	Game::gout() << "Suddenly, something rises from the flames!\n";
 	Game::gout() << "An Ember Titan!\n";
-
 	
 	ask_to_continue();
 	if (!c.startCombat(p, "Ember Titan", 220, 25, "fire")) {
@@ -413,9 +412,8 @@ bool Game::level_three() {
 	Game::gout() << "The air suddenly grows cold and damp.\n";
 	Game::gout() << "Water begins to drip from the ceiling...\n";
 	Game::gout() << "A pool forms beneath your feet.\n";
-	Game::gout() << "Without warning, it surges upward!\n";
+	Game::gout() << "Without warning, it surges upwards!\n";
 	Game::gout() << "An Aqua Phantom emerges!\n";
-
 
 	ask_to_continue();
 	if (!c.startCombat(p, "Aqua Phantom", 250, 30, "water")) {
@@ -440,8 +438,8 @@ bool Game::level_three() {
 	}
 
 	// LEVEL COMPLETE
-	std::cout << "\nYou completed a quest! - concur The Arm of Dismay\n\n";
-	p->completeQuest("conquer The Arm of Dismay");
+	std::cout << "\nYou completed a quest - Conquer The Arm of Dismay\n\n";
+	p->completeQuest("Conquer The Arm of Dismay");
 
 	Game::gout() << "The Dragon lets out a deep groan as the vines wither away...\n";
 	Game::gout() << "The dungeon falls silent.\n";
@@ -452,6 +450,7 @@ bool Game::level_three() {
 
 	Game::gout() << "The Arm of Dismay is no more!\n";
 	Game::gout() << "Its darkness has been lifted from the land.\n\n";
+	Game::gout() << "The prophecy has been fulfilled\n\n";
 
 	Game::gout() << "You are a hero!\n\n";
 
@@ -485,7 +484,6 @@ void Game::menu(Player* p) {
 		std::cout << "5) Save Game\n";
 		std::cout << "6) Quit\n";
 
-		
 			std::cout << "Choice: ";
 			std::cin >> choice;
 
