@@ -50,7 +50,7 @@ void Game::level_selection(int& choice) {
 		if (level_one()) {
 			p->setLocation(second->first);
 			save_player(p);
-			playerInstanceOptions(choice, "Continue", "Close Game", "INVALID", "\nCONTINUE?");
+			playerInstanceOptions(choice, "Continue", "Close Game", "INVALID", "CONTINUE?");
 		} return;
 	}
 
@@ -58,7 +58,7 @@ void Game::level_selection(int& choice) {
 		if (level_two()) {
 			p->setLocation(third->first);
 			save_player(p);
-			playerInstanceOptions(choice, "Continue", "Close Game", "INVALID", "\nCONTINUE?");
+			playerInstanceOptions(choice, "Continue", "Close Game", "INVALID", "CONTINUE?");
 		} return;
 	}
 
@@ -66,7 +66,7 @@ void Game::level_selection(int& choice) {
 		if (level_three()) {
 			p->setLocation("End");
 			save_player(p);
-			playerInstanceOptions(choice, "Complete Game", "INVALID", "INVALID", "\nCONTINUE?");
+			playerInstanceOptions(choice, "Complete Game", "INVALID", "INVALID", "CONTINUE?");
 		} return;
 	}
 }
@@ -367,7 +367,6 @@ bool Game::level_two() {
 	if (!c.startCombat(p, "Water Serpent", 200, 20, "water")) {
 		return false;
 	}
-
 	
 	std::cout << "\nYou completed a quest! - Take down the Water Serpent\n";
 	p->completeQuest("Take down the Water Serpent");
@@ -550,12 +549,9 @@ void Game::menu(Player* p) {
 
 			level_selection(choice);
 
-			//if (choice) save_player(p);
 			if (choice == 1) break;
-			else {
-				return;
-				//quit = quit_game();
-			} break;
+			else return;
+			break;
 		}
 		case 5: {
 			terminateBuffer();

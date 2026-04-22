@@ -158,17 +158,10 @@ void  Inventory::displayItems(Player* p) {
                     removeItem(selectedPotion);
                 }
             }
-
-
             ask_to_continue();
-        }
-
-        else {
-            return; // Exit inventory
-        }
+        } else return; // Exit inventory
     }
 }
-
 
 // Return reference to full inventory (used for saving and loading functionality)
 std::vector<Item*>& Inventory::getItems() {
@@ -184,9 +177,7 @@ std::vector<Potion*> Inventory::getPotions() {
         if (p != nullptr) {
             potions.push_back(p);
         }
-    }
-
-    return potions;
+    } return potions;
 }
 
 // Return a filtered list of Spells only 

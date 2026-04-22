@@ -24,8 +24,6 @@ int Potion::get_value() { return value; } // Return heath restoration value
 int Potion::get_quantity() { return quantity; } // Return number of potions 
 void Potion::set_quantity(int value) { this->quantity = value; }  // Adjust number of potions 
 
-
-
 bool Potion::use_potion(Player* p)
 {
     // Ensure player dose not use potion when full health 
