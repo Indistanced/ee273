@@ -2,7 +2,7 @@
 //Creation Date: 
 
 //Changes made:
-//-Added in ask_to_continue() function to provent repetition
+//-Added in ask_to_continue() function to provent repetition within code
 
 #include "clear.h"
 #include <limits>

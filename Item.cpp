@@ -1,6 +1,8 @@
 ﻿//Author: Kyle Simpson
 //Creation Date: 22/03/26
 
+//Changes made:
+//-added in case where use point fails when player health is full
 
 #include "Item.h"
 #include "Player.h"

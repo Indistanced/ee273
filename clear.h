@@ -8,6 +8,6 @@
 
 #include <iostream>
 
-void clearBuffer();
-void terminateBuffer();
-void ask_to_continue();
+void clearBuffer(); // Clears the input stream to prevent leftover or invalid input from affecting cin operations
+void terminateBuffer(); // Clears terminal screen
+void ask_to_continue(); // Pauses program until the user pesses enter

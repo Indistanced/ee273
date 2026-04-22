@@ -2,7 +2,7 @@
 //Creation Date: 07/04/26
 
 //Changes made:
-//- updated to include weakness for combat
+//- updated to include weakness for combat sequence
 
 #pragma once
 #include <string>
@@ -17,7 +17,8 @@ public:
 	//getters
 	std::string get_element() { return element; }
 
-	std::string get_weakness_element() {  //retuns the enemys weakness using their assinged element 
+	 //retuns the enemys weakness using their assinged element 
+	std::string get_weakness_element() { 
 		if (element == "water") return "grass";
 		else if (element == "fire") return "water";
 		else if (element == "grass") return "fire";

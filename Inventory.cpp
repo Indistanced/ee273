@@ -4,8 +4,8 @@
 //Changes made:
 //- added in dynamic casting of potions and spells
 //- added in unicode to text
-//- added in selective potion and spell getter functions
-//- added in selective potion and spell display functions
+//- added in seperate potion and spell getter functions
+//- added in seperate potion and spell display functions
 
 #include <vector>
 #include <iostream>

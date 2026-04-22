@@ -2,8 +2,10 @@
 //Creation Date: 07/04/26
 
 //Changes made:
+//-seperated enemy and player attack cycles to enhance readability 
 //- added in extra enemy attack strategies
 //- added in random item drop change using rand() fucntion
+//- added in exit game option to combat sequence 
 
 
 #include "combat.h"
@@ -205,6 +207,7 @@ bool Combat::startCombat(Player* p, std::string enemy_name, int health, int atta
 
 void Combat::item_drop_generator(Player* p, int enemy_health) {
 
+	//random number generators to randomise item drop generation 
 	int rand_num = rand() % 101; // 0 to 100
 	int rand_element = rand() % 3; // 0 to 2
 

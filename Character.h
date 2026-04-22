@@ -2,7 +2,7 @@
 //Creation Date: 01/03/26
 
 //Changes made:
-//- updated to short hand notation
+//- updated constructors to short hand notation
 //- removed attack() function as it was not needed.
 
 #pragma once

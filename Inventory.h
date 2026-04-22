@@ -2,8 +2,8 @@
 //Creation Date: 22/03/26
 
 //Changes made:
-//- added in selective potion and spell getter functions
-//- added in selective potion and spell display functions
+//- added in seperate potion and spell getter functions
+//- added in seperate potion and spell display functions
 
 #pragma once
 #include <vector>
@@ -22,7 +22,7 @@ public:
     bool addSpell(std::string name, std::string description, int base, int weak, int strong, std::string element);
 
    
-    void removeItem(Item* itemToRemove);
+    void removeItem(Item* itemToRemove); //remove item from inventory using name of item
 
     
 

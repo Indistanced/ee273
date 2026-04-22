@@ -3,6 +3,7 @@
 
 //Changes made:
 //- added in levels functions
+//-added level two choices
 
 
 #pragma once
@@ -20,13 +21,11 @@ public:
 	static std::ostream& gout();
 
 	// MAIN
-
 	static bool save_player(Player*& p);
 	void menu(Player* p);
 	static bool quit_game(Player* p);
 
 	// LEVELS
-
 	void level_selection(int& choice);
 
 	bool level_one();
@@ -34,6 +33,7 @@ public:
 	bool level_two_choices(int choice, Combat c);
 	bool level_three();
 
+	// RESET GAME
 	static void resetInstance();
 
 	Player* getPlayer() { return p; };

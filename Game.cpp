@@ -7,7 +7,10 @@
 //- updated game menu with quest display
 //- updated save and quit options
 //- updated save file with location, level, experience, inventory and quests
+//- Implement Game class using singleton design pattern
 //- added in level story and combat interaction for levels 1 to 3
+//- added in reset/ game over operations 
+//- added in level two choices for game variety 
 
 #include <iostream> // Read and write functionality with console
 #include <fstream> // Read and write functionality with files

@@ -6,6 +6,7 @@
 //- updated load function with location
 //- updated load fucntion with level and experince
 //- updated load function with inventory and quest
+//- added playerInstanceOptions to crete a user selection menu
 
 #include <iostream>
 #include <string>
@@ -28,6 +29,7 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 
+// Displays a generic menu and handles user input selection
 void playerInstanceOptions(int& choice, std::string one, std::string two, std::string three, std::string header_text) {
     std::cout << "─── " << header_text << " ───\n";
     std::cout << "1) " << one << "\n";

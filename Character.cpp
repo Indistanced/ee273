@@ -2,7 +2,8 @@
 //Creation Date: 01/03/26
 
 //Changes made:
-//- removed attack() function as it was not needed.
+//- removed attack() function as it was not needed
+//- refined take damage vailidation to ensure health did not drop below 0
 
 #include "Character.h"
 
