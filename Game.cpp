@@ -9,7 +9,7 @@
 //- updated save file with location, level, experience, inventory and quests
 //- Implement Game class using singleton design pattern
 //- added in level story and combat interaction for levels 1 to 3
-//- added in reset/ game over operations 
+//- added in reset/game over operations 
 //- added in level two choices for game variety 
 
 #include <iostream> // Read and write functionality with console
@@ -160,16 +160,16 @@ void Game::start(Player* p) {
 	std::cout << "── Entering the " << p->getLocation() << " ──\n"; std::cout << '\n'; // Location information
 	std::cout << ">> Press enter to start <<"; // Confirmation
 
-	clearBuffer();
+	//clearBuffer();
 	std::cin.get();  // wait for player to press enter
 	return;
 }
 
 // Main game loop 
 bool Game::run(Game* g, Player* p) {
-	start(p); //show introduction 
-	save_player(p); //initial save of player 
-	menu(p); //open menu 
+	start(p); // show introduction 
+	save_player(p); // initial save of player 
+	menu(p); // open menu 
 
 	return p->isAlive(); // Continue while player is alive
 }
@@ -178,7 +178,6 @@ bool Game::run(Game* g, Player* p) {
 std::ostream& Game::gout() {
 	return std::cout << ">> ";
 }
-
 
 // Handles quit game sequance  
 bool Game::quit_game(Player* p) {
@@ -213,7 +212,6 @@ bool Game::quit_game(Player* p) {
 
 }
 
-
 bool Game::level_one() {
 	Combat c;  
 
@@ -226,16 +224,15 @@ bool Game::level_one() {
 	Game::gout() << "All of a sudden, something jumps up at you out of nowhere!\n";
 
 	// Enemy 1 
-
 	Game::gout() << "A water slime appears!\n";
 	ask_to_continue();
 
 	if (!c.startCombat(p, "Slime", 50, 8, "water")) {  //start combat 
-		return false;  //if player is defeated return 
+		return false;  // if player is defeated, return 
 	}
 
-	Game::gout() << "You completed a quest! - Defeat a slime\n\n";
-	p->completeQuest("Defeat a slime");  //update quest completion 
+	Game::gout() << "You completed a quest! - Defeat a slime\n";
+	p->completeQuest("Defeat a slime");  // update quest completion 
 
 	Game::gout() << "You have a new quest! - Reach the magic mountain";
 	p->addQuest("Reach the magic mountain", false); // add a new quest to track 
@@ -251,7 +248,7 @@ bool Game::level_one() {
 	Game::gout() << "A wild grass goblin ambushes you!\n";
 	ask_to_continue();
 
-	if (!c.startCombat(p, "Goblin", 70, 10, "grass")) {  //start combat 
+	if (!c.startCombat(p, "Goblin", 70, 10, "grass")) {  // start combat 
 		return false;
 	}
 
@@ -266,7 +263,7 @@ bool Game::level_one() {
 	Game::gout() << "A powerful fire spirit blocks your path!\n";
 	ask_to_continue();
 
-	if (!c.startCombat(p, "Fire Spirit", 100, 12, "fire")) { //start combat 
+	if (!c.startCombat(p, "Fire Spirit", 100, 12, "fire")) { // start combat 
 		return false;
 	}
 
@@ -274,7 +271,7 @@ bool Game::level_one() {
 	dashText("You completed Level 1!");
 	std::cout << "\n";
 	p->completeQuest("Reach the magic mountain");
-	Level::isComplete[0] = true;  //complete level 1 more to next level 
+	Level::isComplete[0] = true;  // complete level 1 more to next level 
 
 	Game::gout() << "You have a new quest! - Reach the portal at the peak of the Magic Mountain\n\n";
 	p->addQuest("Reach the portal at the peak of the Magic Mountain", false); // add a new quest to track 
@@ -321,7 +318,6 @@ bool Game::level_two_choices(int choice, Combat c) {
 		Combat::item_drop_generator(p, maxHealth);  //generate items 
 	}
 }
-
 
 bool Game::level_two() {
 	int choice;

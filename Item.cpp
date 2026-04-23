@@ -35,7 +35,7 @@ bool Potion::use_potion(Player* p)
     // Ensure player has potion 
     if (quantity > 0) {
         p->addHealth(value);
-        quantity--;  //remove one potion 
+        quantity--;  // Remove one potion 
 
         std::cout << "Used " << name << " (+" << value << " HP)\n";
 

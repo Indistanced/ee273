@@ -42,7 +42,7 @@ void Player::addExp(int exp_amount) {
 		currentHealth = maxHealth;
 		expLimit += 50;
 
-		dashText("YOU LEVELED UP!");
+		dashText("YOU LEVELLED UP!");
 		std::cout << "-New Health: " << maxHealth <<"\n";
 		std::cout << "-New Strength: " << strength << "\n";
 	}

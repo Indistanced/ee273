@@ -118,7 +118,7 @@ void Combat::playerMove(Player* p, Enemy*& e) {
 		case 3: {
 			exit(0); // Quit program
 		}
-		default: std::cout << "\nInvalid choice.\n";
+		//default: //std::cout << "\nInvalid choice.\n";
 		}
 
 	} while (choice != 1); // Loop until player attacks 
