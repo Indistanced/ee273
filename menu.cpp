@@ -65,6 +65,8 @@ Player* selectPlayerInstance(Player*& p) {
         running = false;
         clearBuffer();
         std::cin.get();
+        
+        exit(0);
         return p;
     }else if (choice == 2) {
         if (!load_player(p)) {
